@@ -45,11 +45,12 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     implementation ("com.google.zxing:core:3.4.1")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-
+    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
     //_sdp
     implementation ("com.intuit.sdp:sdp-android:1.1.0")

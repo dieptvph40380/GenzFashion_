@@ -95,9 +95,6 @@
                 android:padding="10dp"
                 />
 
-
-
-
         </LinearLayout>
 
         <View
@@ -111,13 +108,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-
             android:layout_marginBottom="16dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#E0E0E0"
+            android:background="#000000"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp" />
 
