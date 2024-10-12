@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.genz_fashion.fragmentUser.ActiveFragment;
+import com.example.genz_fashion.fragmentUser.CancelledFragment;
 import com.example.genz_fashion.fragmentUser.CheckOutFragment;
 import com.example.genz_fashion.fragmentUser.CompletedFragment;
 
@@ -24,7 +25,7 @@ public class ViewPagerOderAdapter extends FragmentStateAdapter {
             case 1:
                 return new CompletedFragment();
             case 2:
-                return new CheckOutFragment();
+                return new CancelledFragment();
             default:
                 return new ActiveFragment();
         }

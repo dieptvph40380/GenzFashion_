@@ -11,7 +11,6 @@ import com.example.genz_fashion.R;
 public class CancelledFragment extends Fragment {
 
     public CancelledFragment() {
-        // Required empty public constructor
     }
 
     @Override

@@ -2,15 +2,8 @@ package com.example.genz_fashion.fragmentUser;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.genz_fashion.R;
@@ -26,7 +19,7 @@ public class MyOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_order);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -37,13 +30,13 @@ public class MyOrderActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Tab 1");
+                    tab.setText("Active");
                     break;
                 case 1:
-                    tab.setText("Tab 2");
+                    tab.setText("Completed");
                     break;
                 case 2:
-                    tab.setText("Tab 3");
+                    tab.setText("Cancelled");
                     break;
             }
         }).attach();
