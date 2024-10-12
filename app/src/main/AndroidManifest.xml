@@ -15,8 +15,10 @@
         <activity
             android:name=".screen_manager.Manager_Signin"
             android:exported="false" />
+        <activity android:name=".MainActivity"
+            android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".fragmentUser.MyOrderActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
