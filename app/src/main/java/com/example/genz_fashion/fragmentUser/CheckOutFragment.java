@@ -1,4 +1,4 @@
-package com.example.genz_fashion;
+package com.example.genz_fashion.fragmentUser;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.genz_fashion.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_checkout#newInstance} factory method to
+ * Use the {@link CheckOutFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_checkout extends Fragment {
+public class CheckOutFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class Fragment_checkout extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_checkout() {
+    public CheckOutFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class Fragment_checkout extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_checkout.
+     * @return A new instance of fragment CheckOutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_checkout newInstance(String param1, String param2) {
-        Fragment_checkout fragment = new Fragment_checkout();
+    public static CheckOutFragment newInstance(String param1, String param2) {
+        CheckOutFragment fragment = new CheckOutFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class Fragment_checkout extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checkout, container, false);
+        return inflater.inflate(R.layout.fragment_check_out, container, false);
     }
 }
