@@ -22,6 +22,9 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".fragmentUser.MyOrderActivity"
             android:exported="true">
             <intent-filter>
