@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@drawable/rounded_border"
     android:padding="8dp">
+
 
     <ImageView
         android:id="@+id/ivProductImage"
@@ -83,4 +85,5 @@
         android:textSize="11sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"/>
+
 </LinearLayout>
