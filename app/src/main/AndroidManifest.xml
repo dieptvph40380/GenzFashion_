@@ -13,9 +13,13 @@
         android:theme="@style/Theme.GenZ_Fashion"
         tools:targetApi="31">
         <activity
+            android:name=".Forgot_Pass"
+            android:exported="false" />
+        <activity
             android:name=".screen_manager.Manager_Signin"
             android:exported="false" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".fragmentUser.MyOrderActivity"
