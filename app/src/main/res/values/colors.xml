@@ -3,7 +3,4 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#6394B7</color>
-    <color name="checkedColor">#FF4081</color> <!-- Màu khi chọn -->
-    <color name="uncheckedColor">#FFFFFF</color> <!-- Màu khi không chọn -->
-    <color name="borderColor">#FF4081</color> <!-- Màu viền -->
 </resources>
