@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- Back Arrow -->
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Product Details Title -->
+
+    <!-- Product Image Placeholder -->
+    <TextView
+        android:id="@+id/productDetailsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Product Details"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/backArrow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/productImagePlaceholder"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:background="#D8D8D8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productDetailsTitle" />
+
+    <!-- Price -->
+    <TextView
+        android:padding="16dp"
+        android:id="@+id/productPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="$89.97"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productImagePlaceholder" />
+
+    <!-- Star Icon and Rating -->
+    <LinearLayout
+        android:padding="16dp"
+        android:id="@+id/starAndRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productImagePlaceholder">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_star" />
+
+        <TextView
+            android:id="@+id/productRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="4.5"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Product Name -->
+    <TextView
+        android:paddingLeft="16dp"
+        android:id="@+id/productName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Light Brown Jacket"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productPrice" />
+
+    <!-- Product Details Description -->
+    <TextView
+        android:paddingLeft="16dp"
+        android:id="@+id/productDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productName" />
+
+    <TextView
+        android:paddingLeft="16dp"
+        android:id="@+id/readMoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Read more"
+        android:textColor="@android:color/holo_blue_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productDescription" />
+
+    <!-- Select Size -->
+
+
+    <TextView
+
+        android:id="@+id/selectSizeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Size"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/readMoreText" />
+
+    <LinearLayout
+        android:id="@+id/sizeOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/selectSizeText">
+
+        <RadioButton
+            android:id="@+id/sizeS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:button="@null"
+            android:text="S"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:background="@drawable/radio_button_background"
+            android:gravity="center"
+            android:padding="12dp"
+            />
+
+
+        <RadioButton
+            android:id="@+id/sizeM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:button="@null"
+            android:text="M"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:background="@drawable/radio_button_background"
+            android:gravity="center"
+            android:padding="12dp"
+            />
+
+        <RadioButton
+            android:id="@+id/sizeL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:button="@null"
+            android:text="L"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:background="@drawable/radio_button_background"
+            android:gravity="center"
+            android:padding="12dp"
+            />
+
+        <RadioButton
+            android:id="@+id/sizeXL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:button="@null"
+            android:text="XL"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:background="@drawable/radio_button_background"
+            android:gravity="center"
+            android:padding="12dp"
+            />
+
+        <RadioButton
+            android:id="@+id/sizeXXL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:button="@null"
+            android:text="XXL"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:background="@drawable/radio_button_background"
+            android:gravity="center"
+            android:padding="12dp"
+            />
+
+    </LinearLayout>
+
+
+
+    <!-- Select Color -->
+    <TextView
+        android:paddingLeft="16dp"
+        android:id="@+id/selectColorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Select Color: Red"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sizeOptions" />
+
+    <RadioGroup
+        android:id="@+id/colorOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectColorText">
+
+        <!-- Color Option 1 (Red) -->
+        <RadioButton
+            android:id="@+id/colorRed"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:button="@null"
+            android:backgroundTint="#FF0000"
+            android:background="@drawable/color_circle_with_dot_selector" />
+
+        <!-- Color Option 2 (Light Brown) -->
+        <RadioButton
+            android:id="@+id/colorLightBrown"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:button="@null"
+            android:backgroundTint="#D3A984"
+            android:background="@drawable/color_circle_with_dot_selector" />
+
+        <!-- Color Option 3 (Grayish Brown) -->
+        <RadioButton
+            android:id="@+id/colorGrayishBrown"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:button="@null"
+            android:backgroundTint="#B2A29C"
+            android:background="@drawable/color_circle_with_dot_selector" />
+
+        <!-- Color Option 4 (Light Purple) -->
+        <RadioButton
+            android:id="@+id/colorLightPurple"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:button="@null"
+            android:backgroundTint="#A684DE"
+            android:background="@drawable/color_circle_with_dot_selector" />
+    </RadioGroup>
+
+
+
+
+    <!-- Bottom Navigation Buttons -->
+    <LinearLayout
+        android:id="@+id/bottomButtons"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="#A9A9A9"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_addtocart"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_suport"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="suport"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_addtocart"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_addtocart"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="add to cart"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical"
+            android:background="#4092D9"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Buy now"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
