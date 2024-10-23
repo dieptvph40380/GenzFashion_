@@ -8,12 +8,10 @@
     android:orientation="vertical"
     tools:context=".screen_manager.Manager_Signin">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".screen_manager.Manager_Signin">
+      >
 
         <!-- ImageView nằm ở phía dưới -->
         <ImageView
@@ -83,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             app:endIconMode="password_toggle"
-            android:passwordToggleEnabled="true">
+           >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_password"
