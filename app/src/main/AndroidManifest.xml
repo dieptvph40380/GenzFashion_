@@ -13,6 +13,9 @@
         android:theme="@style/Theme.GenZ_Fashion"
         tools:targetApi="31">
         <activity
+            android:name=".screen_manager.Statistical"
+            android:exported="false" />
+        <activity
             android:name=".Forgot_Pass"
             android:exported="false" />
         <activity
