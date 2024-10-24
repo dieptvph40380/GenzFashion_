@@ -8,14 +8,13 @@
     android:orientation="vertical"
     tools:context=".screen_manager.Manager_Signin">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
+        android:id="@+id/fragment_Signin"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".screen_manager.Manager_Signin">
+       >
 
-        <!-- ImageView nằm ở phía dưới -->
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="400dp"
@@ -46,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
                 android:text="Sign In"
                 android:textColor="@color/black"
@@ -83,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             app:endIconMode="password_toggle"
-            android:passwordToggleEnabled="true">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_password"
@@ -115,14 +114,14 @@
                 android:textColor="#2F7CAC"
                 android:gravity="end"/>
         </LinearLayout>
-        <Button
-            android:id="@+id/btnOrder"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnsign"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:text="Sign in"
-            android:textSize="16sp"
-            android:backgroundTint="@color/blue"
+            android:text="Sign In"
+            android:textSize="20sp"
+            app:cornerRadius="12dp"
+            android:backgroundTint="#6394B7"
             />
         <LinearLayout
             android:layout_marginTop="20dp"
@@ -143,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Register"
-                android:textColor="#303030" /> <!-- Thêm khoảng cách giữa 2 TextView -->
+                android:textColor="#303030" />
 
         </LinearLayout>
     </LinearLayout>
