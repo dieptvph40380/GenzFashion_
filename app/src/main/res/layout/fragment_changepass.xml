@@ -13,89 +13,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Register"
-        android:textSize="35sp"
+        android:text="Change Password"
+        android:textSize="30sp"
         android:textStyle="normal"
         android:layout_marginTop="30dp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Fill your information below or register with your social account."
-        android:textSize="15sp"
-        android:layout_marginTop="10dp" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_name"
+        android:id="@+id/edt_oldpass"
         android:layout_width="337dp"
         android:layout_height="53dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/background_edit_text"
-        android:hint="  Name"
+        android:hint="  Old Password"
         android:inputType="textPersonName" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_email"
+        android:id="@+id/edt_newpass"
         android:layout_width="337dp"
         android:layout_height="53dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/background_edit_text"
-        android:hint="  Email"
+        android:hint="  New Password"
         android:inputType="textEmailAddress" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_password"
+        android:id="@+id/edt_confimpass"
         android:layout_width="337dp"
         android:layout_height="53dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/background_edit_text"
-        android:hint="  Password"
+        android:hint="  Confim Password"
         android:inputType="textPassword" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_repass"
-        android:layout_width="337dp"
-        android:layout_height="53dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/background_edit_text"
-        android:hint="  Repass"
-        android:inputType="textPassword" />
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnresgin"
+        android:id="@+id/btnchange"
         android:layout_marginTop="30dp"
         android:layout_width="330dp"
         android:layout_height="60dp"
-        android:text="Register"
+        android:text="Change Password"
         android:textSize="20sp"
         app:cornerRadius="12dp"
         android:backgroundTint="#6394B7"
         />
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already have an account."
-            android:textColor="#808080" />
-
-        <TextView
-            android:id="@+id/Resigin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Register"
-            android:textColor="#303030" /> <!-- Thêm khoảng cách giữa 2 TextView -->
-
-    </LinearLayout>
 </LinearLayout>
