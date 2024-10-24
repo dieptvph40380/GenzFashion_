@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Profile Section -->
+    <ImageView
+        android:id="@+id/profileIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/user"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp" />
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi, Admin"
+        android:textSize="18sp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileIcon"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/welcomeSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome back"
+        android:textSize="14sp"
+        android:textColor="#777777"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
+        app:layout_constraintStart_toStartOf="@+id/welcomeText" />
+
+    <!-- Notification Icon -->
+    <ImageView
+        android:id="@+id/notificationIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/notification"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- Orders and Revenue Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/orderRevenueCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/profileIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@id/card1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/orderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Orders:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/orderCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12.000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/revenueTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Revenue:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/revenueAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12.000.000"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="#FF7F7F"
+        app:layout_constraintTop_toBottomOf="@+id/orderRevenueCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:paddingBottom="16dp">
+
+            <!-- Products Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/tshirt"
+                    android:contentDescription="Products" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Products"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Product Types Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/box"
+                    android:contentDescription="Product Types" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product Types"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Customer Support Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/customer"
+                    android:contentDescription="Customer Support" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Support"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Voucher Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/voucher"
+                    android:contentDescription="Voucher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Voucher"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Orders Button -->
+            <LinearLayout
+                android:layout_marginLeft="46dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/check"
+                    android:contentDescription="Orders" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Orders"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Suppliers Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/suppliers"
+                    android:contentDescription="Suppliers" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Suppliers"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Statistics Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/analysis"
+                    android:contentDescription="Statistics" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Statistics"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Customer Information Button -->
+            <LinearLayout
+                android:layout_marginLeft="46dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/information"
+                    android:contentDescription="Customer Information" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Information"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Orders Details Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/details"
+                    android:contentDescription="Orders Details" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Orders Details"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+        </GridLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
