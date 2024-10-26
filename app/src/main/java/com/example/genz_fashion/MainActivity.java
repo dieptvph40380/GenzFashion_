@@ -1,29 +1,21 @@
 package com.example.genz_fashion;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.genz_fashion.fragmentUser.Cart_Fragment;
 import com.example.genz_fashion.fragmentUser.Chat_Fragment;
-import com.example.genz_fashion.fragmentUser.FragmentSetting;
+import com.example.genz_fashion.fragmentUser.ProfileFragment;
 import com.example.genz_fashion.fragmentUser.HomeFragment;
 import com.example.genz_fashion.fragmentUser.MyWishlistFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new Chat_Fragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_profile) {
-                    replaceFragment(new FragmentSetting());
+                    replaceFragment(new ProfileFragment());
                     return true;
                 }
                 return false;
