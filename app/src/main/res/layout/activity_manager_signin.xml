@@ -9,11 +9,9 @@
     tools:context=".screen_manager.Manager_Signin">
 
     <FrameLayout
-        android:id="@+id/fragment_Signin"
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       >
+      >
 
         <ImageView
             android:layout_width="match_parent"
@@ -82,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             app:endIconMode="password_toggle"
+
             >
 
             <com.google.android.material.textfield.TextInputEditText
