@@ -18,7 +18,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.genz_fashion.fragmentUser.Cart_Fragment;
+import com.example.genz_fashion.fragmentUser.Chat_Fragment;
+import com.example.genz_fashion.fragmentUser.FragmentSetting;
 import com.example.genz_fashion.fragmentUser.HomeFragment;
+import com.example.genz_fashion.fragmentUser.MyWishlistFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -46,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new Cart_Fragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_favorite) {
-                    replaceFragment(new Cart_Fragment());
+                    replaceFragment(new MyWishlistFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_chat) {
-                    replaceFragment(new Cart_Fragment());
+                    replaceFragment(new Chat_Fragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_profile) {
-                    replaceFragment(new Cart_Fragment());
+                    replaceFragment(new FragmentSetting());
                     return true;
                 }
                 return false;
