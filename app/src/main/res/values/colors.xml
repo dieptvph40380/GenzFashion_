@@ -6,4 +6,7 @@
     <color name="checkedColor">#FF4081</color> <!-- Màu khi chọn -->
     <color name="uncheckedColor">#FFFFFF</color> <!-- Màu khi không chọn -->
     <color name="borderColor">#FF4081</color> <!-- Màu viền -->
+    <color name="gray">#D9D9D9</color>
+    <color name="min">#E3DDDC</color>
+    <color name="red">#FFBCBC</color>
 </resources>
