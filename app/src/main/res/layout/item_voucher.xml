@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:padding="10dp"
+    android:background="@drawable/coupon_background"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:orientation="vertical"
+
+        android:padding="16dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- Mã Coupon -->
+
+        <TextView
+            android:id="@+id/couponCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WELCOME200"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <!-- Chi tiết Mã Coupon -->
+        <TextView
+            android:id="@+id/couponDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add items worth $2 more to unlock\nGet 50% OFF"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:layout_marginTop="4dp" />
+
+        <!-- Nút Copy Code và Thùng rác xóa -->
+
+
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/deleteCouponButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:paddingRight="20dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_deletevoucher"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+
+
+
+</LinearLayout>
+
