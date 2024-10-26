@@ -7,4 +7,6 @@
     <string name="Enterphone">Enter phone</string>
     <string name="profile">Profile</string>
     <string name="profile_image_desc">Profile Image</string>
+    <string name="open">Open nav</string>
+    <string name="close">Close nav</string>
 </resources>
