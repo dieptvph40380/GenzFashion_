@@ -14,10 +14,10 @@ import com.example.genz_fashion.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentSetting#newInstance} factory method to
+ * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentSetting extends Fragment {
+public class ProfileFragment extends Fragment {
 private LinearLayout layout_your_file, layout_payment, layout_order, layout_setting, layout_help, layout_privacy;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +28,7 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
     private String mParam1;
     private String mParam2;
 
-    public FragmentSetting() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +38,11 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentSetting.
+     * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentSetting newInstance(String param1, String param2) {
-        FragmentSetting fragment = new FragmentSetting();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,7 +63,7 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
          layout_your_file=view.findViewById(R.id.profile_profile);
         layout_payment=view.findViewById(R.id.profile_payment);
         layout_payment.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +85,7 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
         layout_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new FragmentSetting(), R.id.frameLayout);
+                replaceFragment(new SettingFragment(), R.id.frameLayout);
             }
         });
         layout_help=view.findViewById(R.id.profile_help);

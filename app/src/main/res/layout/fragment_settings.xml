@@ -1,158 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
-    android:background="#FFFFFF">
+    tools:context=".fragmentUser.SettingFragment">
 
-    <!-- Back Button and Title -->
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:padding="16dp">
 
-        <!-- Back Button -->
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/iconout"
+            android:layout_marginEnd="16dp"
             android:contentDescription="Back Button"
-            android:layout_marginEnd="16dp" />
+            android:src="@drawable/iconout" />
 
-        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Setting"
             android:layout_marginLeft="120dp"
-            android:textSize="18sp"
+            android:text="Setting"
             android:textColor="#000000"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Divider -->
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#D3D3D3" />
 
-    <!-- Notification Settings -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="16dp">
 
-        <!-- Icon -->
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/people"
             android:contentDescription="Notification Settings Icon"
-            />
+            android:src="@drawable/people" />
 
-        <!-- Text -->
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
             android:text="Notification Settings"
-            android:textSize="16sp"
             android:textColor="#000000"
-            android:layout_weight="1"
-            android:layout_marginStart="16dp" />
+            android:textSize="16sp" />
 
-        <!-- Arrow Icon -->
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/chevron"
             android:contentDescription="Arrow Icon"
-           />
+            android:src="@drawable/chevron" />
     </LinearLayout>
 
-    <!-- Divider -->
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#D3D3D3" />
 
-    <!-- Password Manager -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="16dp">
 
-        <!-- Icon -->
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/key"
             android:contentDescription="Password Manager Icon"
-          />
+            android:src="@drawable/key" />
 
-        <!-- Text -->
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Password Manager"
-            android:textSize="16sp"
-            android:textColor="#000000"
+            android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:layout_marginStart="16dp" />
+            android:text="Password Manager"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
-        <!-- Arrow Icon -->
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/chevron"
             android:contentDescription="Arrow Icon"
-            />
+            android:src="@drawable/chevron" />
     </LinearLayout>
 
-    <!-- Divider -->
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#D3D3D3" />
 
-    <!-- Delete Account -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="16dp">
 
-        <!-- Icon -->
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/remove"
             android:contentDescription="Delete Account Icon"
-             />
+            android:src="@drawable/remove" />
 
-        <!-- Text -->
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Delete Account"
-            android:textSize="16sp"
-            android:textColor="#000000"
+            android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:layout_marginStart="16dp" />
+            android:text="Delete Account"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
-        <!-- Arrow Icon -->
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/chevron"
             android:contentDescription="Arrow Icon"
-            />
+            android:src="@drawable/chevron" />
     </LinearLayout>
 
 </LinearLayout>
