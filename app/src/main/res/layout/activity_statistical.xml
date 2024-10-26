@@ -57,13 +57,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="05/04/2024"
+            android:layout_marginRight="10dp"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <!-- ImageView nằm ngay bên cạnh TextView thứ hai -->
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/calendar" />
     </LinearLayout>
 

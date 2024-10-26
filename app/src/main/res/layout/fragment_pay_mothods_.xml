@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     android:padding="16dp">
 
     <!-- Header Section -->
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:padding="10dp"
         android:background="?android:attr/windowBackground">
 
         <!-- Back Button -->
@@ -23,7 +22,7 @@
             android:layout_height="30dp"
             android:contentDescription="Back"
             android:src="@drawable/back"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="0dp" />
 
         <!-- Title -->
         <TextView
@@ -34,7 +33,6 @@
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:gravity="center"
-            android:layout_marginStart="16dp"
             android:textStyle="bold" />
     </LinearLayout>
 
