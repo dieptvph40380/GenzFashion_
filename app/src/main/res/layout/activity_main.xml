@@ -19,8 +19,8 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="611dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+       />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
