@@ -7,21 +7,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="20dp"
-    tools:context=".fragmentUser.ForgotPassActivity">
+    android:padding="20dp"
+    android:background="@color/background_color"
+    tools:context=".UserScreen.ForgotPassActivity">
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/back_forgot"/>
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        android:text="Forgot Password"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="Back"
+            android:src="@drawable/back"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:id="@+id/tvCheckoutTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="60dp"
+            android:text="Forgot Password"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <ImageView
         android:layout_width="270dp"
         android:layout_height="220dp"
@@ -32,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:textSize="18sp"
         android:text="Please enter phone number"/>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -54,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:text="send"
+        android:text="Send"
         android:textSize="20sp"
         android:textStyle="bold"
         android:backgroundTint="@color/blue"

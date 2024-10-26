@@ -6,10 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.genz_fashion.fragmentUser.ActiveFragment;
-import com.example.genz_fashion.fragmentUser.CancelledFragment;
-import com.example.genz_fashion.fragmentUser.CheckOutFragment;
-import com.example.genz_fashion.fragmentUser.CompletedFragment;
+import com.example.genz_fashion.UserScreen.ActiveFragment;
+import com.example.genz_fashion.UserScreen.CancelledFragment;
+import com.example.genz_fashion.UserScreen.CompletedFragment;
 
 public class ViewPagerOderAdapter extends FragmentStateAdapter {
     public ViewPagerOderAdapter(@NonNull FragmentActivity fragmentActivity) {

@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     >
 
-    <!-- Back Arrow -->
     <ImageView
         android:id="@+id/backArrow"
         android:layout_width="30dp"
@@ -16,9 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Product Details Title -->
 
-    <!-- Product Image Placeholder -->
     <TextView
         android:id="@+id/productDetailsTitle"
         android:layout_width="wrap_content"
@@ -42,7 +39,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productDetailsTitle" />
 
-    <!-- Price -->
     <TextView
         android:padding="16dp"
         android:id="@+id/productPrice"
@@ -55,7 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productImagePlaceholder" />
 
-    <!-- Star Icon and Rating -->
     <LinearLayout
         android:padding="16dp"
         android:id="@+id/starAndRating"
@@ -80,7 +75,6 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <!-- Product Name -->
     <TextView
         android:paddingLeft="16dp"
         android:id="@+id/productName"
@@ -93,7 +87,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productPrice" />
 
-    <!-- Product Details Description -->
     <TextView
         android:paddingLeft="16dp"
         android:id="@+id/productDescription"
@@ -116,7 +109,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productDescription" />
 
-    <!-- Select Size -->
 
 
     <TextView
@@ -218,7 +210,6 @@
 
 
 
-    <!-- Select Color -->
     <TextView
         android:paddingLeft="16dp"
         android:id="@+id/selectColorText"
@@ -239,7 +230,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectColorText">
 
-        <!-- Color Option 1 (Red) -->
         <RadioButton
             android:id="@+id/colorRed"
             android:layout_width="48dp"
@@ -249,7 +239,6 @@
             android:backgroundTint="#FF0000"
             android:background="@drawable/color_circle_with_dot_selector" />
 
-        <!-- Color Option 2 (Light Brown) -->
         <RadioButton
             android:id="@+id/colorLightBrown"
             android:layout_width="48dp"
@@ -259,7 +248,6 @@
             android:backgroundTint="#D3A984"
             android:background="@drawable/color_circle_with_dot_selector" />
 
-        <!-- Color Option 3 (Grayish Brown) -->
         <RadioButton
             android:id="@+id/colorGrayishBrown"
             android:layout_width="48dp"
@@ -269,7 +257,6 @@
             android:backgroundTint="#B2A29C"
             android:background="@drawable/color_circle_with_dot_selector" />
 
-        <!-- Color Option 4 (Light Purple) -->
         <RadioButton
             android:id="@+id/colorLightPurple"
             android:layout_width="48dp"
@@ -280,14 +267,10 @@
             android:background="@drawable/color_circle_with_dot_selector" />
     </RadioGroup>
 
-
-
-
-    <!-- Bottom Navigation Buttons -->
     <LinearLayout
         android:id="@+id/bottomButtons"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:background="#A9A9A9"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
@@ -302,8 +285,8 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_suport"/>
@@ -324,8 +307,8 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_addtocart"/>
@@ -344,7 +327,7 @@
             android:layout_height="match_parent"
 
             android:orientation="vertical"
-            android:background="#4092D9"
+            android:background="@color/blue"
             android:layout_weight="1">
 
             <TextView

@@ -8,7 +8,6 @@
 
     >
 
-    <!-- Back Arrow -->
     <ImageView
         android:id="@+id/backArrow"
         android:layout_width="30dp"
@@ -19,7 +18,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp" />
 
-    <!-- Title -->
     <TextView
         android:id="@+id/newCouponTitle"
         android:layout_width="wrap_content"
@@ -33,7 +31,6 @@
         android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0.5" />
 
-    <!-- Name Input -->
     <EditText
 
         android:id="@+id/couponName"
@@ -49,7 +46,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Description Input -->
     <EditText
         android:id="@+id/couponDescription"
         android:layout_width="0dp"
@@ -64,7 +60,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Discount Input -->
     <EditText
         android:id="@+id/couponDiscount"
         android:layout_width="0dp"
@@ -79,7 +74,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Free Delivery Input -->
     <EditText
         android:id="@+id/couponFreeDelivery"
         android:layout_width="0dp"
@@ -94,7 +88,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Redemption Limit Input -->
     <EditText
         android:id="@+id/couponRedemptionLimit"
         android:layout_width="0dp"
@@ -109,7 +102,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Redeem Before Input -->
     <EditText
         android:id="@+id/couponRedeemBefore"
         android:layout_width="0dp"
@@ -124,7 +116,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Created At Input -->
     <EditText
         android:id="@+id/couponCreatedAt"
         android:layout_width="0dp"
@@ -139,7 +130,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Bottom Buttons -->
 
     <LinearLayout
         android:id="@+id/bottomButtons"
@@ -152,7 +142,6 @@
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Cancel Button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancelButton"
             android:layout_width="0dp"
@@ -165,7 +154,6 @@
             android:theme="@null"
             android:background="@drawable/cancel_button" />
 
-        <!-- Create Button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/createButton"
             android:layout_width="0dp"

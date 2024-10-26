@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".fragmentUser.SettingFragment">
+    tools:context=".UserScreen.SettingFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"

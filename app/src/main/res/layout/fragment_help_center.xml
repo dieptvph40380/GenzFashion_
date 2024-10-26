@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".fragmentUser.HelpCenterFragment">
+    tools:context=".UserScreen.HelpCenterFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -73,9 +73,9 @@
 
         <ImageView
             android:id="@+id/customerServiceIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/phone" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/customer" />
 
         <TextView
             android:id="@+id/customerServiceText"
@@ -96,8 +96,8 @@
 
         <ImageView
             android:id="@+id/whatsappIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/whatsapp" />
 
         <TextView
@@ -119,8 +119,8 @@
 
         <ImageView
             android:id="@+id/facebookIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/fb" />
 
         <TextView
@@ -142,8 +142,8 @@
 
         <ImageView
             android:id="@+id/instagramIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ins" />
 
         <TextView

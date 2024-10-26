@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".UserScreen.ChatFragment"
+ >
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="#AAD5FF"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/back"
+            android:contentDescription="Back" />
+
+        <ImageView
+            android:id="@+id/user_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/user"
+            android:contentDescription="Profile"
+            />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Angie Brekke"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Online"
+            android:layout_marginStart="4dp"
+            android:textSize="14sp"
+            android:textColor="#6E6E6E" />
+
+        <ImageView
+            android:id="@+id/more_options"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:src="@drawable/more"
+            android:contentDescription="More options" />
+    </LinearLayout>
+
+    <!-- Chat Section -->
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:padding="16dp">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/today_label"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="TODAY"-->
+    <!--                android:textSize="14sp"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:textColor="#6E6E6E"-->
+    <!--                android:padding="8dp"/>-->
+
+    <!--            &lt;!&ndash; Message received &ndash;&gt;-->
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                android:layout_marginTop="8dp">-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/received_profile_pic"-->
+    <!--                    android:layout_width="40dp"-->
+    <!--                    android:layout_height="40dp"-->
+    <!--                    android:src="@drawable/user"-->
+    <!--                    android:contentDescription="Profile"-->
+    <!--                    />-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="8dp"-->
+    <!--                    android:orientation="vertical">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tv_chat_user"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="Hi, I want to give feedback that the quality of your clothes is too good!"-->
+    <!--                        android:padding="10dp"-->
+    <!--                        android:background="@drawable/bg_chat"-->
+    <!--                        android:textColor="#000000"/>-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="11:04 AM"-->
+    <!--                        android:textSize="12sp"-->
+    <!--                        android:textColor="#6E6E6E"/>-->
+    <!--                </LinearLayout>-->
+    <!--            </LinearLayout>-->
+
+    <!--            &lt;!&ndash; Message sent &ndash;&gt;-->
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                android:layout_gravity="end"-->
+    <!--                android:layout_marginTop="8dp">-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/tv_chat_user2"-->
+    <!--                    android:layout_width="290dp"-->
+    <!--                    android:layout_height="match_parent"-->
+    <!--                    android:background="@drawable/bg_chat"-->
+    <!--                    android:padding="10dp"-->
+
+    <!--                    android:text="Hi, I want to give feedback that the quality of your clothes is too good!"-->
+    <!--                    android:textColor="#000000" />-->
+
+    <!--                <ImageView-->
+
+    <!--                    android:id="@+id/sent_profile_pic"-->
+    <!--                    android:layout_width="40dp"-->
+    <!--                    android:layout_height="40dp"-->
+    <!--                    android:src="@drawable/user"-->
+    <!--                    android:contentDescription="Profile"-->
+    <!--                    />-->
+    <!--            </LinearLayout>-->
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_list_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_border"
+        >
+
+        <EditText
+            android:id="@+id/message_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type a message here..."
+            android:background="@null"
+            android:padding="10dp"/>
+
+        <ImageView
+            android:id="@+id/send_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/send"
+            android:contentDescription="Send"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>
