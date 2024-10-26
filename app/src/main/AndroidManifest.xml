@@ -13,12 +13,6 @@
         android:theme="@style/Theme.GenZ_Fashion"
         tools:targetApi="31">
         <activity
-            android:name=".screen_manager.Password_Manager"
-            android:exported="false" />
-        <activity
-            android:name=".screen_manager.Customer_Information"
-            android:exported="false" />
-        <activity
             android:name=".OTP_Forgot_Pass"
             android:exported="false" />
         <activity
@@ -35,6 +29,12 @@
             android:exported="false" />
         <activity
             android:name=".WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen_manager.Password_Manager"
+            android:exported="false" />
+        <activity
+            android:name=".screen_manager.Customer_Information"
             android:exported="false" />
         <activity
             android:name=".fragmentUser.MyOrderActivity"
