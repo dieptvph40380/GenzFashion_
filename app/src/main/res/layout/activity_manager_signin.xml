@@ -20,6 +20,12 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:src="@drawable/bg_signin" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,7 +71,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_email"
+                android:id="@+id/edtemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edit_text"
@@ -84,7 +90,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_password"
+                android:id="@+id/edtpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edit_text"
@@ -103,13 +109,13 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Nhớ mật khẩu"
-                android:padding="8dp" />
+                android:text="Remember me"
+                android:padding="2dp" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Forgot Password ?"
+                android:text="Forgot Password?"
                 android:textColor="#2F7CAC"
                 android:gravity="end"/>
         </LinearLayout>
@@ -136,7 +142,7 @@
                 android:textColor="#808080" />
 
             <TextView
-
+                android:id="@+id/toRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

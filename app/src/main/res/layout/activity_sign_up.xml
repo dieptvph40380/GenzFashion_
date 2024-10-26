@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".screen_manager.SignUpFragment">
+    tools:context=".screen_manager.SignUpActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -17,6 +17,12 @@
         android:textSize="35sp"
         android:textStyle="normal"
         android:layout_marginTop="30dp" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
     <TextView
         android:id="@+id/textView2"
@@ -67,7 +73,7 @@
         android:hint="  Repass"
         android:inputType="textPassword" />
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnresgin"
+        android:id="@+id/btnRegister"
         android:layout_marginTop="30dp"
         android:layout_width="330dp"
         android:layout_height="60dp"
@@ -94,8 +100,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Register"
-            android:textColor="#303030" /> <!-- Thêm khoảng cách giữa 2 TextView -->
+            android:text="Sign in"
+            android:textColor="#303030" />
 
     </LinearLayout>
 </LinearLayout>

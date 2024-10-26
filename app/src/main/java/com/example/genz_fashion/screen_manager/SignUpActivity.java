@@ -15,16 +15,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.genz_fashion.MainActivity;
 import com.example.genz_fashion.R;
+import com.example.genz_fashion.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.example.genz_fashion.databinding.ActivityManagerSigninBinding;
-public class ManagerSignInActivity extends AppCompatActivity {
+
+public class SignUpActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
-    ActivityManagerSigninBinding binding;
+    ActivitySignUpBinding binding;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -38,50 +40,53 @@ public class ManagerSignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityManagerSigninBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         mAuth = FirebaseAuth.getInstance();
-        binding.toRegister.setOnClickListener(new View.OnClickListener() {
+        setContentView(binding.getRoot());
+
+        binding.Resigin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ManagerSignInActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-        binding.btnsign.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.progressBar.setVisibility(View.VISIBLE);
-                String email,password;
-                email = String.valueOf(binding.edtemail.getText());
-                password = String.valueOf(binding.edtpassword.getText());
-
+                String email,password,name,repass;
+                email = String.valueOf(binding.edtEmail.getText());
+                password = String.valueOf(binding.edtPassword.getText());
+                name = String.valueOf(binding.edtName.getText());
+                repass = String.valueOf(binding.edtRepass.getText());
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(ManagerSignInActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(ManagerSignInActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mAuth.signInWithEmailAndPassword(email, password)
+                mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 binding.progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+
+                                    Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SignUpActivity.this, ManagerSignInActivity.class));
                                 } else {
-                                    Toast.makeText(ManagerSignInActivity.this, "failed.", Toast.LENGTH_SHORT).show();
+
+                                    Toast.makeText(SignUpActivity.this, "failed.", Toast.LENGTH_SHORT).show();
 
                                 }
                             }
                         });
             }
         });
+
     }
 }
