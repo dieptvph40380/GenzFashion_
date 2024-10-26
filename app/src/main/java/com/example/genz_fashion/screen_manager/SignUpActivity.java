@@ -61,6 +61,10 @@ public class SignUpActivity extends AppCompatActivity {
                 password = String.valueOf(binding.edtPassword.getText());
                 name = String.valueOf(binding.edtName.getText());
                 repass = String.valueOf(binding.edtRepass.getText());
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(SignUpActivity.this, "Enter name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(SignUpActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
                     return;
@@ -69,6 +73,11 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (TextUtils.isEmpty(repass)) {
+                    Toast.makeText(SignUpActivity.this, "Enter repassword", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
