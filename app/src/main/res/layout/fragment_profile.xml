@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".UserScreen.ProfileFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -29,9 +30,9 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgProfile"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/geng_jecket"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/profile_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -42,7 +43,7 @@
         android:layout_height="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/edit"
+        android:src="@drawable/edit_profile"
         app:layout_constraintBottom_toBottomOf="@id/imgProfile"
         app:layout_constraintEnd_toEndOf="@id/imgProfile"
         app:layout_constraintTop_toBottomOf="@id/imgProfile" />
@@ -81,7 +82,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_person" />
+                android:src="@drawable/your_profile" />
 
             <TextView
                 android:layout_width="0dp"
@@ -117,7 +118,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/payment_24" />
+                android:src="@drawable/payment" />
 
             <TextView
                 android:layout_width="0dp"
@@ -152,7 +153,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/shopping_cart" />
+                android:src="@drawable/my_order" />
 
             <TextView
                 android:layout_width="0dp"
@@ -187,7 +188,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/settings_24" />
+                android:src="@drawable/settings" />
 
             <TextView
                 android:layout_width="0dp"
@@ -223,7 +224,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/help_center_24" />
+                android:src="@drawable/help_center" />
 
             <TextView
                 android:layout_width="0dp"
@@ -258,7 +259,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/insurance" />
+                android:src="@drawable/privacy_policy" />
 
             <TextView
                 android:layout_width="0dp"

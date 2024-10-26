@@ -39,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         setContentView(binding.getRoot());
 
-        binding.Resigin.setOnClickListener(new View.OnClickListener() {
+        binding.edtNhaplaiPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
@@ -47,15 +47,14 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
-        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+        binding.buttonDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.progressBar.setVisibility(View.VISIBLE);
                 String email,password,name,repass;
                 email = String.valueOf(binding.edtEmail.getText());
                 password = String.valueOf(binding.edtPassword.getText());
-                name = String.valueOf(binding.edtName.getText());
-                repass = String.valueOf(binding.edtRepass.getText());
+                name = String.valueOf(binding.edtUsername.getText());
+                repass = String.valueOf(binding.edtNhaplaiPassword.getText());
                 if (TextUtils.isEmpty(name)) {
                     Toast.makeText(SignUpActivity.this, "Enter name", Toast.LENGTH_SHORT).show();
                     return;
@@ -77,7 +76,6 @@ public class SignUpActivity extends AppCompatActivity {
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                binding.progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
 
                                     Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();

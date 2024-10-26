@@ -10,16 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.genz_fashion.UserScreen.MainActivity;
+import com.example.genz_fashion.databinding.ActivitySigninBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.example.genz_fashion.databinding.ActivityManagerSigninBinding;
+
 public class SignInActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
-    ActivityManagerSigninBinding binding;
+    ActivitySigninBinding binding;
     @Override
     public void onStart() {
         super.onStart();
@@ -33,7 +34,7 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityManagerSigninBinding.inflate(getLayoutInflater());
+        binding = ActivitySigninBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
         binding.toRegister.setOnClickListener(new View.OnClickListener() {
