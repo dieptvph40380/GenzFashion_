@@ -13,25 +13,22 @@
         android:theme="@style/Theme.GenZ_Fashion"
         tools:targetApi="31">
         <activity
-            android:name=".fragmentUser.OTPForgotPassFragment"
+            android:name=".fragmentUser.OTPForgotPassActivity"
             android:exported="false" />
         <activity
-            android:name=".screen_manager.StatisticalFragment"
+            android:name=".fragmentUser.ForgotPassActivity"
             android:exported="false" />
         <activity
-            android:name=".fragmentUser.ForgotPassFragment"
+            android:name=".screen_manager.ManagerSignInActivity"
             android:exported="false" />
         <activity
-            android:name=".screen_manager.ManagerSignInFragment"
-            android:exported="false" />
-        <activity
-            android:name=".fragmentUser.MyOrderActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".fragmentUser.MyOrderActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

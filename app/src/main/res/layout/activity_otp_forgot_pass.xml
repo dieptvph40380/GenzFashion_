@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="20dp"
-    tools:context=".fragmentUser.OTPForgotPassFragment">
+    tools:context=".fragmentUser.OTPForgotPassActivity">
 
     <ImageView
         android:layout_width="50dp"

@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.genz_fashion.R;
 
-public class ForgotPassFragment extends AppCompatActivity {
+public class ForgotPassActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
