@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import com.example.genz_fashion.R;
 
 
-public class Profile_Customer extends Fragment {
+public class ProfileCustomerFragment extends Fragment {
 
 
-    public Profile_Customer() {
+    public ProfileCustomerFragment() {
         // Required empty public constructor
     }
 

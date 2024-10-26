@@ -12,10 +12,10 @@ import com.example.genz_fashion.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentTypeProduct#newInstance} factory method to
+ * Use the {@link TypeProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentTypeProduct extends Fragment {
+public class TypeProductFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class FragmentTypeProduct extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentTypeProduct() {
+    public TypeProductFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class FragmentTypeProduct extends Fragment {
      * @return A new instance of fragment FragmentTypeProduct.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentTypeProduct newInstance(String param1, String param2) {
-        FragmentTypeProduct fragment = new FragmentTypeProduct();
+    public static TypeProductFragment newInstance(String param1, String param2) {
+        TypeProductFragment fragment = new TypeProductFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

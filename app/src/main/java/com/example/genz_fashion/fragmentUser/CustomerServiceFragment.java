@@ -1,4 +1,4 @@
-package com.example.genz_fashion.screen_manager;
+package com.example.genz_fashion.fragmentUser;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.genz_fashion.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentSize#newInstance} factory method to
+ * Use the {@link CustomerServiceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentSize extends Fragment {
+public class CustomerServiceFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class FragmentSize extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentSize() {
+    public CustomerServiceFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class FragmentSize extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentSize.
+     * @return A new instance of fragment CustomerService_Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentSize newInstance(String param1, String param2) {
-        FragmentSize fragment = new FragmentSize();
+    public static CustomerServiceFragment newInstance(String param1, String param2) {
+        CustomerServiceFragment fragment = new CustomerServiceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class FragmentSize extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_size, container, false);
+        return inflater.inflate(R.layout.fragment_customer_service_, container, false);
     }
 }

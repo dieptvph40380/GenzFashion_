@@ -1,4 +1,4 @@
-package com.example.genz_fashion;
+package com.example.genz_fashion.fragmentUser;
 
 import android.os.Bundle;
 
@@ -8,7 +8,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class OTP_Forgot_Pass extends AppCompatActivity {
+import com.example.genz_fashion.R;
+
+public class OTPForgotPassFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

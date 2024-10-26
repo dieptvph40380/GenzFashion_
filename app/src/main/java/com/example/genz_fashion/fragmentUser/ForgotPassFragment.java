@@ -1,4 +1,4 @@
-package com.example.genz_fashion.screen_manager;
+package com.example.genz_fashion.fragmentUser;
 
 import android.os.Bundle;
 
@@ -10,13 +10,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.genz_fashion.R;
 
-public class Manager_Signin extends AppCompatActivity {
+public class ForgotPassFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_manager_signin);
+        setContentView(R.layout.activity_forgot_pass);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

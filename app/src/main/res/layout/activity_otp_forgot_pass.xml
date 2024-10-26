@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="20dp"
-    tools:context=".OTP_Forgot_Pass">
+    tools:context=".fragmentUser.OTPForgotPassFragment">
 
     <ImageView
         android:layout_width="50dp"
