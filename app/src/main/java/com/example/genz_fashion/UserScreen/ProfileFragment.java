@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.genz_fashion.ManagerScreen.ProfileCustomerFragment;
+import com.example.genz_fashion.ManagerScreen.SignInActivity;
 import com.example.genz_fashion.R;
 
 
 public class ProfileFragment extends Fragment {
-private LinearLayout layout_your_file, layout_payment, layout_order, layout_setting, layout_help, layout_privacy;
+private LinearLayout layout_your_file, layout_payment, layout_order, layout_setting, layout_help, layout_privacy, layout_out;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,10 +68,22 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
                 replaceFragment(new PrivacyPolicyFragment(), R.id.frameLayout);
             }
         });
+        layout_out=view.findViewById(R.id.profile_out);
+        layout_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToActivity(SignInActivity.class);
+
+            }
+        });
         return  view;
     }
     private void replaceFragment(Fragment targetFragment, int frameId) {
         if (getActivity() != null) {
+            View bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+            if (bottomNavigationView != null) {
+                bottomNavigationView.setVisibility(View.GONE);
+            }
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(frameId, targetFragment)
                     .addToBackStack(null)
