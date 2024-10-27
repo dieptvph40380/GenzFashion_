@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".fragmentUser.HelpCenterFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -18,28 +17,30 @@
 
 
         <ImageView
+            android:id="@+id/btnBack_help"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/iconout"
             android:contentDescription="Back Button"
             />
 
-        <!-- Title -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Setting"
-            android:layout_marginLeft="120dp"
+            android:text="Help Center"
+           android:layout_gravity="center_horizontal"
             android:textSize="18sp"
             android:textColor="#000000"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Search and Add Button -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="10dp"
         android:gravity="center_vertical">
 
         <androidx.appcompat.widget.SearchView
@@ -60,7 +61,7 @@
         android:layout_gravity="center_horizontal"
         android:text="Contact Us"
         android:textSize="20sp"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="10dp" />
 
     <!-- Contact Options -->
     <LinearLayout

@@ -17,7 +17,7 @@
 
         <!-- Back Button -->
         <ImageView
-            android:id="@+id/btnBack"
+            android:id="@+id/btnBack_pay"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:contentDescription="Back"

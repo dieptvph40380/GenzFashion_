@@ -106,6 +106,10 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
     }
     private void replaceFragment(Fragment targetFragment, int frameId) {
         if (getActivity() != null) {
+            View bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+            if (bottomNavigationView != null) {
+                bottomNavigationView.setVisibility(View.GONE);
+            }
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(frameId, targetFragment)
                     .addToBackStack(null)
