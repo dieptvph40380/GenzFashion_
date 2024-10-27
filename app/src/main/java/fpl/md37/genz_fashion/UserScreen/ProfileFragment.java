@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment;
 import fpl.md37.genz_fashion.ManagerScreen.SignInActivity;
 import com.example.genz_fashion.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class ProfileFragment extends Fragment {
@@ -68,15 +69,25 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
                 replaceFragment(new PrivacyPolicyFragment(), R.id.frameLayout);
             }
         });
+
         layout_out=view.findViewById(R.id.profile_out);
         layout_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToActivity(SignInActivity.class);
+                logout();
 
             }
         });
         return  view;
+    }
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+
+
+        Intent intent = new Intent(getActivity(), SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa ngăn xếp
+        startActivity(intent);
+        getActivity().finish();
     }
     private void replaceFragment(Fragment targetFragment, int frameId) {
         if (getActivity() != null) {
