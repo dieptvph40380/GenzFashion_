@@ -4,52 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_color"
-    android:padding="16dp">
+    android:background="@color/background_color">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+
+        <ImageView
+            android:id="@+id/btnBack_payment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/iconout"
+            android:contentDescription="Back Button"
+            />
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/back"
-                android:contentDescription="Back"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true" />
-
-            <TextView
-                android:id="@+id/notification_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payment Methods"
-                android:textColor="@android:color/black"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_centerInParent="true" />
-
-
-        </RelativeLayout>
-    </LinearLayout>
+            android:text="Payment Method"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000"
+        android:background="#D3D3D3"
         android:layout_marginBottom="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Credit Debit Card"
+        android:paddingStart="10dp"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp"
@@ -96,6 +88,7 @@
         android:layout_height="wrap_content"
         android:text="More Payment Options"
         android:textSize="16sp"
+        android:paddingStart="10dp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp" />

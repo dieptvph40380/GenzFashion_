@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical"
-    tools:context=".ManagerScreen.TypeProductFragment">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.TypeProductFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"

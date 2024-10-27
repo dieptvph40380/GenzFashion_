@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserScreen.WelcomeActivity"
+    tools:context="fpl.md37.genz_fashion.UserScreen.WelcomeActivity"
 
     android:background="#BFDBFE">
 

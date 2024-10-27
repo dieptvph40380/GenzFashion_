@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:background="@color/background_color"
     android:overScrollMode="never"
     android:scrollbars="none"
-    android:layout_margin="20dp"
-    tools:context=".ManagerScreen.SignUpActivity">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.SignUpActivity">
 
 
     <RelativeLayout
@@ -20,14 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="Back"
-                android:src="@drawable/back"
-                android:layout_marginEnd="16dp" />
 
 
             <androidx.core.widget.NestedScrollView
@@ -45,22 +37,22 @@
                         android:layout_marginStart="@dimen/_14sdp"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_14sdp"
-                        android:text="Register"
                         android:gravity="center"
+                        android:text="Register"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_22sdp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_14sdp"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_14sdp"
-                        android:text="Fill your information below or register with your social account."
                         android:gravity="center"
+                        android:text="Fill your information below or register with your social account."
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp"
-                         />
+                        android:textSize="@dimen/_13sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -73,9 +65,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_14sdp"
                             android:layout_marginEnd="@dimen/_14sdp"
-                            android:textColor="@color/black"
                             android:background="@drawable/background_edit_text"
-                            android:hint="Username" />
+                            android:hint="Username"
+                            android:textColor="@color/black" />
 
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -91,10 +83,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_14sdp"
                             android:layout_marginEnd="@dimen/_14sdp"
-                            android:textColor="@color/black"
                             android:background="@drawable/background_edit_text"
                             android:hint="@string/email"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/black" />
 
 
                     </com.google.android.material.textfield.TextInputLayout>

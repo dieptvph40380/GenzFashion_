@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background_color"
-    tools:context=".ManagerScreen.SignInActivity">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.SignInActivity">
 
     <FrameLayout
         android:id="@+id/content_frame_layout"
