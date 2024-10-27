@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical"
-    tools:context=".ManagerScreen.SizeFragment">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.SizeFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"

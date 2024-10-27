@@ -6,7 +6,7 @@
     android:layout_margin="10dp"
     android:orientation="vertical"
     android:background="@color/background_color"
-    tools:context=".ManagerScreen.ProfileCustomerFragment">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment">
 
     <TextView
         android:layout_width="match_parent"
