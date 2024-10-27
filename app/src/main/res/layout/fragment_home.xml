@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context=".UserScreen.HomeFragment">
+    tools:context="fpl.md37.genz_fashion.UserScreen.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:fillViewport="true"
-    tools:context=".UserScreen.LeaveReviewFragment">
+    tools:context="fpl.md37.genz_fashion.UserScreen.LeaveReviewFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

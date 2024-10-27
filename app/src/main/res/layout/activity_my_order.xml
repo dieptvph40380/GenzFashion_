@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="20dp"
     android:background="@color/background_color"
-    tools:context=".UserScreen.MyOrderActivity">
+    tools:context="fpl.md37.genz_fashion.UserScreen.MyOrderActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

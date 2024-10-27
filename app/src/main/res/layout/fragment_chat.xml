@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/background_color"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".UserScreen.ChatFragment"
+    tools:context="fpl.md37.genz_fashion.UserScreen.ChatFragment"
  >
     <LinearLayout
 

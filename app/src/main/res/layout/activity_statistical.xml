@@ -6,7 +6,7 @@
     android:padding="10dp"
     android:layout_margin="10dp"
     android:background="@color/background_color"
-    tools:context=".UserScreen.MyOrderActivity">
+    tools:context="fpl.md37.genz_fashion.UserScreen.MyOrderActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

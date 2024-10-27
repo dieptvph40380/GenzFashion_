@@ -8,7 +8,7 @@
     android:overScrollMode="never"
     android:scrollbars="none"
     android:layout_margin="20dp"
-    tools:context=".ManagerScreen.SignUpActivity">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.SignUpActivity">
 
 
     <RelativeLayout
