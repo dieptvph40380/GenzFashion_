@@ -82,8 +82,6 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
     }
     private void logout() {
         FirebaseAuth.getInstance().signOut();
-
-
         Intent intent = new Intent(getActivity(), SignInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa ngăn xếp
         startActivity(intent);

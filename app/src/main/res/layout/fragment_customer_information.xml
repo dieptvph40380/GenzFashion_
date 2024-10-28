@@ -7,7 +7,7 @@
     android:background="@color/background_color"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="fpl.md37.genz_fashion.ManagerScreen.CustomerInformationFragment">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.InformationFragment">
 
     <SearchView
         android:id="@+id/search"
