@@ -13,6 +13,18 @@
         android:theme="@style/Theme.GenZ_Fashion"
         tools:targetApi="31" >
         <activity
+            android:name="fpl.md37.genz_fashion.ManagerScreen.InformationFragment"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.ManagerScreen.SuppliersFragment"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.ManagerScreen.StatisticalFragment"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.ManagerScreen.TypeProductFragment"
+            android:exported="false" />
+        <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.ProductsFragment"
             android:exported="false" />
         <activity

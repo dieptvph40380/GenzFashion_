@@ -7,10 +7,12 @@
     android:background="@color/background_color"
     tools:context="fpl.md37.genz_fashion.UserScreen.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/frameLayout2"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
+
     <ImageView
         android:id="@+id/profileIcon"
         android:layout_width="50dp"
