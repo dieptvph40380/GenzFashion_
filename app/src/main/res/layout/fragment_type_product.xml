@@ -12,7 +12,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:backgroundTint="#BFDBFE"
         android:minHeight="?attr/actionBarSize"
@@ -20,7 +20,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -34,7 +34,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="115dp"
+                android:layout_marginStart="110dp"
                 android:text="TypeProdut"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -70,7 +70,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSuppliers"
+        android:id="@+id/recyclerTypeProduct"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -80,6 +80,6 @@
         android:clipToPadding="false"
         android:padding="8dp"
         android:scrollbars="vertical"
-        tools:listitem="@layout/itemtypeproduct" />
+        />
 
 </LinearLayout>
