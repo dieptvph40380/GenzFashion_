@@ -23,7 +23,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_weight="1"
-                android:text="Add TypeName"
+                android:text="Add TypeProduct"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
                     <EditText
                         android:id="@+id/edtName"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/button_style_supplier"
                         android:hint="Name" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -77,25 +77,35 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="20dp"
                     app:passwordToggleEnabled="false">
-
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteName"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/button_style_supplier"
                         android:hint="Size"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
+
         </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addtypeproductupload"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="#6394B7"
+            android:text="Upload"
+            app:cornerRadius="12dp" />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addsupplier"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="#6394B7"
             android:text="Add"
