@@ -18,6 +18,7 @@ import com.example.genz_fashion.R;
 
 import java.util.ArrayList;
 
+import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.TypeProduct;
 
 public class AdapterTypeProduct extends RecyclerView.Adapter<AdapterTypeProduct.ViewHolder>{
@@ -49,7 +50,20 @@ private ArrayList<TypeProduct> typeProducts;
                     .into(holder.imageView);
         }
         holder.type.setText(typeProduct.getName());
+// Hiển thị tên loại sản phẩm
+        holder.type.setText(typeProduct.getName());
 
+        if (typeProduct.getSizes() != null && !typeProduct.getSizes().isEmpty()) {
+            StringBuilder sizes = new StringBuilder();
+            for (Size size : typeProduct.getSizes()) {
+                sizes.append(size.getName()).append(", ");
+            }
+            // Cắt bỏ dấu phẩy cuối
+            if (sizes.length() > 0) {
+                sizes.setLength(sizes.length() - 2);
+            }
+            holder.size.setText(sizes.toString());
+        }
         holder.btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

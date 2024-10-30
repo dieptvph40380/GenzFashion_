@@ -28,7 +28,7 @@
                 android:id="@+id/btnout"
                 android:layout_width="30dp"
                 android:layout_height="28dp"
-                tools:src="@drawable/iconout" />
+                android:src="@drawable/iconout" />
 
             <TextView
                 android:id="@+id/textView5"
