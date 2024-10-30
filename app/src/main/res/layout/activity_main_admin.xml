@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background_color"
-    tools:context="fpl.md37.genz_fashion.UserScreen.MainActivity">
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+>
 
     <ImageView
         android:id="@+id/profileIcon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/user"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:layout_margin="16dp" />
 
     <TextView
@@ -28,9 +29,8 @@
         android:layout_height="wrap_content"
         android:text="Hi, Admin"
         android:textSize="18sp"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profileIcon"
+        android:layout_toEndOf="@id/profileIcon"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp" />
 
     <TextView
@@ -40,31 +40,28 @@
         android:text="Welcome back"
         android:textSize="14sp"
         android:textColor="#777777"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
-        app:layout_constraintStart_toStartOf="@+id/welcomeText" />
+        android:layout_below="@id/welcomeText"
+        android:layout_alignStart="@id/welcomeText" />
 
     <ImageView
         android:id="@+id/notificationIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/notification"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="16dp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/orderRevenueCard"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileIcon">
+        android:layout_below="@id/profileIcon">
 
         <LinearLayout
-            android:id="@id/card1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -105,25 +102,23 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card1"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="150dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         android:backgroundTint="#FF7F7F"
-        app:layout_constraintTop_toBottomOf="@+id/orderRevenueCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_below="@id/orderRevenueCard">
 
         <GridLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="3"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:padding="8dp"
-            android:layout_marginLeft="10dp"
-            android:paddingBottom="16dp">
+            android:padding="8dp">
 
             <!-- Products Button -->
             <LinearLayout
@@ -226,11 +221,11 @@
 
             <LinearLayout
                 android:id="@+id/orders_admin"
-                android:layout_marginLeft="46dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:layout_marginLeft="46dp"
                 android:padding="8dp">
 
                 <ImageView
@@ -297,21 +292,20 @@
                     android:gravity="center"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/information_admin"
-                android:layout_marginLeft="46dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:layout_marginLeft="46dp"
                 android:padding="8dp">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/information"
-                    android:contentDescription="Customer Information" />
+                    android:contentDescription="Orders" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -322,7 +316,6 @@
                     android:gravity="center"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/ordersdetails_admin"
                 android:layout_width="wrap_content"
@@ -336,20 +329,18 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/details"
-                    android:contentDescription="Orders Details" />
+                    android:contentDescription="Suppliers" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Orders Details"
+                    android:text="Orders Detail"
                     android:textSize="14sp"
                     android:textColor="#000000"
                     android:gravity="center"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
-
         </GridLayout>
-
     </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
+</FrameLayout>
