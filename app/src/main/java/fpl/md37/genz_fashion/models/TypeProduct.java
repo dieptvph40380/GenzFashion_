@@ -2,21 +2,24 @@ package fpl.md37.genz_fashion.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class TypeProduct {
     @SerializedName("_id")
     private String id;
     private String name;
     private String image;
-    private String id_size;
+    @SerializedName("id_size")
+    private List<Size> sizes;
 
     public TypeProduct() {
     }
 
-    public TypeProduct(String id, String name, String image, String id_size) {
+    public TypeProduct(String id, String name, String image, List<Size> sizes) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.id_size = id_size;
+        this.sizes = sizes;
     }
 
     public String getId() {
@@ -43,11 +46,11 @@ public class TypeProduct {
         this.image = image;
     }
 
-    public String getId_size() {
-        return id_size;
+    public List<Size> getSizes() {
+        return sizes;
     }
 
-    public void setId_size(String id_size) {
-        this.id_size = id_size;
+    public void setSizes(List<Size> sizes) {
+        this.sizes = sizes;
     }
 }
