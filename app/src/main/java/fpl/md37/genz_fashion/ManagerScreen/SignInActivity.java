@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import fpl.md37.genz_fashion.UserScreen.ForgotPassActivity;
 import fpl.md37.genz_fashion.UserScreen.MainActivity;
+
+import com.example.genz_fashion.R;
 import com.example.genz_fashion.databinding.ActivitySigninBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,6 +25,8 @@ public class SignInActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     ActivitySigninBinding binding;
+
+    TextView fotgot;
     @Override
     public void onStart() {
         super.onStart();
@@ -41,6 +47,15 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        fotgot=findViewById(R.id.forgotpass);
+        fotgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ForgotPassActivity.class);
                 startActivity(intent);
                 finish();
             }
