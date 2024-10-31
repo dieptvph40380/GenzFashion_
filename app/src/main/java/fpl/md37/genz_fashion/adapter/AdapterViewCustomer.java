@@ -34,6 +34,10 @@ public class AdapterViewCustomer extends RecyclerView.Adapter<AdapterViewCustome
         this.Client = Client;
         this.database = database;
     }
+    public void updateList(ArrayList<Client> newList) {
+        this.Client = newList; // Cập nhật danh sách khách hàng
+        notifyDataSetChanged(); // Thông báo adapter để cập nhật
+    }
     @NonNull
     @Override
     public AdapterViewCustomer.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

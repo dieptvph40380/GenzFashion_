@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.util.Log;
+import android.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -29,9 +30,11 @@ import fpl.md37.genz_fashion.models.Client;
 public class InformationFragment extends AppCompatActivity {
     FirebaseFirestore db;
     RecyclerView rcv_client, rcv_grocery;
+    SearchView searchCustomer;
     Context context;
     ArrayList<Client> clients = new ArrayList<>();
     AdapterViewCustomer adapter_clients;
+    ArrayList<Client> filteredClients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class InformationFragment extends AppCompatActivity {
         setContentView(R.layout.fragment_customer_information);
 
         rcv_client = findViewById(R.id.rcv_client);
+        searchCustomer = findViewById(R.id.search_Customer);
         db = FirebaseFirestore.getInstance();
 
         adapter_clients = new AdapterViewCustomer(this, clients, db);
@@ -49,6 +53,20 @@ public class InformationFragment extends AppCompatActivity {
         rcv_client.setAdapter(adapter_clients);
 
         ListenFirebaseFirestore_Cilent();
+
+        // Thiết lập listener cho SearchView
+        searchCustomer.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText); // Gọi hàm lọc
+                return true;
+            }
+        });
     }
 
     private void ListenFirebaseFirestore_Cilent() {
@@ -95,4 +113,19 @@ public class InformationFragment extends AppCompatActivity {
                     }
                 });
     }
+
+    private void filterList(String text) {
+        filteredClients.clear(); // Xóa danh sách lọc trước đó
+        if (text.isEmpty()) {
+            filteredClients.addAll(clients); // Nếu ô tìm kiếm trống, thêm lại tất cả khách hàng
+        } else {
+            for (Client client : clients) {
+                if (client.getName().toLowerCase().contains(text.toLowerCase())) { // Kiểm tra nếu tên chứa chuỗi tìm kiếm
+                    filteredClients.add(client);
+                }
+            }
+        }
+        adapter_clients.updateList(filteredClients); // Cập nhật danh sách trong adapter
+    }
+
 }
