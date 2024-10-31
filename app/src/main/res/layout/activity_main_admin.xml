@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout1"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/background_color"
     tools:context="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
@@ -12,6 +12,8 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="0dp"
 >
 
     <ImageView
@@ -106,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="250dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         android:backgroundTint="#FF7F7F"
@@ -117,10 +119,9 @@
             android:layout_height="wrap_content"
             android:columnCount="3"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:padding="8dp">
 
-            <!-- Products Button -->
+
             <LinearLayout
                 android:id="@+id/products_admin"
                 android:layout_width="wrap_content"

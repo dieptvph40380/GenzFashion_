@@ -8,6 +8,7 @@ public class TypeProduct {
     @SerializedName("_id")
     private String id;
     private String name;
+    @SerializedName("image")
     private String image;
     @SerializedName("id_size")
     private List<Size> sizes;

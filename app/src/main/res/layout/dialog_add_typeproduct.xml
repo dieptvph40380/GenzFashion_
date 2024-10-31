@@ -71,20 +71,14 @@
                         android:hint="Name" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupSizes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="20dp"
-                    app:passwordToggleEnabled="false">
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteName"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/button_style_supplier"
-                        android:hint="Size"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:singleLine="false"
+                    app:chipSpacingHorizontal="8dp"
+                    app:chipSpacingVertical="8dp" />
 
             </LinearLayout>
 
@@ -100,7 +94,7 @@
             android:text="Upload"
             app:cornerRadius="12dp" />
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/addsupplier"
+            android:id="@+id/addtype"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
