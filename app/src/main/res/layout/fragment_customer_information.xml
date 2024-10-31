@@ -21,12 +21,12 @@
         app:queryHint="Tìm Kiếm..." />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_view"
+        android:id="@+id/rcv_client"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_manager_products"/>
+        tools:listitem="@layout/item_customer_information"/>
 
 </LinearLayout>

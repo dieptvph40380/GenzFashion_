@@ -17,11 +17,11 @@
         android:textStyle="bold" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginTop="30dp"
         android:id="@+id/profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/profile_image_desc"
         android:src="@drawable/profile_icon" />
 
