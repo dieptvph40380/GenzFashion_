@@ -19,7 +19,6 @@
         android:layout_height="80dp"
         android:scaleType="centerCrop"
         android:contentDescription="Product Image"
-        android:src="@drawable/geng_jecket"
         android:layout_marginEnd="8dp" />
 
     <LinearLayout

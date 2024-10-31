@@ -18,17 +18,21 @@ import com.example.genz_fashion.R;
 
 import java.util.ArrayList;
 
+import fpl.md37.genz_fashion.handel.Item_Handle_Typeproduct;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.TypeProduct;
 
 public class AdapterTypeProduct extends RecyclerView.Adapter<AdapterTypeProduct.ViewHolder>{
     private Context context;
 private ArrayList<TypeProduct> typeProducts;
+private Item_Handle_Typeproduct items;
 
-    public AdapterTypeProduct(Context context, ArrayList<TypeProduct> typeProducts) {
+    public AdapterTypeProduct(Context context, ArrayList<TypeProduct> typeProducts, Item_Handle_Typeproduct items) {
         this.context = context;
         this.typeProducts = typeProducts;
+        this.items = items;
     }
+
 
     @NonNull
     @Override
@@ -42,15 +46,16 @@ private ArrayList<TypeProduct> typeProducts;
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     TypeProduct typeProduct=typeProducts.get(position);
         String imageUrl = typeProduct.getImage();
-        Log.d("ImageURL", "Image URL: " + imageUrl);
         if (imageUrl != null && !imageUrl.isEmpty()) {
+            if (imageUrl.startsWith("http://localhost")) {
+
+                imageUrl = imageUrl.replace("http://localhost", "http://10.0.2.2");
+            }
+            Log.d("ImageURL", "Image URL: " + imageUrl);
             Glide.with(holder.imageView.getContext())
                     .load(imageUrl)
-
                     .into(holder.imageView);
         }
-        holder.type.setText(typeProduct.getName());
-// Hiển thị tên loại sản phẩm
         holder.type.setText(typeProduct.getName());
 
         if (typeProduct.getSizes() != null && !typeProduct.getSizes().isEmpty()) {
@@ -67,12 +72,13 @@ private ArrayList<TypeProduct> typeProducts;
         holder.btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+          items.Update(typeProduct);
             }
         });
         holder.btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                items.Delete(typeProduct);
             }
         });
     }
