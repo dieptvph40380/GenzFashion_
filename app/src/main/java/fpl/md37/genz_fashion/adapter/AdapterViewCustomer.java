@@ -1,7 +1,9 @@
 package fpl.md37.genz_fashion.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment;
 import fpl.md37.genz_fashion.models.Client;
 import fpl.md37.genz_fashion.models.TypeProduct;
 
@@ -40,11 +43,24 @@ public class AdapterViewCustomer extends RecyclerView.Adapter<AdapterViewCustome
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterViewCustomer.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterViewCustomer.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.name.setText(Client.get(position).getName());
         holder.phone.setText(Client.get(position).getPhone());
         holder.email.setText(Client.get(position).getEmail());
         Glide.with(context).load(Client.get(position).getAvatar()).into(holder.avatar);
+
+        holder.btnview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(view.getContext(), ProfileCustomerFragment.class);
+                intent.putExtra("image",Client.get(position).getAvatar());
+                intent.putExtra("name",Client.get(position).getName());
+                intent.putExtra("phone",Client.get(position).getPhone());
+                intent.putExtra("email",Client.get(position).getEmail());
+                intent.putExtra("address",Client.get(position).getAddress());
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
