@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import androidx.appcompat.widget.SearchView;
+
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -70,19 +73,44 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
         View view = inflater.inflate(R.layout.fragment_type_product, container, false);
         checkPermissions();
         initializeViews(view);
-        ImageView btnback=view.findViewById(R.id.btnout);
+        ImageView btnback = view.findViewById(R.id.btnout);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         httpRequest = new HttpRequest();
-
         fetchTypeProducts();
         fetchSizes();
+        //search Typeproduct
+        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Tùy chọn: Xử lý khi người dùng nhấn "Search" trên bàn phím
+                filter(query);
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Lọc danh sách mỗi khi có thay đổi trong ô tìm kiếm
+                filter(newText);
+                return true;
+            }
+        });
         return view;
+    }
+
+    private void filter(String text) {
+        ArrayList<TypeProduct> filteredList = new ArrayList<>();
+        for (TypeProduct item : typeProducts) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        setupRecyclerView(filteredList);
     }
 
     private void initializeViews(View view) {
@@ -92,20 +120,18 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
     }
 
     private void showAddTypeProductDialog() {
-        // Khởi tạo BottomSheetDialog
+
         bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.dialog_add_typeproduct);
 
-        // Ánh xạ các view trong BottomSheetDialog
         EditText editItemName = bottomSheetDialog.findViewById(R.id.edtName);
         MaterialButton btnSubmit = bottomSheetDialog.findViewById(R.id.addtype);
         ImageButton btnBack = bottomSheetDialog.findViewById(R.id.buttonClose);
-        MaterialButton btnSelectImage = bottomSheetDialog.findViewById(R.id.addtypeproductupload); // Nút để chọn ảnh
-        ImageView imageView = bottomSheetDialog.findViewById(R.id.imageDialog); // ImageView để hiển thị ảnh
+        MaterialButton btnSelectImage = bottomSheetDialog.findViewById(R.id.addtypeproductupload);
         ChipGroup chipGroup = bottomSheetDialog.findViewById(R.id.chipGroupSizes);
         btnBack.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
-        // Mở ứng dụng chọn ảnh khi người dùng nhấn vào nút
+
         btnSelectImage.setOnClickListener(v -> openImageChooser());
         if (sizes != null) {
             for (Size size : sizes) {
@@ -128,10 +154,27 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
         btnSubmit.setOnClickListener(v -> {
             String itemName = editItemName.getText().toString();
             String sizeIds = getSelectedSizeIds();
+
+            if (itemName.isEmpty()) {
+                editItemName.setError("Please enter the product name");
+                return;
+            }
+
+
+            if (imageUri == null) {
+                Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            if (sizeIds.isEmpty()) {
+                Toast.makeText(requireContext(), "Please select at least one size", Toast.LENGTH_SHORT).show();
+                return;
+            }
             addTypeProduct(itemName, sizeIds, bottomSheetDialog);
         });
 
-        // Thiết lập chiều cao cho BottomSheetDialog
+
         bottomSheetDialog.setOnShowListener(dialog -> {
             BottomSheetDialog d = (BottomSheetDialog) dialog;
             FrameLayout bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
@@ -143,12 +186,13 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
         });
         bottomSheetDialog.show();
     }
+
     private void showUpdateTypeProductDialog(TypeProduct typeProduct) {
-        // Khởi tạo BottomSheetDialog
+
         bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.dialog_edit_typeproduct);
 
-        // Ánh xạ các view trong BottomSheetDialog
+
         EditText editItemName = bottomSheetDialog.findViewById(R.id.edtName);
         MaterialButton btnUpdate = bottomSheetDialog.findViewById(R.id.updatetype);
         ImageButton btnBack = bottomSheetDialog.findViewById(R.id.buttonClose);
@@ -156,7 +200,7 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
         ImageView imageView = bottomSheetDialog.findViewById(R.id.imageDialog1);
         ChipGroup chipGroup = bottomSheetDialog.findViewById(R.id.chipGroupSizes);
 
-        // Thiết lập giá trị cho EditText và ImageView từ đối tượng typeProduct
+
         editItemName.setText(typeProduct.getName());
         if (typeProduct.getImage() != null && !typeProduct.getImage().isEmpty()) {
             assert imageView != null;
@@ -167,26 +211,26 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
 
         btnBack.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
-        // Mở ứng dụng chọn ảnh khi người dùng nhấn vào nút
+
         btnSelectImage.setOnClickListener(v -> openImageChooser());
 
-        // Thêm chips kích thước
+
         if (sizes != null) {
             for (Size size : sizes) {
                 Chip chip = new Chip(requireContext());
                 chip.setText(size.getName());
                 chip.setTag(size.getId());
                 chip.setCheckable(true);
-                chip.setChecked(typeProduct.getSizes().contains(size.getId())); // Đánh dấu chip nếu kích thước đã được chọn
+                chip.setChecked(typeProduct.getSizes().contains(size.getId()));
                 chipGroup.addView(chip);
             }
         }
 
-        // Xử lý sự kiện khi nhấn nút Cập nhật
+
         btnUpdate.setOnClickListener(v -> {
             String itemName = editItemName.getText().toString();
             String sizeIds = getSelectedSizeIds1(chipGroup);
-            updateTypeProduct(typeProduct.getId(), itemName, sizeIds, bottomSheetDialog); // Gọi hàm cập nhật với ID sản phẩm
+            updateTypeProduct(typeProduct.getId(), itemName, sizeIds, bottomSheetDialog);
         });
 
         // Thiết lập chiều cao cho BottomSheetDialog
@@ -214,15 +258,16 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
                     if (sizeIds.length() > 0) {
                         sizeIds.append(","); // Thêm dấu phẩy giữa các ID
                     }
-                    // Lấy ID kích thước từ tag của chip
-                    String sizeId = chip.getTag().toString(); // Lấy ID kích thước từ tag
-                    sizeIds.append(sizeId); // Thêm ID kích thước vào chuỗi
+
+                    String sizeId = chip.getTag().toString();
+                    sizeIds.append(sizeId);
                 }
             }
         }
 
-        return sizeIds.toString(); // Trả về chuỗi chứa ID kích thước đã chọn
+        return sizeIds.toString();
     }
+
     private String getSelectedSizeIds1(ChipGroup chipGroup) {
         StringBuilder sizeIds = new StringBuilder();
         for (int i = 0; i < chipGroup.getChildCount(); i++) {
@@ -236,7 +281,8 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
         }
         return sizeIds.toString();
     }
-// Add TypeProduct
+
+    // Add TypeProduct
     private void addTypeProduct(String itemName, String sizeIds, BottomSheetDialog bottomSheetDialog) {
         // Chuyển đổi các giá trị thành RequestBody
         RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), itemName);
@@ -257,25 +303,25 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    // Xử lý phản hồi thành công
                     bottomSheetDialog.dismiss();
                     fetchTypeProducts();
+                    Toast.makeText(getContext(), "Product type added successfully!", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Xử lý lỗi
                     Log.d("AddTypeProduct", "Error: " + response.message());
                     Log.d("AddTypeProduct", "Error Code: " + response.code());
                     Log.d("AddTypeProduct", "Error Body: " + response.errorBody().toString());
-                    Toast.makeText(getContext(), "Không thể thêm loại sản phẩm: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Unable to add product type ", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // Xử lý lỗi kết nối
                 Log.d("AddTypeProduct", "Failure: " + t.getMessage());
             }
         });
     }
+
+    //Update Product type
     private void updateTypeProduct(String typeId, String itemName, String sizeIds, BottomSheetDialog bottomSheetDialog) {
         // Chuyển đổi các giá trị thành RequestBody
         RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), itemName);
@@ -300,19 +346,19 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
                     // Xử lý phản hồi thành công
                     bottomSheetDialog.dismiss();
                     fetchTypeProducts();
-                    Toast.makeText(getContext(), "Cập nhật loại sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Product type updated successfully!", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Xử lý lỗi
+
                     Log.d("UpdateTypeProduct", "Error: " + response.message());
                     Log.d("UpdateTypeProduct", "Error Code: " + response.code());
                     Log.d("UpdateTypeProduct", "Error Body: " + response.errorBody().toString());
-                    Toast.makeText(getContext(), "Không thể cập nhật loại sản phẩm: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Unable to update product type ", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // Xử lý lỗi khi gọi API
+
                 Log.e("UpdateTypeProduct", "Failure: " + t.getMessage());
                 Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -327,11 +373,13 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
                 if (response.isSuccessful()) {
                     if (response.body().getStatus() == 200) {
                         typeProducts = response.body().getData();
-                        if (typeProducts != null) {for (TypeProduct typeProduct : typeProducts) {
-                            Log.d("TypeProduct", "ID: " + typeProduct.getId() + ", Name: " + typeProduct.getImage() + ", Sizes: " + (typeProduct.getSizes() != null ? typeProduct.getSizes().size() : "null"));
-                        }
+                        if (typeProducts != null) {
+                            for (TypeProduct typeProduct : typeProducts) {
+                                Log.d("TypeProduct", "ID: " + typeProduct.getId() + ", Name: " + typeProduct.getImage() + ", Sizes: " + (typeProduct.getSizes() != null ? typeProduct.getSizes().size() : "null"));
+                            }
                         }
                         setupRecyclerView(typeProducts);
+                        Toast.makeText(getContext(), "List displayed successfully! ", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -349,10 +397,10 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
             public void onResponse(Call<Response<ArrayList<Size>>> call, retrofit2.Response<Response<ArrayList<Size>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getStatus() == 200) {
                     sizes = response.body().getData();
-                    // Ghi log số lượng kích thước
+
                     Log.d("SizeList", "Number of sizes: " + sizes.size());
 
-                    // Ghi log tên của từng kích thước
+
                     for (Size size : sizes) {
                         Log.d("SizeName", "ID: " + size.getId() + ", Name: " + size.getName());
                     }
@@ -369,7 +417,7 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
     }
 
     private void setupRecyclerView(ArrayList<TypeProduct> ds) {
-        adapter = new AdapterTypeProduct(getContext(), ds,this);
+        adapter = new AdapterTypeProduct(getContext(), ds, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
     }
@@ -418,11 +466,13 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -434,11 +484,12 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
             }
         }
     }
-    Callback<Response<TypeProduct>> responseCallback=new Callback<Response<TypeProduct>>() {
+
+    Callback<Response<TypeProduct>> responseCallback = new Callback<Response<TypeProduct>>() {
         @Override
         public void onResponse(Call<Response<TypeProduct>> call, retrofit2.Response<Response<TypeProduct>> response) {
-            if (response.isSuccessful()){
-                if (response.body().getStatus()==200){
+            if (response.isSuccessful()) {
+                if (response.body().getStatus() == 200) {
                     fetchTypeProducts();
                 }
             }
@@ -449,6 +500,7 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
 
         }
     };
+
     @Override
     public void Delete(TypeProduct typeProduct) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -470,7 +522,7 @@ public class TypeProductFragment extends Fragment implements Item_Handle_Typepro
 
     @Override
     public void Update(TypeProduct typeProduct) {
-   showUpdateTypeProductDialog(typeProduct);
+        showUpdateTypeProductDialog(typeProduct);
     }
 }
 
