@@ -36,7 +36,7 @@
             android:textSize="18sp"
             android:text="Name: "/>
         <TextView
-            android:id="@+id/tv_CusViewName"
+            android:id="@+id/tv_PerViewName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -63,7 +63,34 @@
             android:textSize="18sp"
             android:text="Email: "/>
         <TextView
-            android:id="@+id/tv_CusViewEmail"
+            android:id="@+id/tv_PerViewEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="end"
+            android:textSize="18sp"
+            android:text="Giang A Phò"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:textSize="18sp"
+            android:text="Mật khẩu : "/>
+        <TextView
+            android:id="@+id/tv_PerViewPass"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -90,7 +117,7 @@
             android:textSize="18sp"
             android:text="Phone: "/>
         <TextView
-            android:id="@+id/tv_CusViewPhone"
+            android:id="@+id/tv_PerViewPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -117,7 +144,7 @@
             android:textSize="18sp"
             android:text="Address: "/>
         <TextView
-            android:id="@+id/tv_CusViewAddress"
+            android:id="@+id/tv_PerViewAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"

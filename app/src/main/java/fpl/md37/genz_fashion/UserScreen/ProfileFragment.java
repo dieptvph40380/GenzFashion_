@@ -28,7 +28,7 @@ private LinearLayout layout_your_file, layout_payment, layout_order, layout_sett
         layout_your_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new ProfileCustomerFragment(), R.id.frameLayout);
+                replaceFragment(new PersonalInformationFragment_(), R.id.frameLayout);
 
             }
         });

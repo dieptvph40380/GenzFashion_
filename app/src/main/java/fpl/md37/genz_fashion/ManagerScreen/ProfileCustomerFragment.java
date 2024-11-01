@@ -3,6 +3,7 @@ package fpl.md37.genz_fashion.ManagerScreen;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,28 +16,25 @@ import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 
 
-public class ProfileCustomerFragment extends Fragment {
+public class ProfileCustomerFragment extends AppCompatActivity {
     ImageView image_viewprofile,img_Product;
     TextView tv_name,tv_address,tv_phone,tv_email;
 
-    public ProfileCustomerFragment() {
-        // Required empty public constructor
-    }
+
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_profile_customer, container, false);
+    public void  onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_profile_customer);
 
-        image_viewprofile=view.findViewById(R.id.image_ViewProfile);
-        tv_name=view.findViewById(R.id.tv_CusViewName);
-        tv_address=view.findViewById(R.id.tv_CusViewAddress);
-        tv_phone=view.findViewById(R.id.tv_CusViewPhone);
-        tv_email=view.findViewById(R.id.tv_CusViewEmail);
+        image_viewprofile=findViewById(R.id.image_ViewProfile);
+        tv_name=findViewById(R.id.tv_CusViewName);
+        tv_address=findViewById(R.id.tv_CusViewAddress);
+        tv_phone=findViewById(R.id.tv_CusViewPhone);
+        tv_email=findViewById(R.id.tv_CusViewEmail);
 
-        Intent intent = requireActivity().getIntent();
+        Intent intent = getIntent();
         String image=intent.getStringExtra("image");
         String name=intent.getStringExtra("name");
         String phone=intent.getStringExtra("phone");
@@ -58,7 +56,5 @@ public class ProfileCustomerFragment extends Fragment {
         }
 
 
-
-        return  view;
     }
 }
