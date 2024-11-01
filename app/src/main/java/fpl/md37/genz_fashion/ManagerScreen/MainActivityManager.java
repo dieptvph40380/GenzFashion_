@@ -41,12 +41,16 @@ public class MainActivityManager extends AppCompatActivity {
             replaceFragment(new TypeProductFragment());
         });
 
-        supplierss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivityManager.this, SuppliersFragment.class));
-            }
+        supplierss.setOnClickListener(v -> {
+            replaceFragment(new SupplierFragment());
         });
+
+//        supplierss.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivityManager.this, SuppliersFragment.class));
+//            }
+//        });
 
         statis.setOnClickListener(new View.OnClickListener() {
             @Override
