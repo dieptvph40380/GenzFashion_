@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.Size;
+import fpl.md37.genz_fashion.models.Suppliers;
 import fpl.md37.genz_fashion.models.TypeProduct;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -43,6 +44,33 @@ public interface ApiService {
             @Path("id") String id,
             @Part("name") RequestBody name,
             @Part("id_size") RequestBody sizes,
+            @Part MultipartBody.Part image
+    );
+
+    @GET("suppliers")
+    Call<Response<ArrayList<Suppliers>>> getAllsuppliers();
+
+    @Multipart
+    @POST("add-supplier")
+    Call<ResponseBody> addSuppliers(
+            @Part("name") RequestBody name,
+            @Part("phone") RequestBody phone,
+            @Part("email") RequestBody email,
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part image
+    );
+
+    //delete supplier
+    @DELETE("delete-supplier-by-id/{id}")
+    Call<Response<Suppliers>> deleteSuppliers(@Path("id") String id);
+    @Multipart
+    @PUT("update-supplier/{id}")
+    Call<ResponseBody> updateSupplier(
+            @Path("id") String id,
+            @Part("name") RequestBody name,
+            @Part("phone") RequestBody phone,
+            @Part("email") RequestBody email,
+            @Part("description") RequestBody description,
             @Part MultipartBody.Part image
     );
 }
