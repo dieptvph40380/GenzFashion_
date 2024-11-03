@@ -33,7 +33,7 @@ public class MainActivityManager extends AppCompatActivity {
         products.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivityManager.this, ProductsFragment.class));
+                replaceFragment(new ProductsFragment());
             }
         });
 
@@ -55,7 +55,7 @@ public class MainActivityManager extends AppCompatActivity {
         statis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivityManager.this, StatisticalFragment.class));
+                replaceFragment(new StatisticalFragment());
             }
         });
          infor.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,9 @@
 package fpl.md37.genz_fashion.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.Suppliers;
@@ -26,7 +28,7 @@ public interface ApiService {
     //listSize
     @GET("get-list-size")
     Call<Response<ArrayList<Size>>> getAllSizes();
-    //addTypeProduct
+    //add type
     @Multipart
     @POST("add-type")
     Call<ResponseBody> addTypeProduct(
@@ -46,10 +48,10 @@ public interface ApiService {
             @Part("id_size") RequestBody sizes,
             @Part MultipartBody.Part image
     );
-
+    //list suppliers
     @GET("suppliers")
     Call<Response<ArrayList<Suppliers>>> getAllsuppliers();
-
+    //add supplier
     @Multipart
     @POST("add-supplier")
     Call<ResponseBody> addSuppliers(
@@ -73,4 +75,22 @@ public interface ApiService {
             @Part("description") RequestBody description,
             @Part MultipartBody.Part image
     );
+    //listProduct
+    @GET("prodct")
+    Call<Response<ArrayList<Product>>> getAllProducts();
+    //add product
+    @Multipart
+    @POST("add-product")
+    Call<Response<Product>> addProduct(
+            @Part("product_name") RequestBody product_name,
+            @Part("price") RequestBody price,
+            @Part("quantity") RequestBody quantity,
+            @Part("state") RequestBody state,
+            @Part("description") RequestBody description,
+            @Part("id_suppliers") RequestBody suppliers,
+            @Part("id_producttype") RequestBody typeproducts,
+            @Part ArrayList<MultipartBody.Part> image
+    );
+
+
 }

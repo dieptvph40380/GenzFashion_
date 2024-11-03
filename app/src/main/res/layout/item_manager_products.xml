@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <ImageView
-            android:id="@+id/img_monan"
+            android:id="@+id/img_product"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:scaleType="fitXY"
@@ -19,7 +19,7 @@
 
 
         <TextView
-            android:id="@+id/tvProductPrice"
+            android:id="@+id/tvProduct_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Product Name"
@@ -30,7 +30,7 @@
             android:layout_marginTop="4dp" />
 
         <TextView
-            android:id="@+id/tvProductSize"
+            android:id="@+id/tvProduct_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Price: 9032"
@@ -38,7 +38,7 @@
             android:textColor="@android:color/darker_gray"
             android:layout_marginLeft="10dp" />
         <TextView
-            android:id="@+id/tvProductStatus"
+            android:id="@+id/tvProduct_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status: 9032"
