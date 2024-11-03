@@ -30,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
@@ -75,7 +76,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         View view = inflater.inflate(R.layout.fragment_suppliers, container, false);
         checkPermissions();
         initializeViews(view);
-        ImageView btnback=view.findViewById(R.id.btnoutS);
+        ImageView btnback=view.findViewById(R.id.btnout);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +90,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
 ///
         // Thiết lập tìm kiếm
         //search Typeproduct
-        androidx.appcompat.widget.SearchView searchView = view.findViewById(R.id.searchViewS);
+        androidx.appcompat.widget.SearchView searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -156,6 +157,11 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             String itemDes = editItemDes.getText().toString().trim();
             addSuppliers(itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
 
+            if (imageUri == null) {
+                Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (itemName.isEmpty()) {
                 Toast.makeText(getContext(), "Tên không được để trống.", Toast.LENGTH_SHORT).show();
             } else if (itemPhone.isEmpty()) {
@@ -172,7 +178,8 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
                 Toast.makeText(getContext(), "Địa chỉ email phải có đuôi @gmail.com.", Toast.LENGTH_SHORT).show();
             } else if (!isValidDescription(itemDes)) {
                 Toast.makeText(getContext(), "Mô tả không được quá 50 ký tự.", Toast.LENGTH_SHORT).show();
-            } else {
+            }
+            else {
                 addSuppliers(itemName, itemPhone, itemEmail, itemDes, bottomSheetDialog);
             }
         });
@@ -365,16 +372,30 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         ImageButton btnBack = bottomSheetDialog.findViewById(R.id.buttonClose);
         MaterialButton btnSelectImage = bottomSheetDialog.findViewById(R.id.updateloadS); // Nút để chọn ảnh
         ImageView imageView = bottomSheetDialog.findViewById(R.id.imageDialog); // ImageView để hiển thị ảnh
+
+
+        editItemName.setText(suppliers.getName());
+        editItemPhone.setText(suppliers.getPhone());
+        editItemEmail.setText(suppliers.getEmail());
+        editItemDes.setText(suppliers.getDescription());
+        if (suppliers.getImage() != null && !suppliers.getImage().isEmpty()) {
+            assert imageView != null;
+            Glide.with(requireContext())
+                    .load(suppliers.getImage())
+                    .into(imageView);
+        }
+
+
         btnBack.setOnClickListener(view -> bottomSheetDialog.dismiss());
 
         // Mở ứng dụng chọn ảnh khi người dùng nhấn vào nút
         btnSelectImage.setOnClickListener(v -> openImageChooser());
 
         btnUpdate.setOnClickListener(view -> {
-            String itemName = editItemName.getText().toString().trim();
-            String itemPhone = editItemPhone.getText().toString().trim();
-            String itemEmail = editItemEmail.getText().toString().trim();
-            String itemDes = editItemDes.getText().toString().trim();
+            String itemName = editItemName.getText().toString();
+            String itemPhone = editItemPhone.getText().toString();
+            String itemEmail = editItemEmail.getText().toString();
+            String itemDes = editItemDes.getText().toString();
             updateSuppliers(suppliers.getId(), itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
 
             if (itemName.isEmpty()) {
@@ -385,7 +406,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
                 Toast.makeText(getContext(), "Địa chỉ email không được để trống.", Toast.LENGTH_SHORT).show();
             } else if (itemDes.isEmpty()) {
                 Toast.makeText(getContext(), "Mô tả không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.length() != 10) { // Kiểm tra độ dài số điện thoại
+            } else if (itemPhone.length() != 10) {
                 Toast.makeText(getContext(), "Số điện thoại phải có đủ 10 chữ số.", Toast.LENGTH_SHORT).show();
             } else if (!isValidPhone(itemPhone)) {
                 Toast.makeText(getContext(), "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.", Toast.LENGTH_SHORT).show();
@@ -455,9 +476,6 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
     }
     ////
 
-    private boolean isValidName(String name) {
-        return name != null && !name.trim().isEmpty();
-    }
 
     private boolean isValidPhone(String phone) {
         return phone != null && !phone.trim().isEmpty() && phone.matches("^0\\d{9}$"); // Bắt đầu bằng 0 và theo sau là 9 chữ số
