@@ -77,7 +77,7 @@ public class AdapterViewCustomer extends RecyclerView.Adapter<AdapterViewCustome
         TextView name, phone,email;
         Button btnview, btndelete;
         public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+            super(itemView); 
             avatar=itemView.findViewById(R.id.image_CusAvatar);
             name=itemView.findViewById(R.id.tv_CusName);
             phone=itemView.findViewById(R.id.tv_CusPhone);
