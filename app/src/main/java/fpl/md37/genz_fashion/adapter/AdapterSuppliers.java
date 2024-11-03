@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fpl.md37.genz_fashion.ManagerScreen.SupplierFragment;
 import fpl.md37.genz_fashion.handel.Item_Handel_Suppliers;
@@ -29,10 +31,13 @@ public class AdapterSuppliers extends RecyclerView.Adapter<AdapterSuppliers.View
     private Item_Handel_Suppliers items;
 
 
+
+
     public AdapterSuppliers(Context context, ArrayList<Suppliers> listsuppliers, SupplierFragment items) {
         this.context = context;
         this.listsuppliers = listsuppliers;
         this.items =  items;
+
     }
 
     @NonNull
@@ -70,7 +75,22 @@ public class AdapterSuppliers extends RecyclerView.Adapter<AdapterSuppliers.View
             }
         });
 
+        holder.name.setText(suppliers.getName());
+        holder.phone.setText(suppliers.getPhone());
+        holder.email.setText(suppliers.getEmail());
+        holder.description.setText(suppliers.getDescription());
+
+
+        holder.btnedit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                items.Update(suppliers);
+            }
+        });
     }
+
+
+
 
     @Override
     public int getItemCount() {
@@ -80,7 +100,7 @@ public class AdapterSuppliers extends RecyclerView.Adapter<AdapterSuppliers.View
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
         TextView name, phone,email,description;
-
+        ImageButton btnedit;
         LinearLayout itemDelete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +109,8 @@ public class AdapterSuppliers extends RecyclerView.Adapter<AdapterSuppliers.View
             phone=itemView.findViewById(R.id.textSupplierContact);
             email=itemView.findViewById(R.id.textSupplierEmail);
             description=itemView.findViewById(R.id.textSupplierDescreption);
+
+            btnedit=itemView.findViewById(R.id.btnEditS);
 
             itemDelete=itemView.findViewById(R.id.itemDelete);
 

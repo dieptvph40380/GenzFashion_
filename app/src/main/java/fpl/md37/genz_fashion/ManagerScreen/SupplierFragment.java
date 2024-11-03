@@ -1,6 +1,7 @@
 package fpl.md37.genz_fashion.ManagerScreen;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -34,6 +36,7 @@ import com.google.android.material.button.MaterialButton;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import fpl.md37.genz_fashion.adapter.AdapterSuppliers;
 import fpl.md37.genz_fashion.api.ApiService;
@@ -47,6 +50,8 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+
+
 
 
 public class SupplierFragment extends Fragment implements Item_Handel_Suppliers {
@@ -70,7 +75,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         View view = inflater.inflate(R.layout.fragment_suppliers, container, false);
         checkPermissions();
         initializeViews(view);
-        ImageView btnback=view.findViewById(R.id.btnout);
+        ImageView btnback=view.findViewById(R.id.btnoutS);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,8 +86,42 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
 
         fetchSuppliers();
 
+///
+        // Thiết lập tìm kiếm
+        //search Typeproduct
+        androidx.appcompat.widget.SearchView searchView = view.findViewById(R.id.searchViewS);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Tùy chọn: Xử lý khi người dùng nhấn "Search" trên bàn phím
+                filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Lọc danh sách mỗi khi có thay đổi trong ô tìm kiếm
+                filter(newText);
+                return true;
+            }
+        });
+        ///
+
         return view;
     }
+
+    ///
+    private void filter(String query) {
+        ArrayList<Suppliers> filteredList = new ArrayList<>();
+        for (Suppliers supplier : listSuppliers) {
+            if (supplier.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(supplier);
+            }
+        }
+        setupRecyclerView(filteredList);
+    }
+
+    ///
 
     private void initializeViews(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewSuppliers);
@@ -111,12 +150,33 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         btnSelectImage.setOnClickListener(v -> openImageChooser());
 
         btnSubmit.setOnClickListener(view -> {
-            String itemName = editItemName.getText().toString();
-            String itemPhone = editItemPhone.getText().toString();
-            String itemEmail = editItemEmail.getText().toString();
-            String itemDes = editItemDes.getText().toString();
+            String itemName = editItemName.getText().toString().trim();
+            String itemPhone = editItemPhone.getText().toString().trim();
+            String itemEmail = editItemEmail.getText().toString().trim();
+            String itemDes = editItemDes.getText().toString().trim();
             addSuppliers(itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
+
+            if (itemName.isEmpty()) {
+                Toast.makeText(getContext(), "Tên không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemPhone.isEmpty()) {
+                Toast.makeText(getContext(), "Số điện thoại không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemEmail.isEmpty()) {
+                Toast.makeText(getContext(), "Địa chỉ email không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemDes.isEmpty()) {
+                Toast.makeText(getContext(), "Mô tả không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemPhone.length() != 10) { // Kiểm tra độ dài số điện thoại
+                Toast.makeText(getContext(), "Số điện thoại phải có đủ 10 chữ số.", Toast.LENGTH_SHORT).show();
+            } else if (!isValidPhone(itemPhone)) {
+                Toast.makeText(getContext(), "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.", Toast.LENGTH_SHORT).show();
+            } else if (!isValidEmail(itemEmail)) {
+                Toast.makeText(getContext(), "Địa chỉ email phải có đuôi @gmail.com.", Toast.LENGTH_SHORT).show();
+            } else if (!isValidDescription(itemDes)) {
+                Toast.makeText(getContext(), "Mô tả không được quá 50 ký tự.", Toast.LENGTH_SHORT).show();
+            } else {
+                addSuppliers(itemName, itemPhone, itemEmail, itemDes, bottomSheetDialog);
+            }
         });
+
 
         // Thiết lập chiều cao cho BottomSheetDialog
         bottomSheetDialog.setOnShowListener(dialog -> {
@@ -124,7 +184,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             FrameLayout bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
             if (bottomSheet != null) {
                 CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomSheet.getLayoutParams();
-                layoutParams.height = getResources().getDisplayMetrics().heightPixels / 2;
+                layoutParams.height = getResources().getDisplayMetrics().heightPixels / 2;  ////caanf suwa dder can chinh layout
                 bottomSheet.setLayoutParams(layoutParams);
             }
         });
@@ -173,11 +233,6 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         });
     }
 
-
-
-
-
-
     private void fetchSuppliers(){
         httpRequest.callApi().getAllsuppliers().enqueue(new Callback<Response<ArrayList<Suppliers>>>() {
             @Override
@@ -194,8 +249,6 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
                     }
                 }
             }
-
-
 
             @Override
             public void onFailure(Call<Response<ArrayList<Suppliers>>> call, Throwable t) {
@@ -294,8 +347,132 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         builder.show();
     }
 
-    @Override
-    public void Update(Suppliers suppliers) {
+
+
+    ///
+    private void showupdateSupplierDialog(Suppliers suppliers){
+        // Khởi tạo BottomSheetDialog
+        bottomSheetDialog = new BottomSheetDialog(requireContext());
+        bottomSheetDialog.setContentView(R.layout.dialog_update_supplier);
+
+        // Ánh xạ các view trong BottomSheetDialog
+        EditText editItemName = bottomSheetDialog.findViewById(R.id.edtName);
+        EditText editItemPhone = bottomSheetDialog.findViewById(R.id.edtPhone);
+        EditText editItemEmail = bottomSheetDialog.findViewById(R.id.edtEmail);
+        EditText editItemDes = bottomSheetDialog.findViewById(R.id.edtInfor);
+
+        MaterialButton btnUpdate = bottomSheetDialog.findViewById(R.id.updatesupplier);
+        ImageButton btnBack = bottomSheetDialog.findViewById(R.id.buttonClose);
+        MaterialButton btnSelectImage = bottomSheetDialog.findViewById(R.id.updateloadS); // Nút để chọn ảnh
+        ImageView imageView = bottomSheetDialog.findViewById(R.id.imageDialog); // ImageView để hiển thị ảnh
+        btnBack.setOnClickListener(view -> bottomSheetDialog.dismiss());
+
+        // Mở ứng dụng chọn ảnh khi người dùng nhấn vào nút
+        btnSelectImage.setOnClickListener(v -> openImageChooser());
+
+        btnUpdate.setOnClickListener(view -> {
+            String itemName = editItemName.getText().toString().trim();
+            String itemPhone = editItemPhone.getText().toString().trim();
+            String itemEmail = editItemEmail.getText().toString().trim();
+            String itemDes = editItemDes.getText().toString().trim();
+            updateSuppliers(suppliers.getId(), itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
+
+            if (itemName.isEmpty()) {
+                Toast.makeText(getContext(), "Tên không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemPhone.isEmpty()) {
+                Toast.makeText(getContext(), "Số điện thoại không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemEmail.isEmpty()) {
+                Toast.makeText(getContext(), "Địa chỉ email không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemDes.isEmpty()) {
+                Toast.makeText(getContext(), "Mô tả không được để trống.", Toast.LENGTH_SHORT).show();
+            } else if (itemPhone.length() != 10) { // Kiểm tra độ dài số điện thoại
+                Toast.makeText(getContext(), "Số điện thoại phải có đủ 10 chữ số.", Toast.LENGTH_SHORT).show();
+            } else if (!isValidPhone(itemPhone)) {
+                Toast.makeText(getContext(), "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.", Toast.LENGTH_SHORT).show();
+            } else if (!isValidEmail(itemEmail)) {
+                Toast.makeText(getContext(), "Địa chỉ email phải có đuôi @gmail.com.", Toast.LENGTH_SHORT).show();
+            } else if (!isValidDescription(itemDes)) {
+                Toast.makeText(getContext(), "Mô tả không được quá 50 ký tự.", Toast.LENGTH_SHORT).show();
+            } else {
+                addSuppliers(itemName, itemPhone, itemEmail, itemDes, bottomSheetDialog);
+            }
+        });
+
+        // Thiết lập chiều cao cho BottomSheetDialog
+        bottomSheetDialog.setOnShowListener(dialog -> {
+            BottomSheetDialog d = (BottomSheetDialog) dialog;
+            FrameLayout bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomSheet.getLayoutParams();
+                layoutParams.height = getResources().getDisplayMetrics().heightPixels / 2;
+                bottomSheet.setLayoutParams(layoutParams);
+            }
+        });
+
+        bottomSheetDialog.show();
 
     }
+
+    private void updateSuppliers(String typeId, String itemName, String itemPhone, String itemEmail,String itemDes, BottomSheetDialog bottomSheetDialog) {
+        // Chuyển đổi các giá trị thành RequestBody
+        RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), itemName);
+        RequestBody phonePart = RequestBody.create(MediaType.parse("text/plain"), itemPhone);
+        RequestBody emailPart = RequestBody.create(MediaType.parse("text/plain"), itemEmail);
+        RequestBody desPart = RequestBody.create(MediaType.parse("text/plain"), itemDes);
+
+        // Chuyển đổi URI thành MultipartBody.Part
+        MultipartBody.Part imagePart = null;
+        if (imageUri != null) {
+            File file = new File(getRealPathFromURI(imageUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/png"), file);
+            imagePart = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+        }
+
+        ApiService apiService = httpRequest.callApi();
+        Call<ResponseBody> call=apiService.updateSupplier(typeId,namePart,phonePart,emailPart,desPart,imagePart);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    // Xử lý phản hồi thành công
+                    bottomSheetDialog.dismiss();
+                    fetchSuppliers();
+                } else {
+                    // Xử lý lỗi
+                    Log.d("UpdateSuppliers", "Error: " + response.message());
+                    Log.d("UpdateSuppliers", "Error Code: " + response.code());
+                    Log.d("UpdateSuppliers", "Error Body: " + response.errorBody().toString());
+                    Toast.makeText(getContext(), "Không thể update nhà cung cấp: " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("UpdateTypeProduct", "Failure: " + t.getMessage());
+                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    ////
+
+    private boolean isValidName(String name) {
+        return name != null && !name.trim().isEmpty();
+    }
+
+    private boolean isValidPhone(String phone) {
+        return phone != null && !phone.trim().isEmpty() && phone.matches("^0\\d{9}$"); // Bắt đầu bằng 0 và theo sau là 9 chữ số
+    }
+
+    private boolean isValidEmail(String email) {
+        return email != null && !email.trim().isEmpty() && email.endsWith("@gmail.com");
+    }
+    private boolean isValidDescription(String description) {
+        return description != null && !description.trim().isEmpty() && description.length() <= 50; // Mô tả không được quá 50 ký tự
+    }
+
+    @Override
+    public void Update(Suppliers suppliers) {
+        showupdateSupplierDialog(suppliers);
+    }
+
 }

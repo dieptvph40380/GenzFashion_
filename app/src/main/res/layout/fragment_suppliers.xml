@@ -25,10 +25,10 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:id="@+id/btnout"
+                android:id="@+id/btnoutS"
                 android:layout_width="30dp"
                 android:layout_height="28dp"
-                tools:src="@drawable/iconout" />
+                android:src="@drawable/iconout" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -50,7 +50,7 @@
         android:layout_margin="16dp">
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/searchViewS"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"

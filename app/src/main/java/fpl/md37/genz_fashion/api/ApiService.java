@@ -1,7 +1,9 @@
 package fpl.md37.genz_fashion.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.Suppliers;
@@ -10,6 +12,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -17,16 +21,22 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
     public static String BASE_URL="http://10.0.2.2:3000/api/";
+    ApiService apiService  = new Retrofit.Builder()
+            .baseUrl(ApiService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService.class);
     //listTypeProduct
     @GET("typeproduct")
     Call<Response<ArrayList<TypeProduct>>> getAlltypeproduct();
     //listSize
     @GET("get-list-size")
     Call<Response<ArrayList<Size>>> getAllSizes();
-    //addTypeProduct
+    //add type
     @Multipart
     @POST("add-type")
     Call<ResponseBody> addTypeProduct(
@@ -46,10 +56,10 @@ public interface ApiService {
             @Part("id_size") RequestBody sizes,
             @Part MultipartBody.Part image
     );
-
+    //list suppliers
     @GET("suppliers")
     Call<Response<ArrayList<Suppliers>>> getAllsuppliers();
-
+    //add supplier
     @Multipart
     @POST("add-supplier")
     Call<ResponseBody> addSuppliers(
@@ -73,4 +83,28 @@ public interface ApiService {
             @Part("description") RequestBody description,
             @Part MultipartBody.Part image
     );
+
+    //listProduct
+    @GET("prodct")
+    Call<Response<ArrayList<Product>>> getAllProducts();
+    //add product
+    @Multipart
+    @POST("add-product")
+    Call<Response<Product>> addProduct(
+            @Part("product_name") RequestBody product_name,
+            @Part("price") RequestBody price,
+            @Part("quantity") RequestBody quantity,
+            @Part("state") RequestBody state,
+            @Part("description") RequestBody description,
+            @Part("id_suppliers") RequestBody suppliers,
+            @Part("id_producttype") RequestBody typeproducts,
+            @Part ArrayList<MultipartBody.Part> image
+    );
+//    @GET("get-supplier-by-name")
+//    Call<Response<ArrayList<Suppliers>>> searchSuppliers(
+//            @Query("name") String name
+//    );
+
+
+
 }
