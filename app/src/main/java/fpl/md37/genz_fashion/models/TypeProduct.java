@@ -13,7 +13,9 @@ public class TypeProduct {
     @SerializedName("id_size")
     private List<Size> sizes;
 
-    public TypeProduct() {
+    public TypeProduct(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public TypeProduct(String id, String name, String image, List<Size> sizes) {
