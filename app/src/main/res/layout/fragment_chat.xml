@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:background="@color/background_color"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="fpl.md37.genz_fashion.UserScreen.ChatFragment"

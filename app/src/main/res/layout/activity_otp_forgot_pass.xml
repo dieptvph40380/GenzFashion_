@@ -6,6 +6,7 @@
     android:overScrollMode="never"
     android:scrollbars="none"
     android:padding="20dp"
+    android:fitsSystemWindows="true"
     android:background="@color/background_color"
     tools:context="fpl.md37.genz_fashion.UserScreen.OTPForgotPassActivity">
 
