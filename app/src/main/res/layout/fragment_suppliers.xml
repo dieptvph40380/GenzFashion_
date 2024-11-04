@@ -25,10 +25,10 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:id="@+id/btnoutS"
+                android:id="@+id/btnout"
                 android:layout_width="30dp"
                 android:layout_height="28dp"
-                android:src="@drawable/iconout" />
+                tools:src="@drawable/iconout" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -50,7 +50,7 @@
         android:layout_margin="16dp">
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchViewS"
+            android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"
@@ -66,17 +66,18 @@
             android:text="Add"
             app:cornerRadius="12dp"
             android:backgroundTint="#6394B7"
-             />
+            />
     </LinearLayout>
 
+    <!--    //sửa đoạn này-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSuppliers"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_weight="1"
+
         android:clipToPadding="false"
         android:padding="8dp"
         android:scrollbars="vertical"

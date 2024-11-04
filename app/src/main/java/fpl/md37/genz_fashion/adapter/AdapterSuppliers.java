@@ -75,12 +75,6 @@ public class AdapterSuppliers extends RecyclerView.Adapter<AdapterSuppliers.View
             }
         });
 
-        holder.name.setText(suppliers.getName());
-        holder.phone.setText(suppliers.getPhone());
-        holder.email.setText(suppliers.getEmail());
-        holder.description.setText(suppliers.getDescription());
-
-
         holder.btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
