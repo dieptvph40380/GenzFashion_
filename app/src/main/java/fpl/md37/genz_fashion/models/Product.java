@@ -2,15 +2,17 @@ package fpl.md37.genz_fashion.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product implements Serializable {
-      private String id, product_name, quantity, price, description;
+public class Product{
+      @SerializedName("_id")
+      private String id;
+      String product_name, quantity, price, description;
       private boolean state;
+      @SerializedName("image")
       private ArrayList<String> image;
-
       @SerializedName("id_suppliers")
       private String suppliersId;
 
