@@ -12,6 +12,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -19,9 +21,15 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
     public static String BASE_URL="http://10.0.2.2:3000/api/";
+    ApiService apiService  = new Retrofit.Builder()
+            .baseUrl(ApiService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService.class);
     //listTypeProduct
     @GET("typeproduct")
     Call<Response<ArrayList<TypeProduct>>> getAlltypeproduct();
@@ -75,6 +83,7 @@ public interface ApiService {
             @Part("description") RequestBody description,
             @Part MultipartBody.Part image
     );
+
     //listProduct
     @GET("prodct")
     Call<Response<ArrayList<Product>>> getAllProducts();
@@ -91,6 +100,11 @@ public interface ApiService {
             @Part("id_producttype") RequestBody typeproducts,
             @Part ArrayList<MultipartBody.Part> image
     );
+//    @GET("get-supplier-by-name")
+//    Call<Response<ArrayList<Suppliers>>> searchSuppliers(
+//            @Query("name") String name
+//    );
+
 
 
 }
