@@ -182,23 +182,23 @@ public class ProductsFragment extends Fragment {
         RequestBody typeIdPart = RequestBody.create(MediaType.parse("text/plain"), typeId);
         RequestBody supplierIdPart = RequestBody.create(MediaType.parse("text/plain"), supplierId);
 
-//        Log.d("AddProductInfo", "Name: " + name);
-//        Log.d("AddProductInfo", "Price: " + price);
-//        Log.d("AddProductInfo", "Quantity: " + quantity);
-//        Log.d("AddProductInfo", "State: " + state);
-//        Log.d("AddProductInfo", "Description: " + description);
-//        Log.d("AddProductInfo", "Type ID: " + typeId);
-//        Log.d("AddProductInfo", "Supplier ID: " + supplierId);
+        Log.d("AddProductInfo", "Name: " + name);
+        Log.d("AddProductInfo", "Price: " + price);
+        Log.d("AddProductInfo", "Quantity: " + quantity);
+        Log.d("AddProductInfo", "State: " + state);
+        Log.d("AddProductInfo", "Description: " + description);
+        Log.d("AddProductInfo", "Type ID: " + typeId);
+        Log.d("AddProductInfo", "Supplier ID: " + supplierId);
 
 
         // Tạo danh sách MultipartBody.Part cho hình ảnh
         ArrayList<MultipartBody.Part> imageParts = new ArrayList<>();
         for (File imageFile : ds_image) {
             RequestBody requestFile = RequestBody.create(MediaType.parse("image/png"), imageFile);
-            MultipartBody.Part imagePart = MultipartBody.Part.createFormData("images[]", imageFile.getName(), requestFile);
+            MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
             imageParts.add(imagePart);
 
-//            Log.d("AddProductInfo", "Images List: " + ds_image.toString());
+            Log.d("AddProductInfo", "Images List: " + ds_image.toString());
         }
 
         // Gọi API để thêm sản phẩm
@@ -241,6 +241,11 @@ public class ProductsFragment extends Fragment {
             public void onResponse(Call<Response<ArrayList<Product>>> call, retrofit2.Response<Response<ArrayList<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                      productList = response.body().getData(); // Sử dụng ArrayList ở đây
+                    if (productList != null) {
+                        for (Product product : productList) {
+                            Log.d("Product", "ID: " + product.getImage() );
+                        }
+                    }
                     setupRecyclerView(productList);
                 } else {
                     Toast.makeText(getContext(), "Lỗi khi lấy sản phẩm", Toast.LENGTH_SHORT).show();
@@ -304,21 +309,21 @@ public class ProductsFragment extends Fragment {
     }
 
 
-    private File createFileFromUri(Uri uri) {
-        String fileName = "image_" + System.currentTimeMillis() + ".jpg";
-        File file = new File(getContext().getCacheDir(), fileName);
-        try (InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
-             OutputStream outputStream = new FileOutputStream(file)) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
+        private File createFileFromUri(Uri uri) {
+            String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+            File file = new File(getContext().getCacheDir(), fileName);
+            try (InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
+                 OutputStream outputStream = new FileOutputStream(file)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            return file;
         }
-        return file;
-    }
 
 
 
