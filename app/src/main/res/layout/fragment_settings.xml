@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="fpl.md37.genz_fashion.UserScreen.SettingFragment">
 
     <androidx.appcompat.widget.Toolbar

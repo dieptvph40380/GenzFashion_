@@ -4,6 +4,7 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="20dp"
+    android:fitsSystemWindows="true"
     android:background="@color/background_color"
     tools:context="fpl.md37.genz_fashion.UserScreen.MyOrderActivity">
 

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
     android:layout_margin="10dp"
+    android:fitsSystemWindows="true"
     android:background="@color/background_color"
     tools:context="fpl.md37.genz_fashion.UserScreen.MyOrderActivity">
 
