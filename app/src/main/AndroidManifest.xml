@@ -36,16 +36,16 @@
             android:name="fpl.md37.genz_fashion.UserScreen.ForgotPassActivity"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.UserScreen.WelcomeActivity"
+            android:name="fpl.md37.genz_fashion.UserScreen.MainActivity"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.MyOrderActivity"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.UserScreen.MainActivity"
+            android:name="fpl.md37.genz_fashion.ManagerScreen.SignInActivity"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.ManagerScreen.SignInActivity"
+            android:name="fpl.md37.genz_fashion.UserScreen.WelcomeActivity"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
