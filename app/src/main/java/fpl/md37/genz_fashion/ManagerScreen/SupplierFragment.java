@@ -155,33 +155,44 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             String itemPhone = editItemPhone.getText().toString().trim();
             String itemEmail = editItemEmail.getText().toString().trim();
             String itemDes = editItemDes.getText().toString().trim();
-            addSuppliers(itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
+
+            if (itemName.isEmpty()) {
+                editItemName.setError("Tên không được để trống");
+                return;
+            }
+
+            if (itemPhone.isEmpty()) {
+                editItemPhone.setError("Số điện thoại không được để trống");
+                return;
+            } else if (!itemPhone.matches("0\\d{9}")) {
+                editItemPhone.setError("Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0");
+                return;
+            }
+
+            if (itemEmail.isEmpty()) {
+                editItemEmail.setError("Địa chỉ email không được để trống");
+                return;
+            } else if (!itemEmail.endsWith("@gmail.com")) {
+                editItemEmail.setError("Địa chỉ email phải có đuôi @gmail.com");
+                return;
+            }
+
+            if (itemDes.isEmpty()) {
+                editItemDes.setError("Mô tả không được để trống");
+                return;
+            } else if (itemDes.length() > 50) {
+                editItemDes.setError("Mô tả không được quá 50 kí tự");
+                return;
+            }
 
             if (imageUri == null) {
                 Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (itemName.isEmpty()) {
-                Toast.makeText(getContext(), "Tên không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.isEmpty()) {
-                Toast.makeText(getContext(), "Số điện thoại không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemEmail.isEmpty()) {
-                Toast.makeText(getContext(), "Địa chỉ email không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemDes.isEmpty()) {
-                Toast.makeText(getContext(), "Mô tả không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.length() != 10) { // Kiểm tra độ dài số điện thoại
-                Toast.makeText(getContext(), "Số điện thoại phải có đủ 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidPhone(itemPhone)) {
-                Toast.makeText(getContext(), "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidEmail(itemEmail)) {
-                Toast.makeText(getContext(), "Địa chỉ email phải có đuôi @gmail.com.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidDescription(itemDes)) {
-                Toast.makeText(getContext(), "Mô tả không được quá 50 ký tự.", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                addSuppliers(itemName, itemPhone, itemEmail, itemDes, bottomSheetDialog);
-            }
+
+
+            addSuppliers(itemName, itemPhone, itemEmail,itemDes, bottomSheetDialog);
         });
 
 
@@ -224,6 +235,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
                     // Xử lý phản hồi thành công
                     bottomSheetDialog.dismiss();
                     fetchSuppliers();
+                    Toast.makeText(getContext(), "Supplier added successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     // Xử lý lỗi
                     Log.d("AddSuppliers", "Error: " + response.message());
@@ -398,25 +410,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             String itemDes = editItemDes.getText().toString();
             updateSuppliers(suppliers.getId(), itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
 
-            if (itemName.isEmpty()) {
-                Toast.makeText(getContext(), "Tên không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.isEmpty()) {
-                Toast.makeText(getContext(), "Số điện thoại không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemEmail.isEmpty()) {
-                Toast.makeText(getContext(), "Địa chỉ email không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemDes.isEmpty()) {
-                Toast.makeText(getContext(), "Mô tả không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.length() != 10) {
-                Toast.makeText(getContext(), "Số điện thoại phải có đủ 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidPhone(itemPhone)) {
-                Toast.makeText(getContext(), "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidEmail(itemEmail)) {
-                Toast.makeText(getContext(), "Địa chỉ email phải có đuôi @gmail.com.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidDescription(itemDes)) {
-                Toast.makeText(getContext(), "Mô tả không được quá 50 ký tự.", Toast.LENGTH_SHORT).show();
-            } else {
-                addSuppliers(itemName, itemPhone, itemEmail, itemDes, bottomSheetDialog);
-            }
+
         });
 
         // Thiết lập chiều cao cho BottomSheetDialog
@@ -458,6 +452,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
                     // Xử lý phản hồi thành công
                     bottomSheetDialog.dismiss();
                     fetchSuppliers();
+                    Toast.makeText(getContext(), "Supplier update successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     // Xử lý lỗi
                     Log.d("UpdateSuppliers", "Error: " + response.message());
