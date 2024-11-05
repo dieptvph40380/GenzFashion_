@@ -157,38 +157,43 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             String itemDes = editItemDes.getText().toString().trim();
 
             if (itemName.isEmpty()) {
-                editItemName.setError("Tên không được để trống");
+                editItemName.setError("Name cannot be empty");
                 return;
             }
 
+            // Validate phone (10 digits, starts with 0)
             if (itemPhone.isEmpty()) {
-                editItemPhone.setError("Số điện thoại không được để trống");
+                editItemPhone.setError("Phone number cannot be empty");
                 return;
-            } else if (!itemPhone.matches("0\\d{9}")) {
-                editItemPhone.setError("Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0");
+            } else if (!itemPhone.matches("^0\\d{9}$")) {
+                editItemPhone.setError("Phone number must have 10 digits and start with 0");
                 return;
             }
 
+            // Validate email with @gmail.com format
             if (itemEmail.isEmpty()) {
-                editItemEmail.setError("Địa chỉ email không được để trống");
+                editItemEmail.setError("Email address cannot be empty");
                 return;
-            } else if (!itemEmail.endsWith("@gmail.com")) {
-                editItemEmail.setError("Địa chỉ email phải có đuôi @gmail.com");
+            } else if (!itemEmail.matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$")) {
+                editItemEmail.setError("Email address must be in a valid format and end with @gmail.com");
                 return;
             }
 
+            // Validate description
             if (itemDes.isEmpty()) {
-                editItemDes.setError("Mô tả không được để trống");
+                editItemDes.setError("Description cannot be empty");
                 return;
             } else if (itemDes.length() > 50) {
-                editItemDes.setError("Mô tả không được quá 50 kí tự");
+                editItemDes.setError("Description cannot exceed 50 characters");
                 return;
             }
 
+            // Validate image selection
             if (imageUri == null) {
                 Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show();
                 return;
             }
+
 
 
 
