@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical"
-    tools:context="fpl.md37.genz_fashion.ManagerScreen.SuppliersFragment">
+    tools:context="fpl.md37.genz_fashion.ManagerScreen.SupplierFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
@@ -28,7 +28,7 @@
                 android:id="@+id/btnout"
                 android:layout_width="30dp"
                 android:layout_height="28dp"
-                tools:src="@drawable/iconout" />
+                android:src="@drawable/iconout" />
 
             <TextView
                 android:id="@+id/textView5"
