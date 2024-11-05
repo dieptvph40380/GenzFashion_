@@ -174,7 +174,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             if (itemEmail.isEmpty()) {
                 editItemEmail.setError("Email address cannot be empty");
                 return;
-            } else if (!itemEmail.matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$")) {
+            } else if (!itemEmail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
                 editItemEmail.setError("Email address must be in a valid format and end with @gmail.com");
                 return;
             }
