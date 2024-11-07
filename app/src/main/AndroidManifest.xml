@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name="fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment"
+            android:exported="false" />
+        <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.InformationFragment"
             android:exported="false" />
         <activity
