@@ -3,10 +3,11 @@ package fpl.md37.genz_fashion.models;
 import com.google.gson.annotations.SerializedName;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product{
+public class Product implements Serializable {
       @SerializedName("_id")
       private String id;
       String product_name, quantity, price, description;

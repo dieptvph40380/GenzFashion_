@@ -105,6 +105,12 @@ public interface ApiService {
 //            @Query("name") String name
 //    );
 
+    // Lấy thông tin chi tiết của nhà cung cấp dựa trên ID
+    @GET("suppliers/{id}")
+    Call<Response<Suppliers>> getSupplierById(@Path("id") String id);
 
+    // Lấy thông tin chi tiết của loại sản phẩm dựa trên ID
+    @GET("typeproduct/{id}")
+    Call<Response<TypeProduct>> getTypeProductById(@Path("id") String id);
 
 }
