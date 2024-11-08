@@ -21,10 +21,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="45dp"
                 android:layout_weight="1"
                 android:text="Add TypeProduct"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageButton
@@ -99,8 +99,8 @@
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="15dp"
             android:backgroundTint="#6394B7"
             android:text="Add"
             app:cornerRadius="12dp" />
