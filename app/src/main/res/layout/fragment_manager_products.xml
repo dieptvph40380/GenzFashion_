@@ -21,7 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#BFDBFE"
-            app:titleTextColor="@color/black" />
+            app:titleTextColor="@color/black">
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Products"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

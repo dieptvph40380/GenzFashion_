@@ -1,19 +1,13 @@
 package fpl.md37.genz_fashion.models;
 
+import java.util.ArrayList;
+
 public class Response<T> {
     private int status;
-    private String messenger;
+    private String message;
     private T data;
 
-    public Response() {
-    }
-
-    public Response(int status, String messenger, T data) {
-        this.status = status;
-        this.messenger = messenger;
-        this.data = data;
-    }
-
+    // Getter và Setter
     public int getStatus() {
         return status;
     }
@@ -22,12 +16,12 @@ public class Response<T> {
         this.status = status;
     }
 
-    public String getMessenger() {
-        return messenger;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMessenger(String messenger) {
-        this.messenger = messenger;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {
