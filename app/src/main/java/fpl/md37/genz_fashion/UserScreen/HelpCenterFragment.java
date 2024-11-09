@@ -40,9 +40,9 @@ public class HelpCenterFragment extends Fragment {
         TextView d =view.findViewById(R.id.d);
 
         a.setOnClickListener(v -> startActivity(new Intent(getActivity(),  Question1.class)));
-        d.setOnClickListener(v -> startActivity(new Intent(getActivity(), Question2.class)));
-        b.setOnClickListener(v -> startActivity(new Intent(getActivity(), Question3.class)));
-        c.setOnClickListener(v -> startActivity(new Intent(getActivity(), Question4.class)));
+        b.setOnClickListener(v -> startActivity(new Intent(getActivity(), Question2.class)));
+        c.setOnClickListener(v -> startActivity(new Intent(getActivity(), Question3.class)));
+        d.setOnClickListener(v -> startActivity(new Intent(getActivity(), Question4.class)));
 
 
 
