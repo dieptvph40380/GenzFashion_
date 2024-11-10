@@ -26,9 +26,6 @@
             android:name="fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.ManagerScreen.InformationFragment"
-            android:exported="false" />
-        <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.SignUpActivity"
             android:exported="false"
             android:theme="@style/Theme.GenZ_Fashion" />
@@ -39,10 +36,10 @@
             android:name="fpl.md37.genz_fashion.UserScreen.ForgotPassActivity"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.UserScreen.MainActivity"
+            android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.UserScreen.MyOrderActivity"
+            android:name="fpl.md37.genz_fashion.UserScreen.MainActivity"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.SignInActivity"
@@ -51,7 +48,7 @@
             android:name="fpl.md37.genz_fashion.UserScreen.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
+            android:name="fpl.md37.genz_fashion.UserScreen.MyOrderActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
