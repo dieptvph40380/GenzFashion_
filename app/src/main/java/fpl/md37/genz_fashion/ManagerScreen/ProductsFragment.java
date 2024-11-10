@@ -4,16 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -22,41 +19,30 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import fpl.md37.genz_fashion.adapter.AdapterProduct;
-import fpl.md37.genz_fashion.adapter.AdapterSuppliers;
 import fpl.md37.genz_fashion.adapter.CustomSpinnerSuppAdapter;
 import fpl.md37.genz_fashion.adapter.CustomSpinnerTypeAdapter;
 import fpl.md37.genz_fashion.api.ApiService;
 import fpl.md37.genz_fashion.api.HttpRequest;
+import fpl.md37.genz_fashion.handel.Item_Handle_Product;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.Suppliers;
@@ -64,12 +50,11 @@ import fpl.md37.genz_fashion.models.TypeProduct;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class ProductsFragment extends Fragment {
+public class ProductsFragment extends Fragment  implements Item_Handle_Product{
     private static final int PERMISSION_REQUEST_CODE = 100;
     private static final int PICK_IMAGE_REQUEST = 10;
     private HttpRequest httpRequest;
@@ -260,7 +245,7 @@ public class ProductsFragment extends Fragment {
     }
 
     private void setupRecyclerView(ArrayList<Product> products) {
-        AdapterProduct adapter = new AdapterProduct(getContext(), products);
+        AdapterProduct adapter = new AdapterProduct(getContext(), products,this);
         rcv.setLayoutManager(new GridLayoutManager(getContext(),2));
         rcv.setAdapter(adapter);
     }
@@ -287,6 +272,7 @@ public class ProductsFragment extends Fragment {
                     ImageView imageViewAdd = bottomSheetDialog.findViewById(R.id.product_image);
                     if (imageViewAdd != null && i == 0) { // Chỉ hiển thị ảnh đầu tiên để minh họa
                         imageViewAdd.setImageURI(imageUri);
+                        imageViewAdd.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     }
 
                     // Thêm ảnh vào danh sách File nếu cần thiết
@@ -299,6 +285,7 @@ public class ProductsFragment extends Fragment {
                 ImageView imageViewAdd = bottomSheetDialog.findViewById(R.id.product_image);
                 if (imageViewAdd != null) {
                     imageViewAdd.setImageURI(imageUri);
+                    imageViewAdd.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
 
                 // Thêm ảnh vào danh sách File
@@ -399,4 +386,12 @@ public class ProductsFragment extends Fragment {
             Log.e("ProductsFragment", "Failed to fetch suppliers", t);
         }
     };
+
+
+    @Override
+    public void ShowProduct(Product product) {
+        Intent intent = new Intent(getContext(), ProductDetailActivity.class);
+        intent.putExtra("product_data", product);
+        startActivity(intent);
+    }
 }

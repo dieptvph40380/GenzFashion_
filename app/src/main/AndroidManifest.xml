@@ -25,6 +25,9 @@
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.SendOtpActivity"
             android:exported="false" />
+       <activity
+      android:name="fpl.md37.genz_fashion.ManagerScreen.ProductDetailActivity"
+                  android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment"
             android:exported="false" />
