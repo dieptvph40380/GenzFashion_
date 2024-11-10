@@ -80,7 +80,12 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
+
+                Intent intent = new Intent(getActivity(), MainActivityManager.class);
+
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+
             }
         });
         httpRequest =new HttpRequest();
