@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fpl.md37.genz_fashion.UserScreen.MainActivity;
+import fpl.md37.genz_fashion.UserScreen.SendOtpActivity;
+
 import com.example.genz_fashion.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -78,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
 
                                     Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+                                    startActivity(new Intent(SignUpActivity.this, SendOtpActivity.class));
                                 } else {
 
                                     Toast.makeText(SignUpActivity.this, "failed.", Toast.LENGTH_SHORT).show();
