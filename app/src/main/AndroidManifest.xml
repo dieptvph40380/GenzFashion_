@@ -20,8 +20,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="fpl.md37.genz_fashion.ManagerScreen.ProductDetailActivity"
+            android:name="fpl.md37.genz_fashion.UserScreen.OTPVerificationActivity"
             android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.SendOtpActivity"
+            android:exported="false" />
+       <activity
+      android:name="fpl.md37.genz_fashion.ManagerScreen.ProductDetailActivity"
+                  android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment"
             android:exported="false" />
@@ -45,13 +51,13 @@
             android:name="fpl.md37.genz_fashion.UserScreen.MyOrderActivity"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.ManagerScreen.SignInActivity"
+            android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
+            android:name="fpl.md37.genz_fashion.ManagerScreen.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
