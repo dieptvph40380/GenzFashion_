@@ -17,11 +17,11 @@
         >
 
         <ImageView
-            android:id="@+id/btnBack"
+            android:id="@+id/btnBack_order"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:contentDescription="Back"
-            android:src="@drawable/back"
+            android:src="@drawable/iconout"
             android:layout_marginEnd="16dp" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My Order"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginLeft="80dp"
             android:layout_gravity="center" />

@@ -61,7 +61,7 @@ public class MainActivityManager extends AppCompatActivity {
          infor.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 startActivity(new Intent(MainActivityManager.this, InformationFragment.class));
+                 replaceFragment(new InformationFragment());
              }
          });
 
