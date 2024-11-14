@@ -72,8 +72,6 @@
         android:text="Câu hỏi thường gặp"
         android:textStyle="bold"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/searchField"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"/>
 
     <!-- Customer Service Item -->
@@ -85,9 +83,7 @@
         android:padding="12dp"
         android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@+id/contactUsTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        >
 
 
 
@@ -163,8 +159,7 @@
         android:textStyle="bold"
         android:text="Các kênh liên hệ khác"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/customerServiceItem"
-        app:layout_constraintStart_toStartOf="parent"
+
         android:layout_marginStart="16dp"/>
 
 
@@ -177,9 +172,7 @@
         android:layout_marginTop="8dp"
         android:padding="12dp"
         android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@+id/contact"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+     >
 
         <ImageView
             android:id="@+id/whatsappIcon"
@@ -205,9 +198,7 @@
         android:orientation="horizontal"
         android:padding="12dp"
         android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@+id/whatsappItem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+      >
 
         <ImageView
             android:id="@+id/facebookIcon"
@@ -233,9 +224,7 @@
         android:orientation="horizontal"
         android:padding="12dp"
         android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@+id/facebookItem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+       >
 
         <ImageView
             android:id="@+id/instagramIcon"
