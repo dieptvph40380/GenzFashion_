@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout_pay"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    >
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/container"
     android:fitsSystemWindows="true"
     android:background="@color/background_color">
 
@@ -37,6 +46,8 @@
         android:layout_height="1dp"
         android:background="#D3D3D3"
         android:layout_marginBottom="8dp" />
+
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -161,3 +172,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</FrameLayout>

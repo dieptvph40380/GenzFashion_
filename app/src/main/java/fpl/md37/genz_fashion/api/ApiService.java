@@ -98,6 +98,7 @@ public interface ApiService {
             @Part("description") RequestBody description,
             @Part("id_suppliers") RequestBody suppliers,
             @Part("id_producttype") RequestBody typeproducts,
+            @Part("sizeQuantities") RequestBody sizeQuantities,
             @Part ArrayList<MultipartBody.Part> image
     );
 //    @GET("get-supplier-by-name")

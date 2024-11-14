@@ -214,6 +214,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         }
     }
+
     private File createFileFromUri(Uri uri) {
         String fileName = "image_" + System.currentTimeMillis() + ".jpg";
         File file = new File(this.getCacheDir(), fileName);
