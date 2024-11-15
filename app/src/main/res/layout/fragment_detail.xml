@@ -31,7 +31,7 @@
         app:layout_constraintStart_toEndOf="@+id/backArrow"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <ImageView
         android:id="@+id/productImagePlaceholder"
         android:layout_width="0dp"
         android:layout_height="200dp"

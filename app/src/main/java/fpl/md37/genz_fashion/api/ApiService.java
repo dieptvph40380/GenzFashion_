@@ -2,12 +2,14 @@ package fpl.md37.genz_fashion.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.Suppliers;
 import fpl.md37.genz_fashion.models.TypeProduct;
+import fpl.md37.genz_fashion.models.Voucher;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -98,6 +100,7 @@ public interface ApiService {
             @Part("description") RequestBody description,
             @Part("id_suppliers") RequestBody suppliers,
             @Part("id_producttype") RequestBody typeproducts,
+            @Part("sizeQuantities") RequestBody sizeQuantities,
             @Part ArrayList<MultipartBody.Part> image
     );
 //    @GET("get-supplier-by-name")
@@ -113,4 +116,7 @@ public interface ApiService {
     @GET("typeproduct/{id}")
     Call<Response<TypeProduct>> getTypeProductById(@Path("id") String id);
 
+    //listVoucher
+    @GET("get-list-voucher")
+    Call<Response<ArrayList<Voucher>>> getAllVoucher();
 }
