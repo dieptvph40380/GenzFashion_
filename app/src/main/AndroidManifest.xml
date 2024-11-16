@@ -19,9 +19,23 @@
         android:theme="@style/Theme.GenZ_Fashion"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.DetailUser"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question1"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question2"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question3"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question4"
+            android:exported="false" />
 
         <activity
-
             android:name="fpl.md37.genz_fashion.UserScreen.OTPVerificationActivity"
             android:exported="false" />
         <activity
@@ -45,26 +59,27 @@
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
-            android:exported="false" />
+            android:exported="true">
 
+        </activity>
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.MainActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.WelcomeActivity"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.MyOrderActivity"
             android:exported="false" />
-
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.SignInActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
