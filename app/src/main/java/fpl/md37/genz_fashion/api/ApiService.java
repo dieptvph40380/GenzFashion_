@@ -1,8 +1,6 @@
 package fpl.md37.genz_fashion.api;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
@@ -23,7 +21,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiService {
     public static String BASE_URL="http://10.0.2.2:3000/api/";
@@ -119,4 +116,30 @@ public interface ApiService {
     //listVoucher
     @GET("get-list-voucher")
     Call<Response<ArrayList<Voucher>>> getAllVoucher();
+    // add voucher
+    @Multipart
+    @POST("add-voucher")
+    Call<ResponseBody> addVoucher(
+            @Part("name") RequestBody name,
+            @Part("description") RequestBody description,
+            @Part("discountValue") RequestBody discountValue,
+            @Part("discountType") RequestBody discountType,
+            @Part("validFrom") RequestBody validFrom,
+            @Part("validUntil") RequestBody validUntil,
+            @Part("minimumOrderValue") RequestBody minimumOrderValue,
+            @Part MultipartBody.Part image
+    );
+    @Multipart
+    @PUT("update-voucher/{id}")
+    Call<ResponseBody> updateVoucher(
+            @Path("id") String voucherId,
+            @Part("name") RequestBody name,
+            @Part("description") RequestBody description,
+            @Part("discountValue") RequestBody discountValue,
+            @Part("discountType") RequestBody discountType,
+            @Part("validFrom") RequestBody validFrom,
+            @Part("validUntil") RequestBody validUntil,
+            @Part("minimumOrderValue") RequestBody minimumOrderValue,
+            @Part MultipartBody.Part image
+    );
 }
