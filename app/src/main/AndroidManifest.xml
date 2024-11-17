@@ -20,7 +20,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.RePassActivity"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.ForgotPassEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.ForgotRole"
+            android:exported="false" />
+        <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.VoucherDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question1"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question2"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question3"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.QaA.Question4"
+            android:exported="false" />
+        <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.DetailUser"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.OTPVerificationActivity"
