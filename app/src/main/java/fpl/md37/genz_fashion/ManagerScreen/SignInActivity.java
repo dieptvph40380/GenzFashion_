@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fpl.md37.genz_fashion.UserScreen.ForgotPassActivity;
+import fpl.md37.genz_fashion.UserScreen.ForgotRole;
 import fpl.md37.genz_fashion.UserScreen.MainActivity;
 
 import com.example.genz_fashion.R;
@@ -55,7 +56,7 @@ public class SignInActivity extends AppCompatActivity {
         fotgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ForgotPassActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ForgotRole.class);
                 startActivity(intent);
                 finish();
             }
