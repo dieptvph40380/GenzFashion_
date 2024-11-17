@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.ViewHolder> {
@@ -22,6 +23,12 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         this.context = context;
         this.imageUrls = imageUrls;
     }
+    public void updateImages(List<String> newImageUrls) {
+        this.imageUrls.clear(); // Xóa danh sách cũ
+        this.imageUrls.addAll(newImageUrls); // Thêm danh sách mới
+        notifyDataSetChanged(); // Thông báo cho adapter rằng dữ liệu đã thay đổi
+    }
+
 
     @NonNull
     @Override
