@@ -50,9 +50,9 @@ public class PersonalInformationFragment_ extends Fragment {
         super.onCreate(savedInstanceState);
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if(result.getResultCode() == Activity.RESULT_OK){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        if(data != null && data.getData() != null){
+                        if (data != null && data.getData() != null) {
                             selectedImageUri = data.getData();
                             AndroidUtil.setProfilePic(getContext(), selectedImageUri, profilePic);
                         }
@@ -117,10 +117,10 @@ public class PersonalInformationFragment_ extends Fragment {
     void updateToFirestore() {
         FirebaseUtil.currentUserDetails().set(currentUserModel)
                 .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        AndroidUtil.showToast(getContext(),"Updated successfully");
-                    }else{
-                        AndroidUtil.showToast(getContext(),"Updated failed");
+                    if (task.isSuccessful()) {
+                        AndroidUtil.showToast(getContext(), "Updated successfully");
+                    } else {
+                        AndroidUtil.showToast(getContext(), "Updated failed");
                     }
                 });
     }

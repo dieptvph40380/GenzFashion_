@@ -45,6 +45,9 @@ public class FirebaseUtil {
                 .child(userId);
     }
 
+
+
+
     // Lấy StorageReference của ảnh đại diện người dùng khác
     public static StorageReference getOtherProfilePicStorageRef(String otherUserId) {
         if (otherUserId == null || otherUserId.isEmpty()) {
