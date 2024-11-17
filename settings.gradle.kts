@@ -16,3 +16,13 @@ dependencyResolutionManagement {
 
 rootProject.name = "GenZ_Fashion" // Tên dự án
 include(":app") // Bao gồm mô-đun chính của ứng dụng
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://jitpack.io")
+        }
+    }
+}
+
+rootProject.name = "GenZ_Fashion"
+include(":app")

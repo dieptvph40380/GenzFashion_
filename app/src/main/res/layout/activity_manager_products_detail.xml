@@ -127,6 +127,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"/>
 
+            <TextView
+                android:id="@+id/size_quantities_productdetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Type: Shirt"
+                android:paddingTop="4dp"
+                android:textSize="18sp"
+
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"/>
             <!-- Product Description -->
             <TextView
                 android:id="@+id/description_productdetail"

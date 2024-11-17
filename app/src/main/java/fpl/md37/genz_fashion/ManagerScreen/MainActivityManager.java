@@ -44,6 +44,9 @@ public class MainActivityManager extends AppCompatActivity {
         supplierss.setOnClickListener(v -> {
             replaceFragment(new SupplierFragment());
         });
+        voucher.setOnClickListener(v -> {
+            replaceFragment(new VoucherFragment());
+        });
 
 //        supplierss.setOnClickListener(new View.OnClickListener() {
 //            @Override

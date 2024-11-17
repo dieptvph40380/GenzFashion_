@@ -21,6 +21,7 @@ import com.example.genz_fashion.R;
 import java.util.ArrayList;
 
 import fpl.md37.genz_fashion.ManagerScreen.ProductsFragment;
+import fpl.md37.genz_fashion.UserScreen.HomeFragment;
 import fpl.md37.genz_fashion.handel.Item_Handle_Product;
 import fpl.md37.genz_fashion.models.Product;
 
@@ -31,6 +32,14 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
 
 
     public AdapterProduct(Context context, ArrayList<Product> listProduct, ProductsFragment items) {
+        this.context = context;
+        this.listProduct = listProduct;
+        this.items = items;
+    }
+
+
+    //Adapter màn home hiển thị danh sách sản phẩm cho người dùng
+    public AdapterProduct(Context context, ArrayList<Product> listProduct, HomeFragment homeFragment) {
         this.context = context;
         this.listProduct = listProduct;
         this.items = items;

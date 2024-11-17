@@ -106,17 +106,14 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Lọc danh sách mỗi khi có thay đổi trong ô tìm kiếm
                 filter(newText);
                 return true;
             }
         });
-        ///
 
         return view;
     }
 
-    ///
     private void filter(String query) {
         ArrayList<Suppliers> filteredList = new ArrayList<>();
         for (Suppliers supplier : listSuppliers) {
@@ -127,7 +124,6 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         setupRecyclerView(filteredList);
     }
 
-    ///
 
     private void initializeViews(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewSuppliers);
