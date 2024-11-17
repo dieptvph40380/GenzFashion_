@@ -49,6 +49,7 @@ public class ForgotPassEmailActivity extends AppCompatActivity {
 
                 // Gửi email đặt lại mật khẩu
                 sendPasswordResetEmail(email);
+
             }
         });
 

@@ -1,5 +1,6 @@
 package fpl.md37.genz_fashion.ManagerScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -77,6 +78,10 @@ public class Password_Manager extends Fragment {
                 // Nếu các điều kiện trên đều thỏa mãn, tiến hành đổi mật khẩu
 
                 updatePassword(currentPassword, newPassword);
+
+                Intent intent = new Intent(getContext(), SignInActivity.class);
+                startActivity(intent);
+
             }
         });
 
