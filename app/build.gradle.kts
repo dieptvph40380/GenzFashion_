@@ -84,4 +84,7 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+
+    // Image Picker
+    implementation("com.github.dhaval2404:imagepicker:2.1")
 }
