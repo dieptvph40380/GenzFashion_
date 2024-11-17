@@ -31,9 +31,9 @@ import retrofit2.Callback;
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     private CountDownTimer countDownTimer;
-    private HttpRequest httpRequest;
-    private ArrayList<Product> productList = new ArrayList<>();  // Khởi tạo danh sách rỗng
-    private RecyclerView rcv;
+//    private HttpRequest httpRequest;
+//    private ArrayList<Product> productList = new ArrayList<>();
+//    private RecyclerView rcv;
 
     @Nullable
     @Override
@@ -46,60 +46,60 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rcv = binding.rvItems;  // Liên kết RecyclerView từ layout
-        setupCategoryRecyclerView();
+        startCountdownTimer(2 * 60 * 60 * 1000);
 
-        httpRequest = new HttpRequest();  // Khởi tạo HttpRequest
-        startCountdownTimer(2 * 60 * 60 * 1000);  // Countdown 2 giờ
-        fetchProducts();  // Lấy danh sách sản phẩm
+
+//        rcv = binding.rvItems;
+//        setupCategoryRecyclerView();
+     /*   httpRequest = new HttpRequest();  */
+//        fetchProducts();
     }
 
-    private void setupRecyclerView(ArrayList<Product> products) {
-        if (products == null) {
-            products = new ArrayList<>();  // Khởi tạo danh sách rỗng nếu products là null
-        }
+//    private void setupRecyclerView(ArrayList<Product> products) {
+//        if (products == null) {
+//            products = new ArrayList<>();
+//        }
+//
+////        AdapterProduct adapter = new AdapterProduct(getContext(), products, this);
+//        AdapterProductUser adapter=new AdapterProductUser(getContext(),products,this);
+//        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+//        rcv.setAdapter(adapter);
+//    }
 
-//        AdapterProduct adapter = new AdapterProduct(getContext(), products, this);
-        AdapterProductUser adapter=new AdapterProductUser(getContext(),products,this);
-        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        rcv.setAdapter(adapter);
-    }
+//    private void fetchProducts() {
+//        httpRequest.callApi().getAllProducts().enqueue(new Callback<Response<ArrayList<Product>>>() {
+//            @Override
+//            public void onResponse(Call<Response<ArrayList<Product>>> call, retrofit2.Response<Response<ArrayList<Product>>> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    productList = response.body().getData();
+//                    if (productList == null) {
+//                        productList = new ArrayList<>();
+//                    }
+//                    setupRecyclerView(productList);
+//                } else {
+//                    Toast.makeText(getContext(), "Lỗi khi lấy sản phẩm", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Response<ArrayList<Product>>> call, Throwable t) {
+//                Toast.makeText(getContext(), "Có lỗi xảy ra: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
-    private void fetchProducts() {
-        httpRequest.callApi().getAllProducts().enqueue(new Callback<Response<ArrayList<Product>>>() {
-            @Override
-            public void onResponse(Call<Response<ArrayList<Product>>> call, retrofit2.Response<Response<ArrayList<Product>>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    productList = response.body().getData();
-                    if (productList == null) {
-                        productList = new ArrayList<>();  // Khởi tạo danh sách rỗng nếu không có sản phẩm
-                    }
-                    setupRecyclerView(productList);
-                } else {
-                    Toast.makeText(getContext(), "Lỗi khi lấy sản phẩm", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Response<ArrayList<Product>>> call, Throwable t) {
-                Toast.makeText(getContext(), "Có lỗi xảy ra: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setupCategoryRecyclerView() {
-        List<CategoryAdapter.Category> categoryList = new ArrayList<>();
-        categoryList.add(new CategoryAdapter.Category("T-Shirt", R.drawable.ic_shirt));
-        categoryList.add(new CategoryAdapter.Category("Pant", R.drawable.ic_pant));
-        categoryList.add(new CategoryAdapter.Category("Dress", R.drawable.ic_dress));
-        categoryList.add(new CategoryAdapter.Category("Jacket", R.drawable.ic_jacket));
-
-        Log.d("CategoryList", "Size: " + categoryList.size());  // Kiểm tra kích thước danh sách
-
-        CategoryAdapter adapter = new CategoryAdapter(categoryList);
-        binding.rvCategory.setAdapter(adapter);
-        binding.rvCategory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-    }
+//    private void setupCategoryRecyclerView() {
+//        List<CategoryAdapter.Category> categoryList = new ArrayList<>();
+//        categoryList.add(new CategoryAdapter.Category("T-Shirt", R.drawable.ic_shirt));
+//        categoryList.add(new CategoryAdapter.Category("Pant", R.drawable.ic_pant));
+//        categoryList.add(new CategoryAdapter.Category("Dress", R.drawable.ic_dress));
+//        categoryList.add(new CategoryAdapter.Category("Jacket", R.drawable.ic_jacket));
+//
+//        Log.d("CategoryList", "Size: " + categoryList.size());
+//        CategoryAdapter adapter = new CategoryAdapter(categoryList);
+//        binding.rvCategory.setAdapter(adapter);
+//        binding.rvCategory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//    }
 
     private void startCountdownTimer(long duration) {
         countDownTimer = new CountDownTimer(duration, 1000) {
