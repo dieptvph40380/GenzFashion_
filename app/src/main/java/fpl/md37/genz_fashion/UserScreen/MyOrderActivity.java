@@ -1,14 +1,21 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.genz_fashion.R;
+
+import fpl.md37.genz_fashion.ManagerScreen.MainActivityManager;
 import fpl.md37.genz_fashion.adapter.ViewPagerOderAdapter;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -28,7 +35,7 @@ public class MyOrderActivity extends AppCompatActivity {
         ViewPagerOderAdapter adapter = new ViewPagerOderAdapter(this);
         viewPager.setAdapter(adapter);
 
-        btnback=findViewById(R.id.btnBack);
+        btnback=findViewById(R.id.btnBack_order);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,4 +56,5 @@ public class MyOrderActivity extends AppCompatActivity {
             }
         }).attach();
     }
+
 }

@@ -80,7 +80,12 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
+
+                Intent intent = new Intent(getActivity(), MainActivityManager.class);
+
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+
             }
         });
         httpRequest =new HttpRequest();
@@ -101,17 +106,14 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Lọc danh sách mỗi khi có thay đổi trong ô tìm kiếm
                 filter(newText);
                 return true;
             }
         });
-        ///
 
         return view;
     }
 
-    ///
     private void filter(String query) {
         ArrayList<Suppliers> filteredList = new ArrayList<>();
         for (Suppliers supplier : listSuppliers) {
@@ -122,7 +124,6 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         setupRecyclerView(filteredList);
     }
 
-    ///
 
     private void initializeViews(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewSuppliers);
