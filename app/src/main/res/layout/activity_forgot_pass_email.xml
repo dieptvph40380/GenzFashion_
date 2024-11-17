@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="30dp"
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:layout_marginTop="30dp"
-    tools:context="fpl.md37.genz_fashion.UserScreen.ForgotPassActivity">
+    tools:context="fpl.md37.genz_fashion.UserScreen.ForgotPassEmailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,52 +47,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Please enter phone number"
+        android:text="Please enter email"
         android:textSize="18sp" />
 
-    <LinearLayout
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        >
+        android:layout_height="wrap_content">
 
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/ccp"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:ccp_textSize="20sp"
-            app:ccp_defaultNameCode="VN"
-            android:layout_gravity="center"
-            app:ccp_showFlag="true"
-            app:ccp_showFullName="false"
-            app:ccp_showNameCode="false"
-            app:ccp_showPhoneCode="true"
-            app:ccp_hintExampleNumber="true"
-            android:layout_marginEnd="8dp"/>
+            android:background="@color/background_color"
+            android:hint="@string/EnterEmail"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_Phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background_color"
-                android:hint="@string/Enterphone"
-                android:textSize="20sp"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnSendOTP"
+        android:id="@+id/btnSendEmail"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
