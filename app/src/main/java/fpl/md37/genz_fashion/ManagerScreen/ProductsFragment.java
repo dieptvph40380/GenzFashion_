@@ -166,8 +166,6 @@ public class ProductsFragment extends Fragment  implements Item_Handle_Product{
         bottomSheetDialog.show();
     }
 
-
-
     private void addProduct(String name, String price, String quantity, String state, String description, String typeId, String supplierId, BottomSheetDialog bottomSheetDialog) {
         // Lấy danh sách size và số lượng từ các EditText trong sizeQuantityContainer
         List<HashMap<String, Object>> sizeQuantities = new ArrayList<>();
@@ -486,4 +484,5 @@ public class ProductsFragment extends Fragment  implements Item_Handle_Product{
         intent.putExtra("product_data", product);
         startActivity(intent);
     }
+
 }
