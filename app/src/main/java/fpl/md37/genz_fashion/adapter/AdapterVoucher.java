@@ -103,18 +103,29 @@ public class AdapterVoucher extends RecyclerView.Adapter<AdapterVoucher.ViewHold
 
     // Cập nhật lại số ngày còn lại từ ngày hiện tại đến ngày hết hạn
     private long calculateDaysDifference(String validFrom, String validUntil) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); // Định dạng ngày tháng
         try {
             Date startDate = sdf.parse(validFrom);
             Date endDate = sdf.parse(validUntil);
+            Date currentDate = new Date();
 
-            long differenceInMillis = endDate.getTime() - startDate.getTime();
-            return differenceInMillis / (1000 * 60 * 60 * 24); // Chuyển đổi từ mili giây sang ngày
+            // Nếu ngày hiện tại lớn hơn ngày kết thúc thì voucher đã hết hạn
+            if (currentDate.after(endDate)) {
+                return 0;
+            }
+
+            // Nếu ngày bắt đầu lớn hơn ngày hiện tại thì sử dụng ngày bắt đầu
+            Date effectiveStartDate = currentDate.before(startDate) ? startDate : currentDate;
+
+            // Tính toán số ngày giữa ngày hiệu lực và ngày hết hạn
+            long differenceInMillis = endDate.getTime() - effectiveStartDate.getTime();
+            return differenceInMillis / (1000 * 60 * 60 * 24);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
+
 
     // Lặp lại cập nhật sau mỗi 24 giờ
     private void scheduleDailyUpdate() {
