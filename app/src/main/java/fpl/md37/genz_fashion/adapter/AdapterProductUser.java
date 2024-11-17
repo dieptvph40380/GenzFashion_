@@ -2,12 +2,11 @@ package fpl.md37.genz_fashion.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,37 +19,29 @@ import com.example.genz_fashion.R;
 
 import java.util.ArrayList;
 
-import fpl.md37.genz_fashion.ManagerScreen.ProductsFragment;
+import fpl.md37.genz_fashion.UserScreen.DetailUser;
 import fpl.md37.genz_fashion.UserScreen.HomeFragment;
 import fpl.md37.genz_fashion.handel.Item_Handle_Product;
 import fpl.md37.genz_fashion.models.Product;
 
-public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHolder> {
+public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.ViewHolder>{
     private Context context;
     private ArrayList<Product> listProduct;
     Item_Handle_Product items;
 
-
-    public AdapterProduct(Context context, ArrayList<Product> listProduct, ProductsFragment items) {
+    public AdapterProductUser(Context context, ArrayList<Product> listProduct, HomeFragment homeFragment) {
         this.context = context;
         this.listProduct = listProduct;
         this.items = items;
     }
 
-
-    //Adapter màn home hiển thị danh sách sản phẩm cho người dùng
-    public AdapterProduct(Context context, ArrayList<Product> listProduct, HomeFragment homeFragment) {
-        this.context = context;
-        this.listProduct = listProduct;
-        this.items = items;
-    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_manager_products,parent,false);
-        return new ViewHolder(view);
+        View view = inflater.inflate(R.layout.item_products,parent,false);
+        return new AdapterProductUser.ViewHolder(view);
     }
 
     @Override
@@ -68,21 +59,22 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
                     .into(holder.image);
         }
         holder.name.setText(product.getProduct_name());
-        holder.price.setText(product.getPrice());
-        if (product.isState()) {
-            holder.status.setText("Còn hàng");
-            holder.status.setTextColor(context.getResources().getColor(R.color.green));
-        } else {
-            holder.status.setText("Hết hàng");
-            holder.status.setTextColor(context.getResources().getColor(R.color.red));
-        }
+        holder.price.setText("$"+product.getPrice());
+//        if (product.isState()) {
+//            holder.status.setText("Còn hàng");
+//            holder.status.setTextColor(context.getResources().getColor(R.color.green));
+//        } else {
+//            holder.status.setText("Hết hàng");
+//            holder.status.setTextColor(context.getResources().getColor(R.color.red));
+//        }
         holder.show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               items.ShowProduct(product);
+                Intent intent = new Intent(context, DetailUser.class);
+                intent.putExtra("product", product); // Truyền đối tượng product sang Activity chi tiết
+                context.startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -100,9 +92,8 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
             image=itemView.findViewById(R.id.img_product);
             name=itemView.findViewById(R.id.tvProduct_name);
             price=itemView.findViewById(R.id.tvProduct_price);
-            status=itemView.findViewById(R.id.tvProduct_status);
+//            status=itemView.findViewById(R.id.tvProduct_status);
 
         }
     }
-
 }
