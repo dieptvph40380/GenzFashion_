@@ -1,17 +1,17 @@
 package fpl.md37.genz_fashion.ManagerScreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.ConditionVariable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
-import androidx.activity.EdgeToEdge;
+import androidx.fragment.app.Fragment;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,28 +27,38 @@ import java.util.ArrayList;
 import fpl.md37.genz_fashion.adapter.AdapterViewCustomer;
 import fpl.md37.genz_fashion.models.Client;
 
-public class InformationFragment extends AppCompatActivity {
+public class InformationFragment extends Fragment {
     FirebaseFirestore db;
-    RecyclerView rcv_client, rcv_grocery;
+    RecyclerView rcv_client;
     SearchView searchCustomer;
     Context context;
     ArrayList<Client> clients = new ArrayList<>();
     AdapterViewCustomer adapter_clients;
     ArrayList<Client> filteredClients = new ArrayList<>();
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.fragment_customer_information);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate layout for the fragment
+        View view = inflater.inflate(R.layout.fragment_customer_information, container, false);
+        ImageView btnback=view.findViewById(R.id.btnout);
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        rcv_client = findViewById(R.id.rcv_client);
-        searchCustomer = findViewById(R.id.search_Customer);
+                Intent intent = new Intent(getActivity(), MainActivityManager.class);
+
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+
+            }
+        });
+        rcv_client = view.findViewById(R.id.rcv_client);
+        searchCustomer = view.findViewById(R.id.search_Customer);
         db = FirebaseFirestore.getInstance();
 
-        adapter_clients = new AdapterViewCustomer(this, clients, db);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+        adapter_clients = new AdapterViewCustomer(getActivity(), clients, db);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rcv_client.setLayoutManager(linearLayoutManager);
         rcv_client.setAdapter(adapter_clients);
 
@@ -67,6 +77,8 @@ public class InformationFragment extends AppCompatActivity {
                 return true;
             }
         });
+
+        return view;
     }
 
     private void ListenFirebaseFirestore_Cilent() {
@@ -92,12 +104,10 @@ public class InformationFragment extends AppCompatActivity {
                                         if (dc.getOldIndex() == dc.getNewIndex()) {
                                             clients.set(dc.getOldIndex(), update);
                                             adapter_clients.notifyItemChanged(dc.getOldIndex());
-
                                         } else {
                                             clients.remove(dc.getOldIndex());
                                             clients.add(update);
                                             adapter_clients.notifyItemMoved(dc.getOldIndex(), dc.getNewIndex());
-
                                         }
                                         break;
                                     }
@@ -115,17 +125,16 @@ public class InformationFragment extends AppCompatActivity {
     }
 
     private void filterList(String text) {
-        filteredClients.clear(); // Xóa danh sách lọc trước đó
+        filteredClients.clear();
         if (text.isEmpty()) {
-            filteredClients.addAll(clients); // Nếu ô tìm kiếm trống, thêm lại tất cả khách hàng
+            filteredClients.addAll(clients);
         } else {
             for (Client client : clients) {
-                if (client.getName().toLowerCase().contains(text.toLowerCase())) { // Kiểm tra nếu tên chứa chuỗi tìm kiếm
+                if (client.getName().toLowerCase().contains(text.toLowerCase())) {
                     filteredClients.add(client);
                 }
             }
         }
-        adapter_clients.updateList(filteredClients); // Cập nhật danh sách trong adapter
+        adapter_clients.updateList(filteredClients);
     }
-
 }

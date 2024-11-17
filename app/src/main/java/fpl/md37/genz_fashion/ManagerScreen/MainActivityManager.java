@@ -44,6 +44,9 @@ public class MainActivityManager extends AppCompatActivity {
         supplierss.setOnClickListener(v -> {
             replaceFragment(new SupplierFragment());
         });
+        voucher.setOnClickListener(v -> {
+            replaceFragment(new VoucherFragment());
+        });
 
 //        supplierss.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -61,13 +64,14 @@ public class MainActivityManager extends AppCompatActivity {
          infor.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 startActivity(new Intent(MainActivityManager.this, InformationFragment.class));
+                 replaceFragment(new InformationFragment());
              }
          });
 
     }
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.sile_right,R.anim.slide_left);
         transaction.replace(R.id.frameLayout1, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

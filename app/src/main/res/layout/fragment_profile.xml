@@ -1,53 +1,51 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout_profile"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    >
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     android:background="@color/background_color"
+    android:fitsSystemWindows="true"
     tools:context="fpl.md37.genz_fashion.UserScreen.ProfileFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/iconout">
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
 
+
+        <ImageView
+            android:id="@+id/btnBack_profile"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/iconout"
+            android:contentDescription="Back Button"
+            />
         <TextView
-            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="My Profile"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="20sp"
+            android:text="My Information"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="#000000"
             android:textStyle="bold" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgProfile"
         android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:src="@drawable/profile_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <ImageView
-        android:id="@+id/btnEditProfile"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/edit_profile"
-        app:layout_constraintBottom_toBottomOf="@id/imgProfile"
-        app:layout_constraintEnd_toEndOf="@id/imgProfile"
-        app:layout_constraintTop_toBottomOf="@id/imgProfile" />
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:src="@drawable/profile_icon" />
 
     <TextView
         android:id="@+id/tvProfileName"
@@ -57,32 +55,27 @@
         android:text="Satoko"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgProfile" />
+        android:layout_gravity="center_horizontal"/>
 
-
+    <!-- Profile Options -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvProfileName">
+        android:paddingTop="10dp">
 
+        <!-- Profile Section -->
         <LinearLayout
             android:id="@+id/profile_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="15dp">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
                 android:src="@drawable/your_profile" />
 
             <TextView
@@ -107,13 +100,13 @@
             android:layout_marginRight="20dp"
             android:background="@color/black" />
 
-
+        <!-- Payment Method -->
         <LinearLayout
             android:id="@+id/profile_payment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="15dp">
 
             <ImageView
@@ -143,12 +136,13 @@
             android:layout_marginRight="20dp"
             android:background="@color/black" />
 
+        <!-- My Orders -->
         <LinearLayout
             android:id="@+id/profile_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="15dp">
 
             <ImageView
@@ -178,12 +172,13 @@
             android:layout_marginRight="20dp"
             android:background="@color/black" />
 
+        <!-- Settings -->
         <LinearLayout
             android:id="@+id/profile_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="15dp">
 
             <ImageView
@@ -201,7 +196,6 @@
                 android:textSize="16sp" />
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/layer" />
@@ -214,12 +208,13 @@
             android:layout_marginRight="20dp"
             android:background="@color/black" />
 
+        <!-- Help Center -->
         <LinearLayout
             android:id="@+id/profile_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="15dp">
 
             <ImageView
@@ -249,12 +244,13 @@
             android:layout_marginRight="20dp"
             android:background="@color/black" />
 
+        <!-- Privacy Policy -->
         <LinearLayout
             android:id="@+id/profile_policy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="15dp">
 
             <ImageView
@@ -284,7 +280,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/black" />
-
         <LinearLayout
             android:id="@+id/profile_out"
             android:layout_width="match_parent"
@@ -297,7 +292,7 @@
                 android:id="@+id/icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/logout" />
+                android:src="@drawable/outred" />
 
             <TextView
                 android:id="@+id/menuTitle"
@@ -306,13 +301,16 @@
                 android:layout_weight="1"
                 android:paddingStart="16dp"
                 android:text="Log out"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/red"
+                android:textSize="20sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/layer"/>
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/nextred" />
         </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+</FrameLayout>

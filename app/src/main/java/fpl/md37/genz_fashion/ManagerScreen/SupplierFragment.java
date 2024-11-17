@@ -80,7 +80,12 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
+
+                Intent intent = new Intent(getActivity(), MainActivityManager.class);
+
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+
             }
         });
         httpRequest =new HttpRequest();
@@ -101,17 +106,14 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Lọc danh sách mỗi khi có thay đổi trong ô tìm kiếm
                 filter(newText);
                 return true;
             }
         });
-        ///
 
         return view;
     }
 
-    ///
     private void filter(String query) {
         ArrayList<Suppliers> filteredList = new ArrayList<>();
         for (Suppliers supplier : listSuppliers) {
@@ -122,7 +124,6 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
         setupRecyclerView(filteredList);
     }
 
-    ///
 
     private void initializeViews(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewSuppliers);
@@ -155,33 +156,49 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             String itemPhone = editItemPhone.getText().toString().trim();
             String itemEmail = editItemEmail.getText().toString().trim();
             String itemDes = editItemDes.getText().toString().trim();
-            addSuppliers(itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
 
+            if (itemName.isEmpty()) {
+                editItemName.setError("Name cannot be empty");
+                return;
+            }
+
+            // Validate phone (10 digits, starts with 0)
+            if (itemPhone.isEmpty()) {
+                editItemPhone.setError("Phone number cannot be empty");
+                return;
+            } else if (!itemPhone.matches("^0\\d{9}$")) {
+                editItemPhone.setError("Phone number must have 10 digits and start with 0");
+                return;
+            }
+
+            // Validate email with @gmail.com format
+            if (itemEmail.isEmpty()) {
+                editItemEmail.setError("Email address cannot be empty");
+                return;
+            } else if (!itemEmail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                editItemEmail.setError("Email address must be in a valid format and end with @gmail.com");
+                return;
+            }
+
+            // Validate description
+            if (itemDes.isEmpty()) {
+                editItemDes.setError("Description cannot be empty");
+                return;
+            } else if (itemDes.length() > 50) {
+                editItemDes.setError("Description cannot exceed 50 characters");
+                return;
+            }
+
+            // Validate image selection
             if (imageUri == null) {
                 Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (itemName.isEmpty()) {
-                Toast.makeText(getContext(), "Tên không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.isEmpty()) {
-                Toast.makeText(getContext(), "Số điện thoại không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemEmail.isEmpty()) {
-                Toast.makeText(getContext(), "Địa chỉ email không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemDes.isEmpty()) {
-                Toast.makeText(getContext(), "Mô tả không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.length() != 10) { // Kiểm tra độ dài số điện thoại
-                Toast.makeText(getContext(), "Số điện thoại phải có đủ 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidPhone(itemPhone)) {
-                Toast.makeText(getContext(), "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidEmail(itemEmail)) {
-                Toast.makeText(getContext(), "Địa chỉ email phải có đuôi @gmail.com.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidDescription(itemDes)) {
-                Toast.makeText(getContext(), "Mô tả không được quá 50 ký tự.", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                addSuppliers(itemName, itemPhone, itemEmail, itemDes, bottomSheetDialog);
-            }
+
+
+
+            addSuppliers(itemName, itemPhone, itemEmail,itemDes, bottomSheetDialog);
         });
 
 
@@ -224,6 +241,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
                     // Xử lý phản hồi thành công
                     bottomSheetDialog.dismiss();
                     fetchSuppliers();
+                    Toast.makeText(getContext(), "Supplier added successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     // Xử lý lỗi
                     Log.d("AddSuppliers", "Error: " + response.message());
@@ -398,25 +416,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
             String itemDes = editItemDes.getText().toString();
             updateSuppliers(suppliers.getId(), itemName, itemPhone,itemEmail,itemDes, bottomSheetDialog);
 
-            if (itemName.isEmpty()) {
-                Toast.makeText(getContext(), "Tên không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.isEmpty()) {
-                Toast.makeText(getContext(), "Số điện thoại không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemEmail.isEmpty()) {
-                Toast.makeText(getContext(), "Địa chỉ email không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemDes.isEmpty()) {
-                Toast.makeText(getContext(), "Mô tả không được để trống.", Toast.LENGTH_SHORT).show();
-            } else if (itemPhone.length() != 10) {
-                Toast.makeText(getContext(), "Số điện thoại phải có đủ 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidPhone(itemPhone)) {
-                Toast.makeText(getContext(), "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidEmail(itemEmail)) {
-                Toast.makeText(getContext(), "Địa chỉ email phải có đuôi @gmail.com.", Toast.LENGTH_SHORT).show();
-            } else if (!isValidDescription(itemDes)) {
-                Toast.makeText(getContext(), "Mô tả không được quá 50 ký tự.", Toast.LENGTH_SHORT).show();
-            } else {
-                addSuppliers(itemName, itemPhone, itemEmail, itemDes, bottomSheetDialog);
-            }
+
         });
 
         // Thiết lập chiều cao cho BottomSheetDialog
@@ -458,6 +458,7 @@ public class SupplierFragment extends Fragment implements Item_Handel_Suppliers 
                     // Xử lý phản hồi thành công
                     bottomSheetDialog.dismiss();
                     fetchSuppliers();
+                    Toast.makeText(getContext(), "Supplier update successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     // Xử lý lỗi
                     Log.d("UpdateSuppliers", "Error: " + response.message());

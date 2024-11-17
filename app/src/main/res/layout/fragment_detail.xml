@@ -31,7 +31,7 @@
         app:layout_constraintStart_toEndOf="@+id/backArrow"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <ImageView
         android:id="@+id/productImagePlaceholder"
         android:layout_width="0dp"
         android:layout_height="200dp"
@@ -90,6 +90,16 @@
         app:layout_constraintTop_toBottomOf="@id/productPrice" />
 
     <TextView
+        android:id="@+id/productdetail"
+        android:paddingLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Detail"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productName"/>
+
+    <TextView
         android:paddingLeft="16dp"
         android:id="@+id/productDescription"
         android:layout_width="0dp"
@@ -98,7 +108,7 @@
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productName" />
+        app:layout_constraintTop_toBottomOf="@id/productdetail" />
 
     <TextView
         android:paddingLeft="16dp"
@@ -125,16 +135,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/readMoreText" />
 
-    <LinearLayout
+    <RadioGroup
         android:id="@+id/sizeOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:orientation="horizontal"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@id/selectSizeText">
 
         <RadioButton
@@ -148,9 +157,7 @@
             android:textColor="#000000"
             android:background="@drawable/radio_button_background"
             android:gravity="center"
-            android:padding="12dp"
-            />
-
+            android:padding="12dp"/>
 
         <RadioButton
             android:id="@+id/sizeM"
@@ -163,8 +170,7 @@
             android:textColor="#000000"
             android:background="@drawable/radio_button_background"
             android:gravity="center"
-            android:padding="12dp"
-            />
+            android:padding="12dp"/>
 
         <RadioButton
             android:id="@+id/sizeL"
@@ -177,8 +183,7 @@
             android:textColor="#000000"
             android:background="@drawable/radio_button_background"
             android:gravity="center"
-            android:padding="12dp"
-            />
+            android:padding="12dp"/>
 
         <RadioButton
             android:id="@+id/sizeXL"
@@ -191,8 +196,7 @@
             android:textColor="#000000"
             android:background="@drawable/radio_button_background"
             android:gravity="center"
-            android:padding="12dp"
-            />
+            android:padding="12dp"/>
 
         <RadioButton
             android:id="@+id/sizeXXL"
@@ -205,10 +209,19 @@
             android:textColor="#000000"
             android:background="@drawable/radio_button_background"
             android:gravity="center"
-            android:padding="12dp"
-            />
+            android:padding="12dp"/>
+    </RadioGroup>
 
-    </LinearLayout>
+    <TextView
+        android:paddingLeft="16dp"
+        android:id="@+id/tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Số lượng"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sizeOptions" />
 
 
 
@@ -217,11 +230,11 @@
         android:id="@+id/selectColorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:text="Select Color: Red"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sizeOptions" />
+        app:layout_constraintTop_toBottomOf="@id/tvSize" />
 
     <RadioGroup
         android:id="@+id/colorOptions"
