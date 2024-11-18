@@ -153,9 +153,9 @@ public class DetailUser extends AppCompatActivity {
      * Khởi tạo bảng ánh xạ size và sizeId.
      */
     private void initializeSizeIdMap() {
-        sizeIdMap.put("S", "67360d28d0baa60674d5662b");
-        sizeIdMap.put("M", "67360c9fd0baa60674d56627");
-        sizeIdMap.put("L", "67360ccbd0baa60674d56629");
+        sizeIdMap.put("S", "6703f36ea2c21ac50fc110a8");
+        sizeIdMap.put("M", "6703f374a2c21ac50fc110aa");
+        sizeIdMap.put("L", "6703f379a2c21ac50fc110ac");
         sizeIdMap.put("XL", "67360d3dd0baa60674d5662d");
         sizeIdMap.put("XXL", "67360dxyz0baa60674d566xy"); // Thêm size khác nếu cần
     }
