@@ -1,33 +1,40 @@
 package fpl.md37.genz_fashion.UserScreen;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.models.Product;
+import fpl.md37.genz_fashion.models.Response;
+import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.SizeQuantity;
+import fpl.md37.genz_fashion.models.TypeProduct;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class DetailUser extends AppCompatActivity {
 
     private ImageView backArrow, productImagePlaceholder;
-    private TextView productName, productPrice, productDescription, tvSize;
-    private RadioGroup sizeOptions;
+    private TextView productName, productPrice, productDescription;
     private Product product;
-
-    // Bảng ánh xạ size với SizeId
+    private HttpRequest httpRequest = new HttpRequest();
     private Map<String, String> sizeIdMap = new HashMap<>();
 
     @Override
@@ -35,121 +42,123 @@ public class DetailUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail);
 
-        // Ánh xạ các view từ XML
+        // Ánh xạ các view trong layout
         backArrow = findViewById(R.id.backArrow);
         productImagePlaceholder = findViewById(R.id.productImagePlaceholder);
         productName = findViewById(R.id.productName);
         productPrice = findViewById(R.id.productPrice);
         productDescription = findViewById(R.id.productDescription);
-        sizeOptions = findViewById(R.id.sizeOptions);
-        tvSize = findViewById(R.id.tvSize);
 
-        // Ánh xạ các RadioButton
-        RadioButton sizeS = findViewById(R.id.sizeS);
-        RadioButton sizeM = findViewById(R.id.sizeM);
-        RadioButton sizeL = findViewById(R.id.sizeL);
-        RadioButton sizeXL = findViewById(R.id.sizeXL);
-        RadioButton sizeXXL = findViewById(R.id.sizeXXL);
+        // Nút thêm vào giỏ hàng và mua ngay
+        LinearLayout addToCartButton = findViewById(R.id.addToCart);
+        LinearLayout buyNowButton = findViewById(R.id.addBuyNow);
+
+        addToCartButton.setOnClickListener(v -> showBottomSheet("Add to Cart"));
+        buyNowButton.setOnClickListener(v -> showBottomSheet("Buy Now"));
 
         // Nhận dữ liệu sản phẩm từ Intent
         product = (Product) getIntent().getSerializableExtra("product");
 
-        // Kiểm tra sản phẩm có tồn tại
         if (product != null) {
-            Log.d("Product details", "Product: " + product);
-
-            // Load thông tin sản phẩm
-            Glide.with(this)
-                    .load(product.getImage().get(0))
-                    .into(productImagePlaceholder);
-
-            productName.setText(product.getProduct_name());
-            productPrice.setText(product.getPrice());
-            productDescription.setText(product.getDescription());
-
-            // Khởi tạo bảng ánh xạ size và sizeId
-            initializeSizeIdMap();
-
-            // Vô hiệu hóa các RadioButton có số lượng bằng 0
-            disableUnavailableSizes(sizeS, sizeM, sizeL, sizeXL, sizeXXL);
-
-            // Xử lý sự kiện lựa chọn kích thước
-            sizeOptions.setOnCheckedChangeListener((group, checkedId) -> {
-                String selectedSize = getSelectedSize(checkedId);
-
-                // Log size đã chọn
-                Log.d("Size Selection", "Selected size: " + selectedSize);
-
-                // Tìm số lượng còn lại
-                int quantity = getAvailableQuantity(selectedSize, product.getSizeQuantities());
-
-                // Cập nhật giao diện
-                tvSize.setText("Số lượng còn: " + quantity);
-            });
-
-            // Xử lý sự kiện Back button
+            updateProductDetails(product);
             backArrow.setOnClickListener(v -> onBackPressed());
-
         } else {
             Toast.makeText(this, "Product details not available", Toast.LENGTH_SHORT).show();
         }
     }
 
-    /**
-     * Vô hiệu hóa các RadioButton có số lượng bằng 0 và các kích thước không tồn tại trong dữ liệu.
-     */
-    private void disableUnavailableSizes(RadioButton sizeS, RadioButton sizeM, RadioButton sizeL, RadioButton sizeXL, RadioButton sizeXXL) {
-        // Đặt mặc định tất cả các nút đều bị vô hiệu hóa
-        sizeS.setEnabled(false);
-        sizeS.setAlpha(0.5f);
-        sizeM.setEnabled(false);
-        sizeM.setAlpha(0.5f);
-        sizeL.setEnabled(false);
-        sizeL.setAlpha(0.5f);
-        sizeXL.setEnabled(false);
-        sizeXL.setAlpha(0.5f);
-        sizeXXL.setEnabled(false);
-        sizeXXL.setAlpha(0.5f);
-
-        // Lấy danh sách SizeQuantity từ sản phẩm
-        List<SizeQuantity> sizeQuantities = product.getSizeQuantities();
-        if (sizeQuantities != null) {
-            for (SizeQuantity sq : sizeQuantities) {
-                String sizeId = sq.getSizeId();
-                int quantity = 0;
-
-                try {
-                    quantity = Integer.parseInt(sq.getQuantity());
-                } catch (NumberFormatException e) {
-                    Log.e("SizeQuantity", "Invalid quantity format: " + sq.getQuantity());
-                }
-
-                // Kích hoạt RadioButton nếu có số lượng
-                if (sizeIdMap.get("S").equals(sizeId)) {
-                    sizeS.setEnabled(quantity > 0);
-                    sizeS.setAlpha(quantity > 0 ? 1.0f : 0.5f); // Làm mờ nếu không có số lượng
-                } else if (sizeIdMap.get("M").equals(sizeId)) {
-                    sizeM.setEnabled(quantity > 0);
-                    sizeM.setAlpha(quantity > 0 ? 1.0f : 0.5f);
-                } else if (sizeIdMap.get("L").equals(sizeId)) {
-                    sizeL.setEnabled(quantity > 0);
-                    sizeL.setAlpha(quantity > 0 ? 1.0f : 0.5f);
-                } else if (sizeIdMap.get("XL").equals(sizeId)) {
-                    sizeXL.setEnabled(quantity > 0);
-                    sizeXL.setAlpha(quantity > 0 ? 1.0f : 0.5f);
-                } else if (sizeIdMap.get("XXL").equals(sizeId)) {
-                    sizeXXL.setEnabled(quantity > 0);
-                    sizeXXL.setAlpha(quantity > 0 ? 1.0f : 0.5f);
-                }
+    private void updateProductDetails(Product product) {
+        if (product != null) {
+            String imageUrl = product.getImage() != null && !product.getImage().isEmpty() ? product.getImage().get(0) : "";
+            if (!TextUtils.isEmpty(imageUrl)) {
+                Glide.with(this)
+                        .load(imageUrl)
+                        .into(productImagePlaceholder);
+            } else {
+                productImagePlaceholder.setImageResource(R.drawable.shark); // Placeholder image
             }
-        } else {
-            Log.e("disableUnavailableSizes", "SizeQuantities is null or empty");
+
+            productName.setText(TextUtils.isEmpty(product.getProduct_name()) ? "Unknown Product" : product.getProduct_name());
+            productPrice.setText(TextUtils.isEmpty(product.getPrice()) ? "Price Not Available" : product.getPrice());
+            productDescription.setText(TextUtils.isEmpty(product.getDescription()) ? "No description available." : product.getDescription());
+
+            // Lấy và cập nhật danh sách kích thước từ API
+            loadSizesFromApi();
         }
     }
 
+    private void loadSizesFromApi() {
+        httpRequest.callApi().getTypeProductById(product.getTypeProductId()).enqueue(new Callback<Response<TypeProduct>>() {
 
 
-    /**
+            @Override
+            public void onResponse(Call<Response<TypeProduct>> call, retrofit2.Response<Response<TypeProduct>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getStatus() == 200) {
+                    TypeProduct typeProduct = response.body().getData();
+                    if (typeProduct != null && typeProduct.getSizes() != null) {
+                        // Cập nhật sizeIdMap từ danh sách sizes
+                        for (Size size : typeProduct.getSizes()) {
+                            sizeIdMap.put(size.getName(), size.getId());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<fpl.md37.genz_fashion.models.Response<TypeProduct>> call, Throwable t) {
+                Log.e("API Failure", "Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void showBottomSheet(String action) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+
+        // Inflate layout cho BottomSheet
+        LinearLayout sheetLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_selected, null);
+
+        // Gắn dữ liệu vào các thành phần trong BottomSheet
+        ImageView imgProduct = sheetLayout.findViewById(R.id.imgProduct);
+        TextView tvProductPrice = sheetLayout.findViewById(R.id.tvProductPrice);
+        TextView tvProductStock = sheetLayout.findViewById(R.id.tvProductStock);
+        RadioGroup sizeOptions = sheetLayout.findViewById(R.id.sizeOptions);
+
+        if (product != null) {
+            String imageUrl = product.getImage() != null && !product.getImage().isEmpty() ? product.getImage().get(0) : "";
+            if (!TextUtils.isEmpty(imageUrl)) {
+                Glide.with(this)
+                        .load(imageUrl)
+                        .into(imgProduct);
+            } else {
+                imgProduct.setImageResource(R.drawable.shark); // Placeholder image
+            }
+
+            tvProductPrice.setText(TextUtils.isEmpty(product.getPrice()) ? "Price Not Available" : product.getPrice());
+
+            // Cập nhật các size vào RadioGroup
+            updateSizeRadioButtons(sizeOptions);
+
+            // Thêm sự kiện lắng nghe khi chọn RadioButton
+            sizeOptions.setOnCheckedChangeListener((group, checkedId) -> {
+                RadioButton selectedButton = sheetLayout.findViewById(checkedId);
+
+                if (selectedButton != null) {
+                    String selectedSize = selectedButton.getText().toString();
+
+                    // Lấy số lượng tương ứng với size được chọn
+                    int selectedQuantity = getAvailableQuantity(selectedSize, product.getSizeQuantities());
+
+                    // Hiển thị số lượng trong TextView
+                    tvProductStock.setText("Quantity: " + selectedQuantity);
+                }
+            });
+        }
+
+
+        // Gắn layout vào BottomSheetDialog và hiển thị
+        bottomSheetDialog.setContentView(sheetLayout);
+        bottomSheetDialog.show();
+        /**
      * Khởi tạo bảng ánh xạ size và sizeId.
      */
     private void initializeSizeIdMap() {
@@ -160,21 +169,16 @@ public class DetailUser extends AppCompatActivity {
         sizeIdMap.put("XXL", "67360dxyz0baa60674d566xy"); // Thêm size khác nếu cần
     }
 
-    /**
-     * Lấy kích thước được chọn từ RadioGroup.
-     */
-    private String getSelectedSize(int checkedId) {
-        if (checkedId == R.id.sizeS) return "S";
-        if (checkedId == R.id.sizeM) return "M";
-        if (checkedId == R.id.sizeL) return "L";
-        if (checkedId == R.id.sizeXL) return "XL";
-        if (checkedId == R.id.sizeXXL) return "XXL";
-        return "";
+    private void updateSizeRadioButtons(RadioGroup sizeOptions) {
+        sizeOptions.removeAllViews(); // Clear existing views
+
+        for (String sizeName : sizeIdMap.keySet()) {
+            RadioButton radioButton = new RadioButton(this);
+            radioButton.setText(sizeName);
+            sizeOptions.addView(radioButton);
+        }
     }
 
-    /**
-     * Lấy số lượng còn lại của kích thước được chọn.
-     */
     private int getAvailableQuantity(String selectedSize, List<SizeQuantity> sizeQuantities) {
         if (sizeQuantities == null || sizeIdMap.get(selectedSize) == null) {
             Log.d("SizeQuantity", "SizeQuantities hoặc SizeIdMap không hợp lệ.");
@@ -183,7 +187,6 @@ public class DetailUser extends AppCompatActivity {
 
         String sizeId = sizeIdMap.get(selectedSize);
         for (SizeQuantity sq : sizeQuantities) {
-            Log.d("SizeQuantity", "Checking Size: " + sq.getSizeId() + ", Quantity: " + sq.getQuantity());
             if (sizeId.equals(sq.getSizeId())) {
                 try {
                     return Integer.parseInt(sq.getQuantity());
@@ -192,9 +195,7 @@ public class DetailUser extends AppCompatActivity {
                 }
             }
         }
-
-        Log.d("SizeQuantity", "No match for selected size: " + selectedSize);
         return 0;
     }
-
 }
+

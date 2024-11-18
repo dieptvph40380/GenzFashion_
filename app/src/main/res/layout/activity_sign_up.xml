@@ -91,6 +91,24 @@
 
 
                     </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:layout_marginEnd="@dimen/_14sdp"
+                            android:background="@drawable/background_edit_text"
+                            android:hint="@string/phone"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/black" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout

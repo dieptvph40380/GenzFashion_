@@ -3,28 +3,29 @@ package fpl.md37.genz_fashion.models;
 import java.util.HashMap;
 
 public class Client {
-    String password;
-    String name;
-    String email;
-    String phone;
-    String avatar;
-    String address;
+    private String password;
+    private String name;
+    private String email;
+    private String phone;
+    private String avatar;
+    private String address;
 
+    // Phương thức chuyển đổi đối tượng thành HashMap
     public HashMap<String, Object> convertHashMap() {
-        HashMap<String, Object> Client = new HashMap<>();
-        Client.put("name", name);
-        Client.put("email", email);
-        Client.put("password", password);
-        Client.put("phone", phone);
-        Client.put("avatar", avatar);
-        Client.put("address", address);
-
-        return Client;
+        HashMap<String, Object> clientMap = new HashMap<>();
+        clientMap.put("name", name);
+        clientMap.put("email", email);
+        clientMap.put("password", password);
+        clientMap.put("phone", phone);
+        clientMap.put("avatar", avatar);
+        clientMap.put("address", address);
+        return clientMap;
     }
 
-    public Client() {
-    }
+    // Khởi tạo mặc định
+    public Client() {}
 
+    // Khởi tạo với tất cả các tham số
     public Client(String address, String avatar, String phone, String email, String name, String password) {
         this.address = address;
         this.avatar = avatar;
@@ -34,12 +35,17 @@ public class Client {
         this.password = password;
     }
 
+    // Getter và Setter với kiểm tra hợp lệ
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password != null && password.length() >= 6) {  // Kiểm tra mật khẩu có đủ độ dài
+            this.password = password;
+        } else {
+            throw new IllegalArgumentException("Password must be at least 6 characters");
+        }
     }
 
     public String getName() {
@@ -47,7 +53,11 @@ public class Client {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null && name.length() > 2) {  // Kiểm tra tên có ít nhất 3 ký tự
+            this.name = name;
+        } else {
+            throw new IllegalArgumentException("Name must be at least 3 characters");
+        }
     }
 
     public String getEmail() {
@@ -55,7 +65,11 @@ public class Client {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email != null && email.contains("@")) {  // Kiểm tra email có hợp lệ không
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Invalid email format");
+        }
     }
 
     public String getPhone() {
@@ -63,7 +77,11 @@ public class Client {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        if (phone != null && phone.length() > 9) {  // Kiểm tra số điện thoại có đủ độ dài
+            this.phone = phone;
+        } else {
+            throw new IllegalArgumentException("Phone number must be at least 10 digits");
+        }
     }
 
     public String getAvatar() {
@@ -79,6 +97,22 @@ public class Client {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        if (address != null && address.length() > 5) {  // Kiểm tra địa chỉ có ít nhất 6 ký tự
+            this.address = address;
+        } else {
+            throw new IllegalArgumentException("Address must be at least 6 characters");
+        }
+    }
+
+    // Phương thức toString() để hiển thị thông tin đối tượng
+    @Override
+    public String toString() {
+        return "Client{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

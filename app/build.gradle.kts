@@ -88,4 +88,8 @@ dependencies {
     //recyclerview
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("it.xabaras.android:recyclerview-swipedecorator:1.4")
+    // Image Picker
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+    implementation ("me.relex:circleindicator:2.1.6")
+
 }

@@ -100,11 +100,28 @@ public interface ApiService {
             @Part("sizeQuantities") RequestBody sizeQuantities,
             @Part ArrayList<MultipartBody.Part> image
     );
+     //update product
+     @Multipart
+     @PUT("update-product/{id}")
+     Call<Response<Product>> updateProduct(
+             @Path("id") String id,
+             @Part("product_name") RequestBody product_name,
+             @Part("price") RequestBody price,
+             @Part("quantity") RequestBody quantity,
+             @Part("state") RequestBody state,
+             @Part("description") RequestBody description,
+             @Part("id_suppliers") RequestBody suppliers,
+             @Part("id_producttype") RequestBody typeproducts,
+             @Part("sizeQuantities") RequestBody sizeQuantities,
+             @Part ArrayList<MultipartBody.Part> image
+     );
+
 //    @GET("get-supplier-by-name")
 //    Call<Response<ArrayList<Suppliers>>> searchSuppliers(
 //            @Query("name") String name
 //    );
-
+    @GET("get_product/{id}")
+    Call<Response<Product>> getProductById(@Path("id") String id);
     // Lấy thông tin chi tiết của nhà cung cấp dựa trên ID
     @GET("suppliers/{id}")
     Call<Response<Suppliers>> getSupplierById(@Path("id") String id);

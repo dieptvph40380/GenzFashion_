@@ -1,20 +1,29 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import fpl.md37.genz_fashion.ManagerScreen.ProfileCustomerFragment;
 import fpl.md37.genz_fashion.ManagerScreen.SignInActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,14 +31,42 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment {
     private LinearLayout layout_your_file, layout_payment, layout_order, layout_setting, layout_help, layout_privacy, layout_out;
-    private ImageView btnbackProfile;
+    private ImageView btnbackProfile, imgProfile;
+    private TextView tvProfileName;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         btnbackProfile = view.findViewById(R.id.btnBack_profile);
+        imgProfile = view.findViewById(R.id.img_ProfileView);
+        tvProfileName = view.findViewById(R.id.tvProfileName);
+
+        // Lấy thông tin từ SharedPreferences
+        SharedPreferences preferences = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+        String name = preferences.getString("name", "No Name");
+        String avatar = preferences.getString("avatar", "");
+        if (name.isEmpty()) {
+            Log.d("ProfileFragment", "Name is empty!");
+        }
+        if (avatar.isEmpty()) {
+            Log.d("ProfileFragment", "Avatar is empty!");
+        }
+
+        // Cập nhật tên trong ProfileFragment
+        tvProfileName.setText(name);
+
+        // Nếu có avatar mới, hiển thị
+        if (!avatar.isEmpty()) {
+            byte[] decodedString = Base64.decode(avatar, Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            Glide.with(getContext())
+                    .load(decodedBitmap)
+                    .into(imgProfile);
+        }
+
         btnbackProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

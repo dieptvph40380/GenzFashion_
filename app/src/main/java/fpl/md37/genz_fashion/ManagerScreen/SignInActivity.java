@@ -28,7 +28,7 @@ public class SignInActivity extends AppCompatActivity {
     ActivitySigninBinding binding;
 
     // Đặt tài khoản admin cố định
-    private static final String ADMIN_EMAIL = "admin@gmail.com";
+    private static final String ADMIN_EMAIL = "admin1@gmail.com" ;
     private static final String ADMIN_PASSWORD = "123456";
 
     TextView fotgot;
