@@ -84,12 +84,9 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-
-    //recyclerview
-    implementation ("androidx.recyclerview:recyclerview:1.2.1")
-    implementation ("it.xabaras.android:recyclerview-swipedecorator:1.4")
     // Image Picker
     implementation("com.github.dhaval2404:imagepicker:2.1")
     implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
 }
