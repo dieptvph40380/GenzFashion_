@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -15,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +35,7 @@ public class DetailUser extends AppCompatActivity {
     private TextView productName, productPrice, productDescription;
     private Product product;
     private HttpRequest httpRequest = new HttpRequest();
-    private Map<String, String> sizeIdMap = new HashMap<>();
+    private Map<String, String> sizeIdMap = new HashMap<>();  // Lưu trữ id của các size
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,6 @@ public class DetailUser extends AppCompatActivity {
     private void loadSizesFromApi() {
         httpRequest.callApi().getTypeProductById(product.getTypeProductId()).enqueue(new Callback<Response<TypeProduct>>() {
 
-
             @Override
             public void onResponse(Call<Response<TypeProduct>> call, retrofit2.Response<Response<TypeProduct>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getStatus() == 200) {
@@ -105,7 +104,7 @@ public class DetailUser extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<fpl.md37.genz_fashion.models.Response<TypeProduct>> call, Throwable t) {
+            public void onFailure(Call<Response<TypeProduct>> call, Throwable t) {
                 Log.e("API Failure", "Error: " + t.getMessage());
             }
         });
@@ -121,7 +120,7 @@ public class DetailUser extends AppCompatActivity {
         ImageView imgProduct = sheetLayout.findViewById(R.id.imgProduct);
         TextView tvProductPrice = sheetLayout.findViewById(R.id.tvProductPrice);
         TextView tvProductStock = sheetLayout.findViewById(R.id.tvProductStock);
-        RadioGroup sizeOptions = sheetLayout.findViewById(R.id.sizeOptions);
+        ChipGroup sizeOptions = sheetLayout.findViewById(R.id.chipGroupSizes);
 
         if (product != null) {
             String imageUrl = product.getImage() != null && !product.getImage().isEmpty() ? product.getImage().get(0) : "";
@@ -135,23 +134,9 @@ public class DetailUser extends AppCompatActivity {
 
             tvProductPrice.setText(TextUtils.isEmpty(product.getPrice()) ? "Price Not Available" : product.getPrice());
 
-            // Cập nhật các size vào RadioGroup
-            updateSizeRadioButtons(sizeOptions);
+            // Cập nhật các size vào ChipGroup
+            updateSizeChips(sizeOptions);
 
-            // Thêm sự kiện lắng nghe khi chọn RadioButton
-            sizeOptions.setOnCheckedChangeListener((group, checkedId) -> {
-                RadioButton selectedButton = sheetLayout.findViewById(checkedId);
-
-                if (selectedButton != null) {
-                    String selectedSize = selectedButton.getText().toString();
-
-                    // Lấy số lượng tương ứng với size được chọn
-                    int selectedQuantity = getAvailableQuantity(selectedSize, product.getSizeQuantities());
-
-                    // Hiển thị số lượng trong TextView
-                    tvProductStock.setText("Quantity: " + selectedQuantity);
-                }
-            });
         }
 
         // Gắn layout vào BottomSheetDialog và hiển thị
@@ -159,15 +144,37 @@ public class DetailUser extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
-    private void updateSizeRadioButtons(RadioGroup sizeOptions) {
+    private void updateSizeChips(ChipGroup sizeOptions) {
         sizeOptions.removeAllViews(); // Clear existing views
 
+        // Duyệt qua tất cả các size từ sizeIdMap
         for (String sizeName : sizeIdMap.keySet()) {
-            RadioButton radioButton = new RadioButton(this);
-            radioButton.setText(sizeName);
-            sizeOptions.addView(radioButton);
+            Chip chip = new Chip(this);
+            chip.setText(sizeName);
+            chip.setCheckable(true); // Đảm bảo chip có thể được chọn
+
+            // Thiết lập sự kiện click cho chip
+            chip.setOnClickListener(v -> {
+                // Bỏ chọn tất cả các chip trong ChipGroup
+                for (int i = 0; i < sizeOptions.getChildCount(); i++) {
+                    Chip otherChip = (Chip) sizeOptions.getChildAt(i);
+                    if (otherChip != chip) {
+                        otherChip.setChecked(false); // Bỏ chọn các chip còn lại
+                    }
+                }
+
+                // Hiển thị số lượng của size được chọn
+                String selectedSize = chip.getText().toString();
+                int selectedQuantity = getAvailableQuantity(selectedSize, product.getSizeQuantities());
+                TextView tvProductStock = sizeOptions.getRootView().findViewById(R.id.tvProductStock);
+                tvProductStock.setText("Số lượng: " + selectedQuantity);
+            });
+
+            sizeOptions.addView(chip); // Thêm chip vào ChipGroup
         }
     }
+
+
 
     private int getAvailableQuantity(String selectedSize, List<SizeQuantity> sizeQuantities) {
         if (sizeQuantities == null || sizeIdMap.get(selectedSize) == null) {
@@ -181,11 +188,10 @@ public class DetailUser extends AppCompatActivity {
                 try {
                     return Integer.parseInt(sq.getQuantity());
                 } catch (NumberFormatException e) {
-                    Log.e("SizeQuantity", "Invalid quantity format: " + sq.getQuantity());
+                    Log.e("SizeQuantity", "Số lượng không hợp lệ: " + sq.getQuantity());
                 }
             }
         }
         return 0;
     }
 }
-
