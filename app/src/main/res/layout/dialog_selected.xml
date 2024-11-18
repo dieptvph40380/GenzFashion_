@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -62,80 +63,14 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <RadioGroup
-        android:id="@+id/sizeOptions"
-        android:layout_width="wrap_content"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupSizes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-
-        android:gravity="center">
-
-        <RadioButton
-            android:id="@+id/sizeS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:button="@null"
-            android:text="S"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:background="@drawable/radio_button_background"
-            android:gravity="center"
-            android:padding="12dp" />
-
-        <RadioButton
-            android:id="@+id/sizeM"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:button="@null"
-            android:text="M"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:background="@drawable/radio_button_background"
-            android:gravity="center"
-            android:padding="12dp" />
-
-        <RadioButton
-            android:id="@+id/sizeL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:button="@null"
-            android:text="L"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:background="@drawable/radio_button_background"
-            android:gravity="center"
-            android:padding="12dp" />
-
-        <RadioButton
-            android:id="@+id/sizeXL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:button="@null"
-            android:text="XL"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:background="@drawable/radio_button_background"
-            android:gravity="center"
-            android:padding="12dp" />
-
-        <RadioButton
-            android:id="@+id/sizeXXL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:button="@null"
-            android:text="XXL"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:background="@drawable/radio_button_background"
-            android:gravity="center"
-            android:padding="12dp" />
-    </RadioGroup>
+        android:layout_marginTop="5dp"
+        app:singleLine="false"
+        app:chipSpacingHorizontal="8dp"
+        app:chipSpacingVertical="8dp" />
 
     <!-- Điều chỉnh số lượng -->
     <TextView
