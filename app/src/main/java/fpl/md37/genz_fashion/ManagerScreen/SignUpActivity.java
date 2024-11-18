@@ -98,7 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                     userID = mAuth.getCurrentUser().getUid();
-                                    DocumentReference documentReference = fstore.collection("users").document(userID);
+                                    DocumentReference documentReference = fstore.collection("Client").document(userID);
                                     Map<String,Object> user = new HashMap<>();
                                     user.put("name",name);
                                     user.put("email",email);
