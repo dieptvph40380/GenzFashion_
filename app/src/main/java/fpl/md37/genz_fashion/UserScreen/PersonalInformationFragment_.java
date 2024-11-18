@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -97,6 +98,7 @@ public class PersonalInformationFragment_ extends Fragment {
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showBottomNav();
                 // Thực hiện back lại màn hình trước
                 getActivity().onBackPressed();  // Điều này sẽ thay đổi Fragment về Fragment trước đó
             }
@@ -104,6 +106,12 @@ public class PersonalInformationFragment_ extends Fragment {
 
 
         return view;
+    }
+    private void showBottomNav() {
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+        }
     }
 
     void getUserData() {
