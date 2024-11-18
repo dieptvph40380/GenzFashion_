@@ -121,6 +121,13 @@ public class DetailUser extends AppCompatActivity {
         TextView tvProductPrice = sheetLayout.findViewById(R.id.tvProductPrice);
         TextView tvProductStock = sheetLayout.findViewById(R.id.tvProductStock);
         ChipGroup sizeOptions = sheetLayout.findViewById(R.id.chipGroupSizes);
+        TextView tvQuantity = sheetLayout.findViewById(R.id.tvQuantity);
+        TextView btnDecrease = sheetLayout.findViewById(R.id.btnDecreaseQuantity); // Là TextView
+        TextView btnIncrease = sheetLayout.findViewById(R.id.btnIncreaseQuantity); // Là TextView
+
+        // Biến lưu trữ số lượng hiện tại và tối đa
+        final int[] currentQuantity = {1};
+        final int[] maxQuantity = {0};
 
         if (product != null) {
             String imageUrl = product.getImage() != null && !product.getImage().isEmpty() ? product.getImage().get(0) : "";
@@ -135,46 +142,55 @@ public class DetailUser extends AppCompatActivity {
             tvProductPrice.setText(TextUtils.isEmpty(product.getPrice()) ? "Price Not Available" : product.getPrice());
 
             // Cập nhật các size vào ChipGroup
-            updateSizeChips(sizeOptions);
+            sizeOptions.removeAllViews();
+            for (String sizeName : sizeIdMap.keySet()) {
+                Chip chip = new Chip(this);
+                chip.setText(sizeName);
+                chip.setCheckable(true); // Cho phép chọn size
+                chip.setOnClickListener(v -> {
+                    // Bỏ chọn tất cả các chip khác
+                    for (int i = 0; i < sizeOptions.getChildCount(); i++) {
+                        Chip otherChip = (Chip) sizeOptions.getChildAt(i);
+                        if (otherChip != chip) {
+                            otherChip.setChecked(false);
+                        }
+                    }
 
+                    // Cập nhật số lượng tối đa và hiện tại
+                    String selectedSize = chip.getText().toString();
+                    maxQuantity[0] = getAvailableQuantity(selectedSize, product.getSizeQuantities());
+                    tvProductStock.setText("Kho: " + maxQuantity[0]);
+                    currentQuantity[0] = 1; // Reset số lượng về 1 khi chọn size mới
+                    tvQuantity.setText(String.valueOf(currentQuantity[0]));
+                });
+
+                sizeOptions.addView(chip);
+            }
         }
+
+        // Xử lý nút tăng/giảm số lượng
+        btnIncrease.setOnClickListener(v -> {
+            if (currentQuantity[0] < maxQuantity[0]) {
+                currentQuantity[0]++;
+                tvQuantity.setText(String.valueOf(currentQuantity[0]));
+            } else {
+                Toast.makeText(this, "Đã đạt số lượng tối đa!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnDecrease.setOnClickListener(v -> {
+            if (currentQuantity[0] > 1) {
+                currentQuantity[0]--;
+                tvQuantity.setText(String.valueOf(currentQuantity[0]));
+            } else {
+                Toast.makeText(this, "Số lượng tối thiểu là 1!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Gắn layout vào BottomSheetDialog và hiển thị
         bottomSheetDialog.setContentView(sheetLayout);
         bottomSheetDialog.show();
     }
-
-    private void updateSizeChips(ChipGroup sizeOptions) {
-        sizeOptions.removeAllViews(); // Clear existing views
-
-        // Duyệt qua tất cả các size từ sizeIdMap
-        for (String sizeName : sizeIdMap.keySet()) {
-            Chip chip = new Chip(this);
-            chip.setText(sizeName);
-            chip.setCheckable(true); // Đảm bảo chip có thể được chọn
-
-            // Thiết lập sự kiện click cho chip
-            chip.setOnClickListener(v -> {
-                // Bỏ chọn tất cả các chip trong ChipGroup
-                for (int i = 0; i < sizeOptions.getChildCount(); i++) {
-                    Chip otherChip = (Chip) sizeOptions.getChildAt(i);
-                    if (otherChip != chip) {
-                        otherChip.setChecked(false); // Bỏ chọn các chip còn lại
-                    }
-                }
-
-                // Hiển thị số lượng của size được chọn
-                String selectedSize = chip.getText().toString();
-                int selectedQuantity = getAvailableQuantity(selectedSize, product.getSizeQuantities());
-                TextView tvProductStock = sizeOptions.getRootView().findViewById(R.id.tvProductStock);
-                tvProductStock.setText("Số lượng: " + selectedQuantity);
-            });
-
-            sizeOptions.addView(chip); // Thêm chip vào ChipGroup
-        }
-    }
-
-
 
     private int getAvailableQuantity(String selectedSize, List<SizeQuantity> sizeQuantities) {
         if (sizeQuantities == null || sizeIdMap.get(selectedSize) == null) {
@@ -194,4 +210,5 @@ public class DetailUser extends AppCompatActivity {
         }
         return 0;
     }
+
 }
