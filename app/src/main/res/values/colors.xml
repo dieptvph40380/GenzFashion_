@@ -15,4 +15,5 @@
     <color name="background_color">#F5F5F5</color>
     <color name="green">#27B446</color>
     <color name="red">#FF0000</color>
+    <color name="button_cart">#F05D21</color>
 </resources>

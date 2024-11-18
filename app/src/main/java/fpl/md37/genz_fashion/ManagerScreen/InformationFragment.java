@@ -29,6 +29,7 @@ import fpl.md37.genz_fashion.models.Client;
 
 public class InformationFragment extends Fragment {
     FirebaseFirestore db;
+
     RecyclerView rcv_client;
     SearchView searchCustomer;
     Context context;
