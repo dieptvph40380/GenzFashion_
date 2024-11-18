@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import fpl.md37.genz_fashion.adapter.AdapterTypeProduct;
@@ -29,6 +30,7 @@ import com.example.genz_fashion.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import fpl.md37.genz_fashion.adapter.AdapterProductUser;
 import fpl.md37.genz_fashion.adapter.CategoryAdapter;
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
         httpRequest = new HttpRequest();  // Khởi tạo HttpRequest
         fetchProducts();
         fetchTypeProducts();
+
         // Initialize image slider
         ArrayList<SlideModel> slideModels = new ArrayList<>();
         slideModels.add(new SlideModel(R.drawable.banner1, ScaleTypes.FIT));
@@ -85,11 +88,16 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         if (productList != null) { // Kiểm tra productList không null
             for (Product product : productList) {
-                if (product.getTypeProductId() == typeId) { // Đảm bảo sử dụng đúng getter
+                if (Objects.equals(product.getTypeProductId(), typeId)) { // Đảm bảo sử dụng đúng getter
                     filteredProducts.add(product);
                 }
             }
         }
+
+        if (filteredProducts.isEmpty()) {
+            Toast.makeText(getContext(), "No Product ", Toast.LENGTH_SHORT).show();
+        }
+
         setupRecyclerView(filteredProducts);
     }
 
@@ -107,7 +115,6 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
                             }
                         }
                         setupRecyclerView2(typeProducts);
-                        Toast.makeText(getContext(), "List displayed successfully! ", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
