@@ -4,22 +4,39 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
+import fpl.md37.genz_fashion.models.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.genz_fashion.R;
 import com.example.genz_fashion.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import fpl.md37.genz_fashion.adapter.AdapterProductUser;
+import fpl.md37.genz_fashion.adapter.CategoryAdapter;
+import fpl.md37.genz_fashion.api.HttpRequest;
+import fpl.md37.genz_fashion.models.Product;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private CountDownTimer countDownTimer;
+    private HttpRequest httpRequest;
+    private ArrayList<Product> productList = new ArrayList<>();  // Khởi tạo danh sách rỗng
+    private RecyclerView rcv;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,6 +48,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        rcv = binding.rvItems;  // Liên kết RecyclerView từ layout
+        httpRequest = new HttpRequest();  // Khởi tạo HttpRequest
+        fetchProducts();
         // Initialize image slider
         ArrayList<SlideModel> slideModels = new ArrayList<>();
         slideModels.add(new SlideModel(R.drawable.banner1, ScaleTypes.FIT));
@@ -38,9 +58,41 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.banner3, ScaleTypes.FIT));
         binding.slide.setImageList(slideModels, ScaleTypes.FIT);
 
-        // Start countdown timer
         startCountdownTimer(2 * 60 * 60 * 1000); // 2 hours
     }
+    private void setupRecyclerView(ArrayList<Product> products) {
+        if (products == null) {
+            products = new ArrayList<>();  // Khởi tạo danh sách rỗng nếu products là null
+        }
+
+//        AdapterProduct adapter = new AdapterProduct(getContext(), products, this);
+        AdapterProductUser adapter=new AdapterProductUser(getContext(),products,this);
+        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rcv.setAdapter(adapter);
+    }
+    private void fetchProducts() {
+        httpRequest.callApi().getAllProducts().enqueue(new Callback<Response<ArrayList<Product>>>() {
+            @Override
+            public void onResponse(Call<Response<ArrayList<Product>>> call, retrofit2.Response<Response<ArrayList<Product>>> response) {
+            if (response.isSuccessful() && response.body() != null) {
+                productList = response.body().getData();
+                if (productList == null) {
+                    productList = new ArrayList<>();  // Khởi tạo danh sách rỗng nếu không có sản phẩm
+                }
+                setupRecyclerView(productList);
+            } else {
+                Toast.makeText(getContext(), "Lỗi khi lấy sản phẩm", Toast.LENGTH_SHORT).show();
+            }
+            }
+
+            @Override
+            public void onFailure(Call<Response<ArrayList<Product>>> call, Throwable t) {
+                Toast.makeText(getContext(), "Có lỗi xảy ra: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
     private void startCountdownTimer(long duration) {
         countDownTimer = new CountDownTimer(duration, 1000) {
