@@ -126,7 +126,6 @@
                     android:textColor="@android:color/black"/>
             </LinearLayout>
         </LinearLayout>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTypes"
                     android:layout_width="match_parent"
