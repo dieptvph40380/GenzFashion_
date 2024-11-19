@@ -53,19 +53,22 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         holder.cart_price.setText(product.getProductId().getPrice()+" VND");
         holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
 
-        // Set trạng thái checkbox (checked hoặc unchecked)
+
+        holder.checkBox_cart.setOnCheckedChangeListener(null); // Bỏ listener cũ trước khi thay đổi trạng thái
+
+// Đặt trạng thái hiện tại của CheckBox
         holder.checkBox_cart.setChecked(product.isSelected());
 
-        holder.checkBox_cart.setOnCheckedChangeListener(null);
-
-        holder.checkBox_cart.setChecked(product.isSelected());
-
+// Thiết lập listener để lắng nghe sự kiện thay đổi trạng thái của CheckBox
         holder.checkBox_cart.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Cập nhật trạng thái chọn của sản phẩm và thông báo lại lên listener
+            // Cập nhật lại trạng thái của sản phẩm
             product.setSelected(isChecked);
+
+            // Thông báo lên listener khi trạng thái thay đổi
             listener.onProductChecked(product, isChecked);
         });
-       holder.btn_minus.setOnClickListener(new View.OnClickListener() {
+
+        holder.btn_minus.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                int currentQuantity = product.getQuantity();
