@@ -174,31 +174,19 @@ public class PersonalInformationFragment_ extends Fragment {
         }
 
         String newUsername = edtName.getText().toString();
-        if (newUsername.isEmpty() || newUsername.length() < 3) {
-            edtName.setError("Username length should be at least 3 chars");
-            return;
-        }
+
         currentUserModel.setName(newUsername);
 
         String newUserEmail = edtEmail.getText().toString();
-        if (newUserEmail.isEmpty() || !isValidEmail(newUserEmail)) {
-            edtEmail.setError("Invalid email format");
-            return;
-        }
+
         currentUserModel.setEmail(newUserEmail);
 
         String newUserPhone = edtPhone.getText().toString();
-        if (newUserPhone.isEmpty() || newUserPhone.length() < 10) {
-            edtPhone.setError("Phone number must be at least 10 digits");
-            return;
-        }
+
         currentUserModel.setPhone(newUserPhone);
 
         String newUserAddress = edtAddress.getText().toString();
-        if (newUserAddress.isEmpty() || newUserAddress.length() < 5) {
-            edtAddress.setError("Address should be at least 5 chars");
-            return;
-        }
+
         currentUserModel.setAddress(newUserAddress);
 
         SharedPreferences preferences = requireActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);

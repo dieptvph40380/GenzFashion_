@@ -43,8 +43,8 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
     private FragmentHomeBinding binding;
     private CountDownTimer countDownTimer;
     private HttpRequest httpRequest;
-    private ArrayList<Product> productList = new ArrayList<>();  // Khởi tạo danh sách rỗng
-    private RecyclerView rcv,rcv2;
+    private ArrayList<Product> productList = new ArrayList<>();  // Empty list initialization
+    private RecyclerView rcv, rcv2;
     private AdapterTypeProductUser adapter;
 
     @Override
@@ -56,9 +56,11 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         rcv2 = binding.rvTypes;
-        rcv = binding.rvItems;  // Liên kết RecyclerView từ layout
-        httpRequest = new HttpRequest();  // Khởi tạo HttpRequest
+        rcv = binding.rvItems;
+        httpRequest = new HttpRequest();
+
         fetchProducts();
         fetchTypeProducts();
 
@@ -71,78 +73,84 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
 
         startCountdownTimer(2 * 60 * 60 * 1000); // 2 hours
     }
+
     private void setupRecyclerView(ArrayList<Product> products) {
         if (products == null) {
-            products = new ArrayList<>();  // Khởi tạo danh sách rỗng nếu products là null
+            products = new ArrayList<>();  // Initialize empty list if null
         }
-        AdapterProductUser adapter=new AdapterProductUser(getContext(),products,this);
-        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        AdapterProductUser adapter = new AdapterProductUser(requireContext(), products, this);
+        rcv.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         rcv.setAdapter(adapter);
     }
+
     private void setupRecyclerView2(ArrayList<TypeProduct> ds) {
-        adapter = new AdapterTypeProductUser(getContext(), ds,this);
-        rcv2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        adapter = new AdapterTypeProductUser(requireContext(), ds, this);
+        rcv2.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         rcv2.setAdapter(adapter);
     }
+
     private void filterProductsByType(String typeId) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
-        if (productList != null) { // Kiểm tra productList không null
+        if (productList != null) {
             for (Product product : productList) {
-                if (Objects.equals(product.getTypeProductId(), typeId)) { // Đảm bảo sử dụng đúng getter
+                if (Objects.equals(product.getTypeProductId(), typeId)) {
                     filteredProducts.add(product);
                 }
             }
         }
 
-        if (filteredProducts.isEmpty()) {
-            Toast.makeText(getContext(), "No Product ", Toast.LENGTH_SHORT).show();
+        if (filteredProducts.isEmpty() && isAdded()) {
+            Toast.makeText(requireContext(), "No Product", Toast.LENGTH_SHORT).show();
         }
 
         setupRecyclerView(filteredProducts);
     }
 
-
     private void fetchTypeProducts() {
         httpRequest.callApi().getAlltypeproduct().enqueue(new Callback<Response<ArrayList<TypeProduct>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<TypeProduct>>> call, retrofit2.Response<Response<ArrayList<TypeProduct>>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body().getStatus() == 200) {
-                        typeProducts = response.body().getData();
-                        if (typeProducts != null) {
-                            for (TypeProduct typeProduct : typeProducts) {
-                                Log.d("TypeProduct", "ID: " + typeProduct.getId() + ", Name: " + typeProduct.getImage() + ", Sizes: " + (typeProduct.getSizes() != null ? typeProduct.getSizes().size() : "null"));
-                            }
+                if (response.isSuccessful() && response.body() != null && response.body().getStatus() == 200) {
+                    typeProducts = response.body().getData();
+                    if (typeProducts != null) {
+                        for (TypeProduct typeProduct : typeProducts) {
+                            Log.d("TypeProduct", "ID: " + typeProduct.getId() + ", Name: " + typeProduct.getImage() +
+                                    ", Sizes: " + (typeProduct.getSizes() != null ? typeProduct.getSizes().size() : "null"));
                         }
-                        setupRecyclerView2(typeProducts);
                     }
+                    setupRecyclerView2(typeProducts);
+                } else {
+                    Log.e("FetchTypeProducts", "Failed response: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Response<ArrayList<TypeProduct>>> call, Throwable t) {
-                Log.d("Error", t.getMessage());
+                Log.e("FetchTypeProducts", "Error: " + t.getMessage());
             }
         });
     }
+
     private void fetchProducts() {
         httpRequest.callApi().getAllProducts().enqueue(new Callback<Response<ArrayList<Product>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<Product>>> call, retrofit2.Response<Response<ArrayList<Product>>> response) {
-            if (response.isSuccessful() && response.body() != null) {
-                productList = response.body().getData();
-                if (productList == null) {
-                    productList = new ArrayList<>();  // Khởi tạo danh sách rỗng nếu không có sản phẩm
+                if (response.isSuccessful() && response.body() != null) {
+                    productList = response.body().getData();
+                    if (productList == null) {
+                        productList = new ArrayList<>();
+                    }
+                    setupRecyclerView(productList);
+                } else if (isAdded()) {
+                    Toast.makeText(requireContext(), "Error fetching products", Toast.LENGTH_SHORT).show();
                 }
-                setupRecyclerView(productList);
-            } else {
-                Toast.makeText(getContext(), "Lỗi khi lấy sản phẩm", Toast.LENGTH_SHORT).show();
-            }
             }
 
             @Override
             public void onFailure(Call<Response<ArrayList<Product>>> call, Throwable t) {
-                Toast.makeText(getContext(), "Có lỗi xảy ra: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                if (isAdded()) {
+                    Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -178,7 +186,6 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
         }
         binding = null; // Avoid memory leaks
     }
-
 
     @Override
     public void onTypeProductClick(String typeId) {

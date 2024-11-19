@@ -41,11 +41,7 @@ public class Client {
     }
 
     public void setPassword(String password) {
-        if (password != null && password.length() >= 6) {  // Kiểm tra mật khẩu có đủ độ dài
             this.password = password;
-        } else {
-            throw new IllegalArgumentException("Password must be at least 6 characters");
-        }
     }
 
     public String getName() {
@@ -53,11 +49,8 @@ public class Client {
     }
 
     public void setName(String name) {
-        if (name != null && name.length() > 2) {  // Kiểm tra tên có ít nhất 3 ký tự
             this.name = name;
-        } else {
-            throw new IllegalArgumentException("Name must be at least 3 characters");
-        }
+
     }
 
     public String getEmail() {
@@ -65,11 +58,8 @@ public class Client {
     }
 
     public void setEmail(String email) {
-        if (email != null && email.contains("@")) {  // Kiểm tra email có hợp lệ không
             this.email = email;
-        } else {
-            throw new IllegalArgumentException("Invalid email format");
-        }
+
     }
 
     public String getPhone() {
@@ -77,11 +67,8 @@ public class Client {
     }
 
     public void setPhone(String phone) {
-        if (phone != null && phone.length() > 9) {  // Kiểm tra số điện thoại có đủ độ dài
+
             this.phone = phone;
-        } else {
-            throw new IllegalArgumentException("Phone number must be at least 10 digits");
-        }
     }
 
     public String getAvatar() {
@@ -97,11 +84,8 @@ public class Client {
     }
 
     public void setAddress(String address) {
-        if (address != null && address.length() > 5) {  // Kiểm tra địa chỉ có ít nhất 6 ký tự
             this.address = address;
-        } else {
-            throw new IllegalArgumentException("Address must be at least 6 characters");
-        }
+
     }
 
     // Phương thức toString() để hiển thị thông tin đối tượng
