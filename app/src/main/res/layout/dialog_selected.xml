@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Chọn Size"
+        android:text="Size"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Số lượng"
+        android:text="quantity: "
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -132,7 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/blue"
-        android:text="Mua ngay"
+        android:text="Add to Cart"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 </LinearLayout>

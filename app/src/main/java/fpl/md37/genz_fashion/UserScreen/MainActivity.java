@@ -1,8 +1,11 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 } else if (menuItem.getItemId() == R.id.nav_bag) {
                     replaceFragment(new CartFragment());
+                    View bottomNavigationView = findViewById(R.id.bottom_nav);
+                    if (bottomNavigationView != null) {
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_favorite) {
                     replaceFragment(new MyWishlistFragment());

@@ -1,7 +1,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="10dp"
    >
 
     <LinearLayout
@@ -11,11 +13,12 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <!-- Hình ảnh sản phẩm -->
         <ImageView
-            android:id="@+id/product_IMG"
+            android:id="@+id/cart_IMG"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginEnd="16dp"
@@ -28,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/product_name"
+                android:id="@+id/cart_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Red Jacket"
@@ -48,14 +51,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/product_size"
+                        android:id="@+id/cart_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Size: XL"
                         android:textColor="#888888" />
 
                     <TextView
-                        android:id="@+id/product_price"
+                        android:id="@+id/cart_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$83.97"
@@ -73,42 +76,34 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/button_minus"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/nexttypeproductupload"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/button_min"
-                        android:gravity="center"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
                         android:padding="5dp"
                         android:text="-"
-                        android:textColor="@color/background_color"
-                        android:textSize="10sp"
-
-                        />
-
+                        android:backgroundTint="#6394B7"
+                        app:cornerRadius="5dp" />
                     <TextView
-                        android:id="@+id/quantity_display"
+                        android:id="@+id/quantity_cart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:gravity="center"
-                        android:text="1"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
-                    <Button
-                        android:id="@+id/button_plus"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/addtypeproductupload"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/button_max"
-                        android:gravity="center"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
                         android:padding="5dp"
                         android:text="+"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-
-                        />
+                        android:backgroundTint="#6394B7"
+                        app:cornerRadius="5dp" />
                 </LinearLayout>
             </LinearLayout>
 

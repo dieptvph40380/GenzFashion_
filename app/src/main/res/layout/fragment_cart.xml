@@ -1,12 +1,18 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout_cart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:fitsSystemWindows="true">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:fitsSystemWindows="true"
     android:padding="16dp">
 
-    <!-- Phần đầu tiên: Header bar -->
+
     <RelativeLayout
         android:id="@+id/header_bar"
         android:layout_width="match_parent"
@@ -30,7 +36,7 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <!-- RecyclerView với layout_height="match_parent" để chiếm hết không gian còn lại -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_cart"
         android:layout_width="match_parent"
@@ -40,7 +46,7 @@
         android:padding="8dp"
         tools:listitem="@layout/item_cart_product" />
 
-    <!-- Phần component mới đè lên RecyclerView -->
+
     <LinearLayout
         android:id="@+id/overlay_component"
         android:layout_width="match_parent"
@@ -49,7 +55,7 @@
         android:background="#F5F5F5"
         android:elevation="4dp"
         android:gravity="center"
-        android:orientation="vertical"> <!-- Đặt component ở dưới cùng của màn hình -->
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,8 +133,8 @@
                 android:layout_weight="2"
                 android:gravity="center|end"
                >
-
                 <TextView
+                    android:id="@+id/total_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tổng thanh toán"
@@ -161,3 +167,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+</FrameLayout>

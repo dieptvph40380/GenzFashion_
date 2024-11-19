@@ -1,9 +1,13 @@
 package fpl.md37.genz_fashion.api;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import fpl.md37.genz_fashion.models.CartResponseBody;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
+import fpl.md37.genz_fashion.models.ResponseCart;
+import fpl.md37.genz_fashion.models.SelectProductRequest;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.Suppliers;
 import fpl.md37.genz_fashion.models.TypeProduct;
@@ -14,6 +18,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -159,4 +164,12 @@ public interface ApiService {
             @Part("minimumOrderValue") RequestBody minimumOrderValue,
             @Part MultipartBody.Part image
     );
+    //add to cart
+    @POST("add-to-cart")
+    Call<ResponseBody> addToCart(@Body CartResponseBody body);
+    @GET("get-cart/{userId}")
+    Call<ResponseCart> getCart(@Path("userId") String userId);
+    @POST("select-products")
+    Call<ResponseBody> selectProducts(@Body SelectProductRequest request);
+
 }
