@@ -1,5 +1,9 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import static android.app.PendingIntent.getActivity;
+import static androidx.core.content.ContentProviderCompat.requireContext;
+import static java.security.AccessController.getContext;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,17 +19,22 @@ import com.example.genz_fashion.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import fpl.md37.genz_fashion.api.HttpRequest;
+import fpl.md37.genz_fashion.models.CartResponseBody;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.SizeQuantity;
 import fpl.md37.genz_fashion.models.TypeProduct;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -129,6 +138,10 @@ public class DetailUser extends AppCompatActivity {
         final int[] currentQuantity = {1};
         final int[] maxQuantity = {0};
 
+        // Lấy userId
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user != null ? user.getUid() : null;
+
         if (product != null) {
             String imageUrl = product.getImage() != null && !product.getImage().isEmpty() ? product.getImage().get(0) : "";
             if (!TextUtils.isEmpty(imageUrl)) {
@@ -159,7 +172,7 @@ public class DetailUser extends AppCompatActivity {
                     // Cập nhật số lượng tối đa và hiện tại
                     String selectedSize = chip.getText().toString();
                     maxQuantity[0] = getAvailableQuantity(selectedSize, product.getSizeQuantities());
-                    tvProductStock.setText("Kho: " + maxQuantity[0]);
+                    tvProductStock.setText("Still: " + maxQuantity[0]);
                     currentQuantity[0] = 1; // Reset số lượng về 1 khi chọn size mới
                     tvQuantity.setText(String.valueOf(currentQuantity[0]));
                 });
@@ -190,7 +203,74 @@ public class DetailUser extends AppCompatActivity {
         // Gắn layout vào BottomSheetDialog và hiển thị
         bottomSheetDialog.setContentView(sheetLayout);
         bottomSheetDialog.show();
+
+        // Thêm sản phẩm vào giỏ hàng khi nhấn "Add to Cart"
+        sheetLayout.findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
+            if (userId != null) {
+                // Gọi API thêm vào giỏ hàng với thông tin sản phẩm và userId
+                addToCart(userId, product, sizeOptions, currentQuantity[0]);
+                bottomSheetDialog.dismiss();
+            } else {
+                Toast.makeText(this, "Vui lòng đăng nhập để thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    private void addToCart(String userId, Product product, ChipGroup sizeOptions, int quantity) {
+        String selectedSize = null;
+        for (int i = 0; i < sizeOptions.getChildCount(); i++) {
+            Chip chip = (Chip) sizeOptions.getChildAt(i);
+            if (chip.isChecked()) {
+                selectedSize = chip.getText().toString();
+                break;
+            }
+        }
+
+        if (selectedSize != null) {
+            String sizeId = sizeIdMap.get(selectedSize);
+            if (sizeId != null) {
+                // Tạo đối tượng CartResponseBody với thông tin giỏ hàng
+                CartResponseBody cartResponseBody = new CartResponseBody(userId, product.getId(), sizeId, quantity);
+
+                // Gọi API thêm vào giỏ hàng với đối tượng CartResponseBody
+                httpRequest.callApi().addToCart(cartResponseBody).enqueue(new Callback<ResponseBody>() {
+
+
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+
+                            // Xử lý khi thêm vào giỏ hàng thành công
+                            Toast.makeText(DetailUser.this, "Added to cart successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            try {
+                                // Xử lý khi thêm vào giỏ hàng không thành công
+                                String errorBody = response.errorBody().string(); // Get error message from error body
+                                Log.e("API Error", "Error message: " + errorBody);
+                                Toast.makeText(DetailUser.this, "Failed to add to cart: " + errorBody, Toast.LENGTH_SHORT).show();
+                            } catch (IOException e) {
+                                Log.e("API Error", "IOException: " + e.getMessage());
+                                Toast.makeText(DetailUser.this, "Failed to add to cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        // Xử lý khi gọi API thất bại (ví dụ: lỗi mạng)
+                        Log.d(".....", "onFailure: " + t.getMessage());
+                        Toast.makeText(DetailUser.this, "Added to no cart successfully", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Vui lòng chọn size!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Vui lòng chọn size!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     private int getAvailableQuantity(String selectedSize, List<SizeQuantity> sizeQuantities) {
         if (sizeQuantities == null || sizeIdMap.get(selectedSize) == null) {
