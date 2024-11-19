@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,28 +138,29 @@ public class CartFragment extends Fragment implements Item_Handel_check {
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
-            // Gọi API để cập nhật sản phẩm được chọn
+            // Tạo danh sách ID sản phẩm đã chọn
             List<String> selectedProductIds = new ArrayList<>();
-            if (isChecked) {
-                selectedProductIds.add(product.getProductId().getId());  // Thêm sản phẩm vào danh sách chọn
-            }
 
+            // Nếu sản phẩm được chọn, thêm vào danh sách selectedProductIds
+            if (isChecked) {
+                selectedProductIds.add(product.getProductId().getId());
+            }
+            // Gọi API để cập nhật sản phẩm được chọn
             SelectProductRequest request = new SelectProductRequest(userId, selectedProductIds);
             httpRequest.callApi().selectProducts(request).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        // Nếu cập nhật thành công, có thể thực hiện cập nhật lại UI
-                        Toast.makeText(getContext(), "Product selected successfully", Toast.LENGTH_SHORT).show();
-                        // Sau khi chọn hoặc bỏ chọn, bạn có thể gọi lại API giỏ hàng để cập nhật UI
+                        // Cập nhật lại giỏ hàng sau khi thay đổi sản phẩm
                         httpRequest.callApi().getCart(userId).enqueue(getCartID);
                     } else {
-                        Toast.makeText(getContext(), "Failed to select product", Toast.LENGTH_SHORT).show();
+                        httpRequest.callApi().getCart(userId).enqueue(getCartID);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    // Hiển thị thông báo lỗi nếu gặp sự cố kết nối
                     Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
