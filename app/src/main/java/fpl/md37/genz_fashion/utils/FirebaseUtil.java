@@ -26,10 +26,9 @@ public class FirebaseUtil {
             throw new IllegalStateException("User is not logged in.");
         }
         return FirebaseFirestore.getInstance()
-                .collection("users")
+                .collection("Client")
                 .document(currentUserId());
     }
-
     // Lấy StorageReference của ảnh đại diện người dùng hiện tại
     public static StorageReference getCurrentProfilePicStorageRef() {
         String userId = currentUserId();

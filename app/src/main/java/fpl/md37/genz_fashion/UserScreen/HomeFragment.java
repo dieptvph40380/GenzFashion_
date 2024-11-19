@@ -147,8 +147,6 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
         });
     }
 
-
-
     private void startCountdownTimer(long duration) {
         countDownTimer = new CountDownTimer(duration, 1000) {
             @Override
