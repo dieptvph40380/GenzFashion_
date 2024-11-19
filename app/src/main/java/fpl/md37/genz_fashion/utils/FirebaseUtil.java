@@ -8,7 +8,6 @@ import com.google.firebase.storage.StorageReference;
 
 public class FirebaseUtil {
 
-    // Lấy ID người dùng hiện tại
     public static String currentUserId() {
         String userId = FirebaseAuth.getInstance().getUid();
         if (userId == null) {
@@ -17,7 +16,6 @@ public class FirebaseUtil {
         return userId;
     }
 
-    // Kiểm tra người dùng đã đăng nhập chưa
     public static boolean isLoggedIn() {
         return currentUserId() != null;
     }
@@ -51,4 +49,5 @@ public class FirebaseUtil {
                 .child("profile_pic")
                 .child(otherUserId);
     }
+
 }

@@ -65,7 +65,8 @@ public class SignUpActivity extends AppCompatActivity {
         binding.buttonDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email,password,name,repass,phone;
+                String email,password,name,repass,phone,address;
+                address = String.valueOf(binding.edtAddress.getText());
                 email = String.valueOf(binding.edtEmail.getText());
                 password = String.valueOf(binding.edtPassword.getText());
                 name = String.valueOf(binding.edtUsername.getText());
@@ -91,6 +92,10 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Enter repassword", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (TextUtils.isEmpty(address)) {
+                    Toast.makeText(SignUpActivity.this, "Enter repassword", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
@@ -103,6 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     user.put("name",name);
                                     user.put("email",email);
                                     user.put("phone",phone);
+                                    user.put("address",address);
                                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
