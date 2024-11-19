@@ -31,7 +31,6 @@ public class FirebaseUtil {
                 .collection("Client")
                 .document(currentUserId());
     }
-
     // Lấy StorageReference của ảnh đại diện người dùng hiện tại
     public static StorageReference getCurrentProfilePicStorageRef() {
         String userId = currentUserId();
