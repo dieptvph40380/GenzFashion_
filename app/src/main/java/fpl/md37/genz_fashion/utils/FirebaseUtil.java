@@ -28,7 +28,7 @@ public class FirebaseUtil {
             throw new IllegalStateException("User is not logged in.");
         }
         return FirebaseFirestore.getInstance()
-                .collection("users")
+                .collection("Client")
                 .document(currentUserId());
     }
 
