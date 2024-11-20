@@ -11,6 +11,7 @@ import fpl.md37.genz_fashion.models.SelectProductRequest;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.Suppliers;
 import fpl.md37.genz_fashion.models.TypeProduct;
+import fpl.md37.genz_fashion.models.UpdateQuantityRequest;
 import fpl.md37.genz_fashion.models.Voucher;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -171,5 +172,6 @@ public interface ApiService {
     Call<ResponseCart> getCart(@Path("userId") String userId);
     @POST("select-products")
     Call<ResponseBody> selectProducts(@Body SelectProductRequest request);
-
+    @POST("update-quantity")
+    Call<ResponseBody> updateProductQuantity(@Body UpdateQuantityRequest request);
 }

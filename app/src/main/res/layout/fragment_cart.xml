@@ -57,6 +57,7 @@
         android:gravity="center"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/click_voucher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
