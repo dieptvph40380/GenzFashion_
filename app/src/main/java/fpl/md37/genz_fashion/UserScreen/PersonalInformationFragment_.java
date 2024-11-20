@@ -69,13 +69,14 @@ public class PersonalInformationFragment_ extends Fragment {
                         if (data != null && data.getData() != null) {
                             selectedImageUri = data.getData();
                             if (safeContext != null) {
-                                AndroidUtil.setProfilePic(safeContext, selectedImageUri, profilePic);
+                                Glide.with(safeContext)
+                                        .load(selectedImageUri)
+                                        .into(profilePic);
                             }
                         }
                     }
                 });
     }
-
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -174,34 +175,28 @@ public class PersonalInformationFragment_ extends Fragment {
         }
 
         String newUsername = edtName.getText().toString();
-
         currentUserModel.setName(newUsername);
 
         String newUserEmail = edtEmail.getText().toString();
-
         currentUserModel.setEmail(newUserEmail);
 
         String newUserPhone = edtPhone.getText().toString();
-
         currentUserModel.setPhone(newUserPhone);
 
         String newUserAddress = edtAddress.getText().toString();
-
         currentUserModel.setAddress(newUserAddress);
 
         SharedPreferences preferences = requireActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("name", newUsername);
-        editor.apply();
 
         if (selectedImageUri != null) {
             String base64Image = convertImageToBase64(selectedImageUri);
             currentUserModel.setAvatar(base64Image);
-
             editor.putString("avatar", base64Image);
-            editor.apply();
         }
 
+        editor.apply();
         updateToFirestore();
     }
 
@@ -225,12 +220,5 @@ public class PersonalInformationFragment_ extends Fragment {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private boolean isValidEmail(String email) {
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}";
-        Pattern pattern = Pattern.compile(emailPattern);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
     }
 }

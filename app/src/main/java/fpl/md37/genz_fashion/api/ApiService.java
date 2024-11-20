@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import fpl.md37.genz_fashion.models.CartResponseBody;
+import fpl.md37.genz_fashion.models.FavouriteItem;
+import fpl.md37.genz_fashion.models.FavouriteResponseBody;
 import fpl.md37.genz_fashion.models.Product;
+import fpl.md37.genz_fashion.models.RemoveFavouriteRequest;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.ResponseCart;
+import fpl.md37.genz_fashion.models.ResponseFavourite;
 import fpl.md37.genz_fashion.models.SelectProductRequest;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.Suppliers;
@@ -27,6 +31,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
     public static String BASE_URL="http://10.0.2.2:3000/api/";
@@ -176,4 +181,13 @@ public interface ApiService {
     Call<ResponseBody> selectProducts(@Body SelectProductRequest request);
     @POST("update-quantity")
     Call<ResponseBody> updateProductQuantity(@Body UpdateQuantityRequest request);
+
+    //add to cart
+    @POST("add-favourite")
+    Call<ResponseBody> addToFavourite(@Body FavouriteResponseBody body);
+    @GET("get-favourite/{userId}") // URL của bạn không có {userId} nữa
+    Call<ResponseFavourite> getFavourite(@Path("userId") String userId);
+
+    @POST("remove-favourite")
+    Call<ResponseBody> removeFavourite(@Body RemoveFavouriteRequest request);
 }
