@@ -143,10 +143,11 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/btn_CheckOut"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Mua hàng(0)"
+                android:text="Mua hàng"
                 android:background="@color/button_cart"
                 android:textSize="14sp"
                 android:textColor="@color/black"

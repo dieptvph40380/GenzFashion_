@@ -170,6 +170,8 @@ public interface ApiService {
     Call<ResponseBody> addToCart(@Body CartResponseBody body);
     @GET("get-cart/{userId}")
     Call<ResponseCart> getCart(@Path("userId") String userId);
+    @GET("get-order/{userId}")
+    Call<ResponseCart> getOrder(@Path("userId") String userId);
     @POST("select-products")
     Call<ResponseBody> selectProducts(@Body SelectProductRequest request);
     @POST("update-quantity")
