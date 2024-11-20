@@ -72,6 +72,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/textSecondary" />
 
+
             <EditText
                 android:id="@+id/edt_ProfileName"
                 android:layout_width="0dp"
