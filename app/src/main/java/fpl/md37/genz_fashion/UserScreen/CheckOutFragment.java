@@ -59,8 +59,6 @@ public class CheckOutFragment extends Fragment {
     private CheckOutAdapter adapter;
     private TextView txtotal;
     private HttpRequest httpRequest;
-    private ImageView btn_back;
-    private List<ProducItem> products;
 
     public CheckOutFragment() {
         // Required empty public constructor
@@ -94,7 +92,7 @@ public class CheckOutFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
-            httpRequest.callApi().getCart(userId).enqueue(getCartID);
+            httpRequest.callApi().getOrder(userId).enqueue(getCartID);
         }
 
         return v;
