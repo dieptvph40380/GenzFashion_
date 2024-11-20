@@ -126,7 +126,6 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
     private void setAvatarImage(String avatar) {
         try {
             byte[] decodedString = Base64.decode(avatar, Base64.DEFAULT);
@@ -184,3 +183,4 @@ public class ProfileFragment extends Fragment {
         }
     }
 }
+
