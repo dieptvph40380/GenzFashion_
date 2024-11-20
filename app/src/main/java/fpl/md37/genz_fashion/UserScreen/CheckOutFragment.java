@@ -48,7 +48,7 @@ import retrofit2.Response;
 
 public class CheckOutFragment extends Fragment {
 
-    TextView tvName,tvPhone,tvAddress;
+    TextView tvName,tvPhone,tvAddress,totalcheckout;
     ImageView profilePic;
     Button updateProfileBtn;
     Client currentUserModel;
@@ -79,6 +79,7 @@ public class CheckOutFragment extends Fragment {
         tvName=v.findViewById(R.id.tv_ClName);
         tvPhone=v.findViewById(R.id.tv_ClPhone);
         tvAddress=v.findViewById(R.id.tv_ClAddress);
+        totalcheckout=v.findViewById(R.id.total_CheckOut);
 
         getUserData();
 
@@ -129,11 +130,11 @@ public class CheckOutFragment extends Fragment {
                 Log.d("zzzzz Response", "Response: " + jsonResponse);
 
                 CartData cartData = response.body().getData();
-//                double totalPrice = cartData.getTotalPrice();
+                double totalPrice = cartData.getTotalPrice();
                 List<ProducItem> products = cartData.getProducts();
 
-//                // Hiển thị tổng giá tiền
-//                txtotal.setText("Total Price: $" + totalPrice);
+                // Hiển thị tổng giá tiền
+                totalcheckout.setText("" + totalPrice);
 
                 // Hiển thị danh sách sản phẩm trong giỏ hàng
                 adapter.setProducts(products);

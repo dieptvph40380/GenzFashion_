@@ -1,5 +1,6 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -44,7 +45,7 @@ import retrofit2.Response;
 public class CartFragment extends Fragment implements Item_Handel_check {
     private RecyclerView recyclerView;
     private AdapterCart adapter;
-    private TextView txtotal;
+    private TextView txtotal, btn_checkout;
     private HttpRequest httpRequest;
     private ImageView btn_back;
     private List<ProducItem> products;
@@ -54,7 +55,7 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
-        LinearLayout voucher=view.findViewById(R.id.click_voucher);
+        LinearLayout voucher = view.findViewById(R.id.click_voucher);
         voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,8 +69,9 @@ public class CartFragment extends Fragment implements Item_Handel_check {
         });
         recyclerView = view.findViewById(R.id.recycler_view_cart);
         txtotal = view.findViewById(R.id.total_cart);
+        btn_checkout = view.findViewById(R.id.btn_CheckOut);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterCart(getContext(),this);
+        adapter = new AdapterCart(getContext(), this);
         recyclerView.setAdapter(adapter);
         httpRequest = new HttpRequest();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -78,6 +80,30 @@ public class CartFragment extends Fragment implements Item_Handel_check {
             String userId = currentUser.getUid();
             httpRequest.callApi().getCart(userId).enqueue(getCartID);
         }
+
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Tạo một instance mới của Fragment
+                CheckOutFragment newFragment = new CheckOutFragment();
+
+                // Lấy đối tượng FragmentTransaction để thực hiện thay đổi fragment
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                // Áp dụng hiệu ứng chuyển động khi thay đổi fragment
+                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+
+                // Thay thế Fragment hiện tại bằng Fragment mới
+                transaction.replace(R.id.frameLayout_cart, newFragment);
+
+                // Thêm giao diện vào back stack để người dùng có thể quay lại
+                transaction.addToBackStack(null);
+
+                // Xác nhận giao dịch và thay đổi fragment
+                transaction.commit();
+            }
+        });
+
 
         btn_back = view.findViewById(R.id.back_button);
 
@@ -244,8 +270,6 @@ public class CartFragment extends Fragment implements Item_Handel_check {
             }
         });
     }
-
-
 
 
 }
