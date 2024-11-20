@@ -19,15 +19,21 @@ import android.widget.Toast;
 import fpl.md37.genz_fashion.adapter.AdapterTypeProduct;
 import fpl.md37.genz_fashion.adapter.AdapterTypeProductUser;
 import fpl.md37.genz_fashion.handel.Item_Handel_click;
+import fpl.md37.genz_fashion.handel.Item_Handle_MyWishlist;
+import fpl.md37.genz_fashion.models.FavouriteResponseBody;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.TypeProduct;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.genz_fashion.R;
 import com.example.genz_fashion.databinding.FragmentHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +43,7 @@ import fpl.md37.genz_fashion.adapter.CategoryAdapter;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.models.Product;
 
-public class HomeFragment extends Fragment implements Item_Handel_click {
+public class HomeFragment extends Fragment implements Item_Handel_click, Item_Handle_MyWishlist {
 
     private ArrayList<TypeProduct> typeProducts;
     private FragmentHomeBinding binding;
@@ -190,5 +196,34 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
     @Override
     public void onTypeProductClick(String typeId) {
         filterProductsByType(typeId);
+    }
+
+    @Override
+    public void addToFavourite(String userId, Product product) {
+        FavouriteResponseBody request=new FavouriteResponseBody(userId,product.getId());
+
+        httpRequest.callApi().addToFavourite(request).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    Toast.makeText(getContext(), "Add to favourite successfully", Toast.LENGTH_SHORT).show();
+                }else {
+                    try {
+                        // Xử lý khi thêm vào giỏ hàng không thành công
+                        String errorBody = response.errorBody().string(); // Get error message from error body
+                        Log.e("API Error", "Error message: " + errorBody);
+                        Toast.makeText( getContext(), "Failed to add to cart: " + errorBody, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e("API Error", "IOException: " + e.getMessage());
+                        Toast.makeText( getContext(), "Failed to add to cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("...","onFailure"+t.getMessage());
+            }
+        });
     }
 }
