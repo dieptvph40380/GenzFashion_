@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +22,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fpl.md37.genz_fashion.ManagerScreen.VoucherFragment;
 import fpl.md37.genz_fashion.adapter.AdapterCart;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.handel.Item_Handel_check;
@@ -31,6 +34,7 @@ import fpl.md37.genz_fashion.models.CartData;
 import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.ResponseCart;
 import fpl.md37.genz_fashion.models.SelectProductRequest;
+import fpl.md37.genz_fashion.models.UpdateQuantityRequest;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,6 +54,18 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        LinearLayout voucher=view.findViewById(R.id.click_voucher);
+        voucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment newFragment = new VoucherFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                transaction.replace(R.id.frameLayout_cart, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
         recyclerView = view.findViewById(R.id.recycler_view_cart);
         txtotal = view.findViewById(R.id.total_cart);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -94,23 +110,23 @@ public class CartFragment extends Fragment implements Item_Handel_check {
     Callback<ResponseCart> getCartID = new Callback<ResponseCart>() {
         @Override
         public void onResponse(Call<ResponseCart> call, Response<ResponseCart> response) {
-            Log.d("zzzz Call", "URL: " + call.request().url());
             if (response.isSuccessful()) {
-                // Log toàn bộ phản hồi để kiểm tra
-                String jsonResponse = new Gson().toJson(response.body());
-                Log.d("zzzzz Response", "Response: " + jsonResponse);
-
                 CartData cartData = response.body().getData();
                 double totalPrice = cartData.getTotalPrice();
                 List<ProducItem> products = cartData.getProducts();
 
-                // Hiển thị tổng giá tiền
                 txtotal.setText("Total Price: $" + totalPrice);
+                Log.d("CartFragment", "Total Price: " + totalPrice);
+                if (products != null && !products.isEmpty()) {
+                    for (ProducItem product : products) {
+                        Log.d("CartFragment", "Product ID: " + product.getId());
+                        Log.d("CartFragment", "Product Name: " + product.getProductId().getProduct_name());
+                        Log.d("CartFragment", "Product Quantity: " + product.getQuantity());
 
-                // Hiển thị danh sách sản phẩm trong giỏ hàng
+                    }
+                }
                 adapter.setProducts(products);
             } else {
-                Log.e("zzzzz Error", "Failed to fetch cart: " + response.message());
                 Toast.makeText(getContext(), "Failed to fetch cart: " + response.message(), Toast.LENGTH_SHORT).show();
             }
         }
@@ -137,37 +153,98 @@ public class CartFragment extends Fragment implements Item_Handel_check {
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
-            // Danh sách chứa sản phẩm được chọn/bỏ chọn
+            // Tạo danh sách ID sản phẩm đã chọn
             List<String> selectedProductIds = new ArrayList<>();
 
-            // Nếu sản phẩm được chọn, thêm vào danh sách các sản phẩm được chọn
+            // Nếu sản phẩm được chọn, thêm vào danh sách selectedProductIds
             if (isChecked) {
-                selectedProductIds.add(product.getProductId().getId());  // Thêm productId của sản phẩm hiện tại
+                selectedProductIds.add(product.getId());
             }
-
-            // Tạo request với danh sách chỉ có một productId
+            // Gọi API để cập nhật sản phẩm được chọn
             SelectProductRequest request = new SelectProductRequest(userId, selectedProductIds);
-
-            // Gửi yêu cầu API để cập nhật trạng thái chọn sản phẩm
             httpRequest.callApi().selectProducts(request).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        // Sau khi cập nhật giỏ hàng, tải lại giỏ hàng
+                        // Cập nhật lại giỏ hàng sau khi thay đổi sản phẩm
                         httpRequest.callApi().getCart(userId).enqueue(getCartID);
                     } else {
                         httpRequest.callApi().getCart(userId).enqueue(getCartID);
-                        Toast.makeText(getContext(), "Error: " + response.message(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    // Hiển thị thông báo lỗi nếu gặp sự cố kết nối
                     Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
+    @Override
+    public void updateQuantity(String userId, String productId, String sizeId, String action) {
+        Log.d("CartFragment", "Updating quantity...");
+        Log.d("CartFragment", "User ID: " + userId);
+        Log.d("CartFragment", "Product ID: " + productId);
+        Log.d("CartFragment", "Size ID: " + sizeId);
+        Log.d("CartFragment", "Action: " + action);
+
+        // Tạo đối tượng yêu cầu
+        UpdateQuantityRequest request = new UpdateQuantityRequest(userId, productId, sizeId, action);
+
+        // Gọi API để cập nhật số lượng
+        httpRequest.callApi().updateProductQuantity(request).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    // Giỏ hàng đã được cập nhật thành công
+                    Log.d("CartFragment", "Quantity updated successfully.");
+                    Toast.makeText(getContext(), "Quantity updated", Toast.LENGTH_SHORT).show();
+
+                    // Lấy lại giỏ hàng mới
+                    httpRequest.callApi().getCart(userId).enqueue(new Callback<ResponseCart>() {
+                        @Override
+                        public void onResponse(Call<ResponseCart> call, Response<ResponseCart> response) {
+                            if (response.isSuccessful()) {
+                                CartData cartData = response.body().getData();
+                                double totalPrice = cartData.getTotalPrice();
+                                List<ProducItem> updatedProducts = cartData.getProducts();
+
+                                // Cập nhật giá trị total và danh sách sản phẩm mới
+                                txtotal.setText("Total Price: $" + totalPrice);
+                                adapter.setProducts(updatedProducts);  // Cập nhật danh sách sản phẩm trong adapter
+                            } else {
+                                Toast.makeText(getContext(), "Failed to fetch updated cart: " + response.message(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseCart> call, Throwable t) {
+                            Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
+                    // Xử lý phản hồi lỗi
+                    try {
+                        String errorResponse = response.errorBody() != null ? response.errorBody().string() : "No error body";
+                        Log.d("CartFragment", "Failed to update quantity: " + errorResponse + response.message());
+                    } catch (IOException e) {
+                        Log.e("CartFragment", "Error parsing error response: " + e.getMessage());
+                    }
+                    Toast.makeText(getContext(), "Failed to update quantity: " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("CartFragment", "Network error: " + t.getMessage());
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
 

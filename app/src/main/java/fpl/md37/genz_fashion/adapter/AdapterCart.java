@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +32,12 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
     private List<ProducItem> products;
     private Item_Handel_check listener;
 
-    public AdapterCart(Context context,Item_Handel_check listener) {
+    public AdapterCart(Context context, Item_Handel_check listener) {
         this.context = context;
         this.products = new ArrayList<>();
         this.listener = listener;
     }
+
     public void setProducts(List<ProducItem> products) {
         this.products = products;
         notifyDataSetChanged();
@@ -49,46 +53,67 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull AdapterCart.ViewHolder holder, int position) {
         ProducItem product = products.get(position);
+
+        // Cập nhật tên sản phẩm
         holder.cart_name.setText(product.getProductId().getProduct_name());
-        holder.cart_price.setText(product.getProductId().getPrice()+" VND");
-        holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
 
+        // Cập nhật giá sản phẩm
+        holder.cart_price.setText(product.getProductId().getPrice() + " VND");
 
-        holder.checkBox_cart.setOnCheckedChangeListener(null); // Bỏ listener cũ trước khi thay đổi trạng thái
-
-// Đặt trạng thái hiện tại của CheckBox
+        // Cập nhật số lượng
+        int quantity = product.getQuantity();
+        if (quantity <= 0) {
+            quantity = 1; // Đảm bảo số lượng không dưới 1
+        }
+        holder.cart_quantity.setText(String.valueOf(quantity));
+        Log.d("QuantityCheck", "Product quantity: " + product.getQuantity());
+        // Cập nhật trạng thái checkbox
         holder.checkBox_cart.setChecked(product.isSelected());
 
-// Thiết lập listener để lắng nghe sự kiện thay đổi trạng thái của CheckBox
+        // Lắng nghe sự kiện khi checkbox thay đổi
         holder.checkBox_cart.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Cập nhật lại trạng thái của sản phẩm
             product.setSelected(isChecked);
-
-            // Thông báo lên listener khi trạng thái thay đổi
-            listener.onProductChecked(product, isChecked);
-        });
-
-        holder.btn_minus.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               int currentQuantity = product.getQuantity();
-               if (currentQuantity > 1) {
-                   product.setQuantity(currentQuantity - 1);
-                   holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
-               }
-           }
-       });
-        holder.btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                product.setQuantity(product.getQuantity() + 1);
-                holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
+            if (listener != null) {
+                listener.onProductChecked(product, isChecked);
             }
         });
+
+        holder.btn_minus.setOnClickListener(view -> {
+            int currentQuantity = product.getQuantity();
+            if (currentQuantity > 1) {
+                product.setQuantity(currentQuantity - 1);
+                holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
+                notifyItemChanged(position);
+
+                // Cập nhật dữ liệu server hoặc cơ sở dữ liệu nếu cần
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    String userId = currentUser.getUid();
+                    listener.updateQuantity(userId, product.getProductId().getId(), product.getSizeId().getId(), "decrease");
+                }
+            } else {
+                Toast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.btn_add.setOnClickListener(view -> {
+            product.setQuantity(product.getQuantity() + 1);
+            holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
+            notifyItemChanged(position);
+
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if (currentUser != null) {
+                String userId = currentUser.getUid();
+                listener.updateQuantity(userId, product.getProductId().getId(), product.getSizeId().getId(), "increase");
+            }
+        });
+
+        // Hiển thị ảnh sản phẩm
         String imageUrl = product.getProductId().getImage().get(0);
         if (imageUrl != null && !imageUrl.isEmpty()) {
             if (imageUrl.startsWith("http://localhost")) {
-
                 imageUrl = imageUrl.replace("http://localhost", "http://10.0.2.2");
             }
             Log.d("ImageURL", "Image URL: " + imageUrl);
@@ -96,12 +121,13 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
                     .load(imageUrl)
                     .into(holder.img_cart);
         }
+
+        // Hiển thị kích thước sản phẩm
         if (product.getSizeId() != null) {
             holder.cart_size.setText("Size: " + product.getSizeId().getName());
         } else {
             holder.cart_size.setText("No size available");
         }
-
     }
 
     @Override
@@ -112,18 +138,19 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_cart;
         CheckBox checkBox_cart;
-        MaterialButton btn_minus,btn_add;
-        TextView cart_name,cart_size,cart_price,cart_quantity;
+        MaterialButton btn_minus, btn_add;
+        TextView cart_name, cart_size, cart_price, cart_quantity;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_cart=itemView.findViewById(R.id.cart_IMG);
-            cart_name=itemView.findViewById(R.id.cart_name);
-            cart_size=itemView.findViewById(R.id.cart_size);
-            cart_price=itemView.findViewById(R.id.cart_price);
-            checkBox_cart=itemView.findViewById(R.id.checkbox);
-            cart_quantity=itemView.findViewById(R.id.quantity_cart);
-            btn_minus=itemView.findViewById(R.id.nexttypeproductupload);
-            btn_add=itemView.findViewById(R.id.addtypeproductupload);
+            img_cart = itemView.findViewById(R.id.cart_IMG);
+            cart_name = itemView.findViewById(R.id.cart_name);
+            cart_size = itemView.findViewById(R.id.cart_size);
+            cart_price = itemView.findViewById(R.id.cart_price);
+            checkBox_cart = itemView.findViewById(R.id.checkbox);
+            cart_quantity = itemView.findViewById(R.id.quantity_cart);
+            btn_minus = itemView.findViewById(R.id.nexttypeproductupload);
+            btn_add = itemView.findViewById(R.id.addtypeproductupload);
         }
     }
 }
