@@ -1,21 +1,19 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content"
     android:background="@color/background_color"
     tools:context="fpl.md37.genz_fashion.UserScreen.MyWishlistFragment">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"
         app:navigationIcon="@drawable/iconout">
 
         <TextView
@@ -27,37 +25,29 @@
             android:textColor="@color/cardview_dark_background"
             android:textSize="20sp"
             android:textStyle="bold" />
-
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- Filters Section -->
     <LinearLayout
         android:id="@+id/filters"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv1_frm_wishlist_user"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rcv1_frm_wishlist_user"/>
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
+    <!-- Main Wishlist RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWishlist"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         android:padding="10dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/filters"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
