@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
@@ -48,17 +51,17 @@ import retrofit2.Response;
 
 public class CheckOutFragment extends Fragment {
 
-    TextView tvName,tvPhone,tvAddress,totalcheckout;
-    ImageView profilePic;
-    Button updateProfileBtn;
+    TextView tvName,tvPhone,tvAddress,totalcheckout,tvPayment,tvPC_ToTal,tvPC_Shipping,tvPC_Voucher,tvPC_Payment,Voucher,tvOrder;
+    CheckBox cbChekOut;
     Client currentUserModel;
+    ImageView btnBack;
     ActivityResultLauncher<Intent> imagePickLauncher;
-    Uri selectedImageUri;
-    Context safeContext; // Lưu trữ context an toàn
+    Double PriceTotal =0.0,PriceShip =0.0,PriceVoucher =0.0,PricePayment=0.0;
+    Context safeContext;    // Lưu trữ context an toàn
     private RecyclerView recyclerView;
     private CheckOutAdapter adapter;
-    private TextView txtotal;
     private HttpRequest httpRequest;
+    private String selectedPaymentMethod = null;
 
     public CheckOutFragment() {
         // Required empty public constructor
@@ -80,11 +83,19 @@ public class CheckOutFragment extends Fragment {
         tvPhone=v.findViewById(R.id.tv_ClPhone);
         tvAddress=v.findViewById(R.id.tv_ClAddress);
         totalcheckout=v.findViewById(R.id.total_CheckOut);
+        tvPayment=v.findViewById(R.id.tv_Payment);
+        cbChekOut=v.findViewById(R.id.cb_CheckOut);
+        tvPC_ToTal=v.findViewById(R.id.tv_TotalPrice);
+        tvPC_Shipping=v.findViewById(R.id.tv_DiscountShipping);
+        tvPC_Voucher=v.findViewById(R.id.tv_DiscountVouchers);
+        tvPC_Payment=v.findViewById(R.id.tv_TotalPayment);
+        Voucher=v.findViewById(R.id.Voucher_Cl);
+        tvOrder=v.findViewById(R.id.tv_Order);
+        btnBack=v.findViewById(R.id.btnBack);
 
         getUserData();
 
         recyclerView = v.findViewById(R.id.rcv_ClCheckOut);
-        txtotal = v.findViewById(R.id.total_cart);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CheckOutAdapter(getContext());
         recyclerView.setAdapter(adapter);
@@ -95,6 +106,38 @@ public class CheckOutFragment extends Fragment {
             String userId = currentUser.getUid();
             httpRequest.callApi().getOrder(userId).enqueue(getCartID);
         }
+
+        cbChekOut.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                selectedPaymentMethod = tvPayment.getText().toString();
+                Toast.makeText(safeContext, "Selected Payment: " + selectedPaymentMethod, Toast.LENGTH_SHORT).show();
+            } else {
+                selectedPaymentMethod = null; // Reset trạng thái
+                Toast.makeText(safeContext, "Payment method deselected", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        tvOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MyOrderActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment newFragment = new CartFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                transaction.replace(R.id.layout_checkout, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        });
 
         return v;
     }
@@ -134,8 +177,16 @@ public class CheckOutFragment extends Fragment {
                 List<ProducItem> products = cartData.getProducts();
 
                 // Hiển thị tổng giá tiền
-                totalcheckout.setText("" + totalPrice);
+//                String voucher =Voucher.getText().toString();
+                String voucher =tvPC_Voucher.getText().toString();
+                PriceVoucher=Double.parseDouble(voucher);
 
+                String ship= tvPC_Shipping.getText().toString();
+                PriceShip=Double.parseDouble(ship);
+                tvPC_ToTal.setText("" + totalPrice);
+                PricePayment= totalPrice-(PriceVoucher+PriceShip);
+                tvPC_Payment.setText(""+PricePayment);
+                totalcheckout.setText(""+PricePayment);
                 // Hiển thị danh sách sản phẩm trong giỏ hàng
                 adapter.setProducts(products);
             } else {
@@ -150,5 +201,9 @@ public class CheckOutFragment extends Fragment {
             Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
+
+    public void PriceCheckOut(Float voucher,Float ship,Float total){
+
+    }
 
 }
