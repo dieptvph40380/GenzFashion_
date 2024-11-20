@@ -89,4 +89,6 @@ dependencies {
     implementation ("me.relex:circleindicator:2.1.6")
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
+    implementation ("com.firebaseui:firebase-ui-firestore:8.0.2")
+
 }

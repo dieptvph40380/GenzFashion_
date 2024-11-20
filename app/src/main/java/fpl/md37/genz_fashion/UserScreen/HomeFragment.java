@@ -78,14 +78,14 @@ public class HomeFragment extends Fragment implements Item_Handel_click {
         if (products == null) {
             products = new ArrayList<>();  // Initialize empty list if null
         }
-        AdapterProductUser adapter = new AdapterProductUser(requireContext(), products, this);
-        rcv.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        AdapterProductUser adapter = new AdapterProductUser(getContext(), products, this);
+        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rcv.setAdapter(adapter);
     }
 
     private void setupRecyclerView2(ArrayList<TypeProduct> ds) {
-        adapter = new AdapterTypeProductUser(requireContext(), ds, this);
-        rcv2.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        adapter = new AdapterTypeProductUser(getContext(), ds, this);
+        rcv2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcv2.setAdapter(adapter);
     }
 
