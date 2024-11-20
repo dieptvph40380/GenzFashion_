@@ -3,6 +3,8 @@ package fpl.md37.genz_fashion.models;
 import com.google.gson.annotations.SerializedName;
 
 public class ProducItem {
+    @SerializedName("_id")
+    private String id;
     @SerializedName("productId")
     private Product productId;
 
@@ -20,6 +22,22 @@ public class ProducItem {
         this.sizeId = sizeId;
         this.quantity = quantity;
         this.isSelected = isSelected;
+    }
+
+    public ProducItem(String id, Product productId, Size sizeId, int quantity, boolean isSelected) {
+        this.id = id;
+        this.productId = productId;
+        this.sizeId = sizeId;
+        this.quantity = quantity;
+        this.isSelected = isSelected;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Product getProductId() {
