@@ -16,4 +16,13 @@
     <color name="green">#27B446</color>
     <color name="red">#FF0000</color>
     <color name="button_cart">#F05D21</color>
+
+
+    <color name="colorAccent">#FF6200EE</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="editTextBackgroundColor">#FFFFFF</color>
+    <color name="editTextBorderColor">#D3D3D3</color>
+
+
 </resources>
