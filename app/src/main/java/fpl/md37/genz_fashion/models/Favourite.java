@@ -2,44 +2,36 @@ package fpl.md37.genz_fashion.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Favourite {
 
 
-    private String name;
-    private String id_client;
-    private String id_product;
+    @SerializedName("userId")
+    private String userId;
 
-    public Favourite() {
+    @SerializedName("products")
+    private List<FavouriteItem> products;
+
+
+    public Favourite(String userId, List<FavouriteItem> products) {
+        this.userId = userId;
+        this.products = products;
     }
 
-    public Favourite(String name, String id_product, String id_client) {
-        this.name = name;
-        this.id_product = id_product;
-        this.id_client = id_client;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getId_product() {
-        return id_product;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setId_product(String id_product) {
-        this.id_product = id_product;
+    public List<FavouriteItem> getProducts() {
+        return products;
     }
 
-    public String getId_client() {
-        return id_client;
+    public void setProducts(List<FavouriteItem> products) {
+        this.products = products;
     }
-
-    public void setId_client(String id_client) {
-        this.id_client = id_client;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }
