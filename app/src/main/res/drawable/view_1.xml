@@ -9,3 +9,4 @@
         android:height="4dp" /> <!-- Chiều cao của đường -->
     <corners android:radius="2dp" /> <!-- Bo góc cho View -->
 </shape>
+
