@@ -3,6 +3,7 @@ package fpl.md37.genz_fashion.UserScreen;
 import static android.app.PendingIntent.getActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new MyWishlistFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_chat) {
-                    replaceFragment(new ChatFragment());
+                    replaceFragment(new ChatUserFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_profile) {
                     replaceFragment(new ProfileFragment());

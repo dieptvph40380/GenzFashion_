@@ -84,14 +84,14 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
         if (products == null) {
             products = new ArrayList<>();  // Initialize empty list if null
         }
-        AdapterProductUser adapter = new AdapterProductUser(requireContext(), products, this);
-        rcv.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        AdapterProductUser adapter = new AdapterProductUser(getContext(), products, this);
+        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rcv.setAdapter(adapter);
     }
 
     private void setupRecyclerView2(ArrayList<TypeProduct> ds) {
-        adapter = new AdapterTypeProductUser(requireContext(), ds, this);
-        rcv2.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        adapter = new AdapterTypeProductUser(getContext(), ds, this);
+        rcv2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcv2.setAdapter(adapter);
     }
 
@@ -211,11 +211,11 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
                     try {
                         // Xử lý khi thêm vào giỏ hàng không thành công
                         String errorBody = response.errorBody().string(); // Get error message from error body
-                        Log.e("API Error", "Error message: " + errorBody);
-                        Toast.makeText( getContext(), "Failed to add to cart: " + errorBody, Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText( getContext(), "Failed to add to Favourite: " + errorBody, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Log.e("API Error", "IOException: " + e.getMessage());
-                        Toast.makeText( getContext(), "Failed to add to cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText( getContext(), "Failed to add to Favourite: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

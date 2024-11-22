@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.SearchUserActivity"
+            android:exported="false" />
+        <activity
             android:name="fpl.md37.genz_fashion.UserScreen.RePassActivity"
             android:exported="false" />
         <activity
@@ -66,12 +69,14 @@
             android:name="fpl.md37.genz_fashion.UserScreen.OTPForgotPassActivity"
             android:exported="false" />
         <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name="fpl.md37.genz_fashion.UserScreen.ForgotPassActivity"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
             android:exported="false" />
-
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.MainActivity"
             android:exported="false" />
@@ -81,7 +86,6 @@
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.MyOrderActivity"
             android:exported="false" />
-
         <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.SignInActivity"
             android:exported="true">

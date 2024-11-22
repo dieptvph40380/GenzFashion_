@@ -9,6 +9,8 @@ public class Client {
     private String phone;
     private String avatar;
     private String address;
+    private String userId;
+    private String fcmToken;
 
     // Phương thức chuyển đổi đối tượng thành HashMap
     public HashMap<String, Object> convertHashMap() {
@@ -33,6 +35,7 @@ public class Client {
         this.email = email;
         this.name = name;
         this.password = password;
+
     }
 
     // Getter và Setter với kiểm tra hợp lệ
@@ -86,6 +89,21 @@ public class Client {
     public void setAddress(String address) {
             this.address = address;
 
+    }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 
     // Phương thức toString() để hiển thị thông tin đối tượng

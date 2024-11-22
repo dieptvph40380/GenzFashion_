@@ -1,12 +1,14 @@
 package fpl.md37.genz_fashion.utils;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class FirebaseUtil {
+
 
     public static String currentUserId() {
         String userId = FirebaseAuth.getInstance().getUid();
@@ -20,6 +22,7 @@ public class FirebaseUtil {
         return currentUserId() != null;
     }
 
+
     // Truy xuất thông tin người dùng hiện tại từ Firestore
     public static DocumentReference currentUserDetails() {
         if (!isLoggedIn()) {
@@ -28,6 +31,9 @@ public class FirebaseUtil {
         return FirebaseFirestore.getInstance()
                 .collection("Client")
                 .document(currentUserId());
+    }
+    public static CollectionReference allUserCollectionReference(){
+        return FirebaseFirestore.getInstance().collection("Client");
     }
     // Lấy StorageReference của ảnh đại diện người dùng hiện tại
     public static StorageReference getCurrentProfilePicStorageRef() {

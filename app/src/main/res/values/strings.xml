@@ -19,7 +19,6 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-///
     <string name="name">Name:</string>
     <string name="update">Update</string>
     <string name="back_button_desc">Back to previous screen</string>
@@ -37,7 +36,6 @@
     <string name="cash_payment">Thanh toán tiền mặt</string>
     <string name="bank_payment">Chuyển khoản ngân hàng</string>
 
-    ///
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
