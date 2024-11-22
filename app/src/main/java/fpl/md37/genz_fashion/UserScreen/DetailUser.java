@@ -60,10 +60,10 @@ public class DetailUser extends AppCompatActivity {
 
         // Nút thêm vào giỏ hàng và mua ngay
         LinearLayout addToCartButton = findViewById(R.id.addToCart);
-        LinearLayout buyNowButton = findViewById(R.id.addBuyNow);
+//        LinearLayout buyNowButton = findViewById(R.id.addBuyNow);
 
         addToCartButton.setOnClickListener(v -> showBottomSheet("Add to Cart"));
-        buyNowButton.setOnClickListener(v -> showBottomSheet("Buy Now"));
+//        buyNowButton.setOnClickListener(v -> showBottomSheet("Buy Now"));
 
         // Nhận dữ liệu sản phẩm từ Intent
         product = (Product) getIntent().getSerializableExtra("product");
