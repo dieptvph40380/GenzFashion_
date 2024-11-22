@@ -1,11 +1,11 @@
 package fpl.md37.genz_fashion.api;
 
 import java.util.ArrayList;
-import java.util.Map;
 
+import fpl.md37.genz_fashion.models.OrderResponse;
 import fpl.md37.genz_fashion.models.CartResponseBody;
-import fpl.md37.genz_fashion.models.FavouriteItem;
 import fpl.md37.genz_fashion.models.FavouriteResponseBody;
+import fpl.md37.genz_fashion.models.OrderRequest;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.RemoveFavouriteRequest;
 import fpl.md37.genz_fashion.models.Response;
@@ -191,4 +191,9 @@ public interface ApiService {
 
     @POST("remove-favourite")
     Call<ResponseBody> removeFavourite(@Body RemoveFavouriteRequest request);
+    //lay danh sach don hang
+    @GET("orders")
+    Call<OrderResponse> getOrders(@Query("clientId") String clientId, @Query("state") int state);
+    @POST("add-order")
+    Call<ResponseBody> addOrder(@Body OrderRequest body);
 }
