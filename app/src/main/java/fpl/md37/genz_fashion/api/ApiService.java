@@ -181,7 +181,8 @@ public interface ApiService {
     Call<ResponseBody> selectProducts(@Body SelectProductRequest request);
     @POST("update-quantity")
     Call<ResponseBody> updateProductQuantity(@Body UpdateQuantityRequest request);
-
+    @POST("remove-product")
+    Call<ResponseBody> removeCart(@Body RemoveFavouriteRequest request);
     //add to cart
     @POST("add-favourite")
     Call<ResponseBody> addToFavourite(@Body FavouriteResponseBody body);

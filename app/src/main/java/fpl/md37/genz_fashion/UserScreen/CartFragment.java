@@ -1,5 +1,6 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.handel.Item_Handel_check;
 import fpl.md37.genz_fashion.models.CartData;
 import fpl.md37.genz_fashion.models.ProducItem;
+import fpl.md37.genz_fashion.models.RemoveFavouriteRequest;
 import fpl.md37.genz_fashion.models.ResponseCart;
 import fpl.md37.genz_fashion.models.SelectProductRequest;
 import fpl.md37.genz_fashion.models.UpdateQuantityRequest;
@@ -269,6 +272,51 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void removeCart(String userId, String productId) {
+        // Inflate the custom dialog layout
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.confim_delete, null);
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setView(dialogView)
+                .setCancelable(false)
+                .create();
+
+        // Initialize dialog elements
+        TextView tvDialogTitle = dialogView.findViewById(R.id.tvDialogTitle);
+        TextView tvDialogMessage = dialogView.findViewById(R.id.tvDialogMessage);
+        Button btnCancel = dialogView.findViewById(R.id.btnCancel);
+        Button btnConfirm = dialogView.findViewById(R.id.btnConfirm);
+
+        // Set up button actions
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        btnConfirm.setOnClickListener(v -> {
+            dialog.dismiss();
+            // Proceed with API call to remove the product
+            RemoveFavouriteRequest request = new RemoveFavouriteRequest(userId, productId);
+            httpRequest.callApi().removeCart(request).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        httpRequest.callApi().getCart(userId).enqueue(getCartID);
+                        Toast.makeText(getContext(), "Product removed from the cart", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.e("MyCart", "Error removing product: " + response.code());
+                        Toast.makeText(getContext(), "Failed to remove product", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("MyCart", "Error: " + t.getMessage());
+                    Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+        // Show the dialog
+        dialog.show();
     }
 
 

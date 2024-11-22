@@ -11,19 +11,27 @@
     <color name="nav_bar_background">#5A88A9</color>
     <color name="icon_selected_color">#000000</color>
     <color name="icon_unselected_color">#FFFFFFFF</color>
+    <color name="light_green">#C3FF7A</color>
     <color name="light_gray">#D3D3D3</color>
     <color name="background_color">#F5F5F5</color>
     <color name="green">#27B446</color>
     <color name="red">#FF0000</color>
     <color name="button_cart">#F05D21</color>
 
-
-
     <color name="colorAccent">#FF6200EE</color>
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#757575</color>
     <color name="editTextBackgroundColor">#FFFFFF</color>
     <color name="editTextBorderColor">#D3D3D3</color>
+
+
+    <color name="background">#F5F5F5</color>
+    <color name="toolbar_bg">#FFFFFF</color> <!-- Màu nền Toolbar -->
+    <color name="text_color">#333333</color>
+    <color name="text_color_secondary">#888888</color>
+    <color name="error">#F44336</color>
+
+
 
 
 </resources>
