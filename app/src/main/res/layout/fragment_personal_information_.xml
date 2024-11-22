@@ -75,9 +75,9 @@
 
             <EditText
                 android:id="@+id/edt_ProfileName"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:gravity="start|center_vertical"
                 android:textSize="18sp"
                 android:padding="12dp"
@@ -153,9 +153,9 @@
 
             <EditText
                 android:id="@+id/edt_ProfileAddress"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:gravity="start|center_vertical"
                 android:textSize="18sp"
                 android:padding="12dp"
@@ -165,15 +165,18 @@
     </LinearLayout>
 
     <!-- Update Button -->
-    <Button
+    <TextView
         android:id="@+id/btn_update_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update"
         android:textSize="20sp"
         android:textColor="@android:color/white"
-        android:background="@color/colorAccent"
+        android:background="@drawable/bg_btn"
         android:layout_marginTop="30dp"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:padding="12dp"/>
+
+
+
 </LinearLayout>

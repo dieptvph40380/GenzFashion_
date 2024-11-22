@@ -154,6 +154,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         ImageView img_cart;
         CheckBox checkBox_cart;
         ImageView btn_minus, btn_add;
+
         LinearLayout item_cart;
         TextView cart_name, cart_size, cart_price, cart_quantity;
 

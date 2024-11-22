@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
@@ -43,7 +46,7 @@ public class PersonalInformationFragment_ extends Fragment {
 
     EditText edtName, edtEmail, edtPhone, edtAddress;
     ImageView profilePic;
-    Button updateProfileBtn;
+    TextView updateProfileBtn;
     Client currentUserModel;
     ActivityResultLauncher<Intent> imagePickLauncher;
     Uri selectedImageUri;
@@ -87,7 +90,20 @@ public class PersonalInformationFragment_ extends Fragment {
         edtEmail = view.findViewById(R.id.edt_ProfileEmail);
         edtPhone = view.findViewById(R.id.edt_ProfilePhone);
         edtAddress = view.findViewById(R.id.edt_ProfileAddress);
+
         updateProfileBtn = view.findViewById(R.id.btn_update_profile);
+
+
+//        Button animatedGradientButton = view.findViewById(R.id.shadow_button);
+//        AnimationDrawable animationDrawable = (AnimationDrawable) animatedGradientButton.getBackground();
+//        animationDrawable.start(); // Khởi động hiệu ứng gradient động
+//
+//        animatedGradientButton.setOnClickListener(v -> {
+//            // Thực hiện hành động khi bấm vào nút
+//            Toast.makeText(this, "Animated Gradient Button Clicked!", Toast.LENGTH_SHORT).show();
+//        });
+
+
 
         getUserData();
 
