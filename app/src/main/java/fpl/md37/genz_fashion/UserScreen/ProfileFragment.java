@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +38,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore fstore;
     private String userID;
+//private View animatedDivider;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,6 +48,14 @@ public class ProfileFragment extends Fragment {
         btnbackProfile = view.findViewById(R.id.btnBack_profile);
         imgProfile = view.findViewById(R.id.img_ProfileView);
         tvProfileName = view.findViewById(R.id.tvProfileName);
+
+//         animatedDivider = view.findViewById(R.id.animated_divider);
+//
+//        // Lấy AnimationDrawable từ background của View
+//        AnimationDrawable animationDrawable = (AnimationDrawable) animatedDivider.getBackground();
+//
+//        // Bắt đầu chạy animation
+//        animationDrawable.start();
 
         mAuth = FirebaseAuth.getInstance();
         fstore = FirebaseFirestore.getInstance();

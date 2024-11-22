@@ -138,7 +138,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_cart;
         CheckBox checkBox_cart;
-        MaterialButton btn_minus, btn_add;
+        ImageView btn_minus, btn_add;
         TextView cart_name, cart_size, cart_price, cart_quantity;
 
         public ViewHolder(@NonNull View itemView) {
