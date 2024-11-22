@@ -91,7 +91,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chọn Voucher"
+                        android:text="Select Vouchers"
                         android:textSize="14sp" />
 
                     <ImageView
@@ -130,7 +130,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tất cả"
+                        android:text="All"
                         android:textSize="14sp"
 
                         android:layout_marginStart="5dp" />
@@ -147,7 +147,7 @@
                         android:id="@+id/total_cart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tổng thanh toán"
+                        android:text="Total payment"
                         android:textSize="14sp" />
                 </LinearLayout>
 
