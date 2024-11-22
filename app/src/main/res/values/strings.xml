@@ -18,11 +18,23 @@
     <string name="in"><u>Sign In</u></string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-
     <string name="name">Name:</string>
     <string name="update">Update</string>
     <string name="back_button_desc">Back to previous screen</string>
+
+    <string name="shipping_address">Shipping Address</string>
+    <string name="select_shipping">Select Shipping</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="note">Note</string>
+    <string name="cash">Cash</string>
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="checkout">Checkout</string>
+    <string name="total">Total</string>
+    <string name="back_button">Quay lại</string>
+    <string name="thanhtoan">Thanh toán</string>
+    <string name="cash_payment">Thanh toán tiền mặt</string>
+    <string name="bank_payment">Chuyển khoản ngân hàng</string>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,7 +97,21 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
                 Toast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_SHORT).show();
             }
         });
-
+        holder.item_cart.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    String userId = currentUser.getUid();
+                    String favouriteId = product.getProductId().getId();
+                    if (favouriteId != null) {
+                        listener.removeCart(userId,favouriteId); // Gọi hàm xóa sản phẩm
+                    }
+                }
+                return false;
+            }
+        });
         holder.btn_add.setOnClickListener(view -> {
             product.setQuantity(product.getQuantity() + 1);
             holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
@@ -138,11 +153,13 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_cart;
         CheckBox checkBox_cart;
-        MaterialButton btn_minus, btn_add;
+        ImageView btn_minus, btn_add;
+        LinearLayout item_cart;
         TextView cart_name, cart_size, cart_price, cart_quantity;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            item_cart=itemView.findViewById(R.id.item_cart);
             img_cart = itemView.findViewById(R.id.cart_IMG);
             cart_name = itemView.findViewById(R.id.cart_name);
             cart_size = itemView.findViewById(R.id.cart_size);
