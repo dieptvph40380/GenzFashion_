@@ -40,10 +40,12 @@ import fpl.md37.genz_fashion.adapter.CheckOutAdapter;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.models.CartData;
 import fpl.md37.genz_fashion.models.Client;
+import fpl.md37.genz_fashion.models.OrderRequest;
 import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.ResponseCart;
 import fpl.md37.genz_fashion.utils.AndroidUtil;
 import fpl.md37.genz_fashion.utils.FirebaseUtil;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +63,10 @@ public class CheckOutFragment extends Fragment {
     private RecyclerView recyclerView;
     private CheckOutAdapter adapter;
     private HttpRequest httpRequest;
-    private String selectedPaymentMethod = null;
+    private String selectedPaymentMethod;
+    private String userId;
+    CartData cartData;
+    List<ProducItem> products;
 
     public CheckOutFragment() {
         // Required empty public constructor
@@ -76,7 +81,6 @@ public class CheckOutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_check_out, container, false);
 
         tvName=v.findViewById(R.id.tv_ClName);
@@ -103,16 +107,17 @@ public class CheckOutFragment extends Fragment {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            String userId = currentUser.getUid();
+            userId = currentUser.getUid();
+            Log.d("CheckOutFragment", "User ID: " + userId);
             httpRequest.callApi().getOrder(userId).enqueue(getCartID);
         }
 
         cbChekOut.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 selectedPaymentMethod = tvPayment.getText().toString();
+                Log.d("CheckOutFragment", "Selected Payment Method: " + selectedPaymentMethod);
                 Toast.makeText(safeContext, "Selected Payment: " + selectedPaymentMethod, Toast.LENGTH_SHORT).show();
             } else {
-                selectedPaymentMethod = null; // Reset trạng thái
                 Toast.makeText(safeContext, "Payment method deselected", Toast.LENGTH_SHORT).show();
             }
         });
@@ -120,11 +125,59 @@ public class CheckOutFragment extends Fragment {
         tvOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MyOrderActivity.class);
-                startActivity(intent);
+                if (cbChekOut.isChecked()) {
+                    // Kiểm tra điều kiện để đảm bảo các dữ liệu cần thiết đã có
+                    if (currentUserModel == null || selectedPaymentMethod == null || cartData == null || cartData.getProducts().isEmpty()) {
+                        Toast.makeText(safeContext, "Missing required data to place order.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
+                    // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
+                    OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products);
+                    Gson gson = new Gson();
+                    String orderRequestJson = gson.toJson(orderRequest);
+                    Log.d("OrderRequest", "Data sent to API: " + orderRequestJson);
+                    // Gửi API addOrder
+                    httpRequest.callApi().addOrder(orderRequest).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(safeContext, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getContext(), MyOrderActivity.class);
+                                startActivity(intent);
+                            } else {
+                                // Log chi tiết lỗi từ server
+                                try {
+                                    if (response.errorBody() != null) {
+                                        String errorResponse = response.errorBody().string();
+                                        Log.e("OrderError", "Server error: " + errorResponse);
+                                        Toast.makeText(safeContext, "Failed to place order: " + errorResponse, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Log.e("OrderError", "Unknown server error.");
+                                        Toast.makeText(safeContext, "Failed to place order: Unknown error.", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
+                                    Log.e("OrderError", "Error parsing errorBody: " + e.getMessage());
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            // Xử lý lỗi kết nối hoặc hệ thống
+                            Toast.makeText(safeContext, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("OrderError", "Network error: " + t.getMessage());
+                        }
+                    });
+
+                } else {
+                    // Hiển thị thông báo nếu checkbox chưa được chọn
+                    Toast.makeText(safeContext, "Please select the payment method before proceeding.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +191,6 @@ public class CheckOutFragment extends Fragment {
 
             }
         });
-
         return v;
     }
 
@@ -171,12 +223,12 @@ public class CheckOutFragment extends Fragment {
                 // Log toàn bộ phản hồi để kiểm tra
                 String jsonResponse = new Gson().toJson(response.body());
                 Log.d("zzzzz Response", "Response: " + jsonResponse);
-
-                CartData cartData = response.body().getData();
+                cartData = response.body().getData();
                 double totalPrice = cartData.getTotalPrice();
-                List<ProducItem> products = cartData.getProducts();
+                String idCart = cartData.getId();
+                Log.d("CheckOutFragment", "Cart ID: " + idCart);
+                 products = cartData.getProducts();
 
-                // Hiển thị tổng giá tiền
 //                String voucher =Voucher.getText().toString();
                 String voucher =tvPC_Voucher.getText().toString();
                 PriceVoucher=Double.parseDouble(voucher);
@@ -202,8 +254,5 @@ public class CheckOutFragment extends Fragment {
         }
     };
 
-    public void PriceCheckOut(Float voucher,Float ship,Float total){
-
-    }
 
 }

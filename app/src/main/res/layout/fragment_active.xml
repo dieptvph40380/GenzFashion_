@@ -5,14 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:padding="8dp">
-
+    >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProductList"
+        android:id="@+id/rvProductList_ac"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        tools:listitem="@layout/item_active"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        tools:listitem="@layout/item_active" />
 </LinearLayout>
