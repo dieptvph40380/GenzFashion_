@@ -1,100 +1,58 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.genz_fashion.R;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.Query;
 
-import fpl.md37.genz_fashion.adapter.SearchUserAdapter;
 import fpl.md37.genz_fashion.models.Client;
-import fpl.md37.genz_fashion.utils.FirebaseUtil;
+import fpl.md37.genz_fashion.utils.AndroidUtil;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private EditText searchInput;
-    private ImageButton searchButton, backButton;
-    private RecyclerView recyclerView;
-    private SearchUserAdapter adapter;
+    Client otherUser;
 
+
+    EditText messageInput;
+    ImageButton sendMessageBtn;
+    ImageButton backBtn;
+    TextView otherUsername;
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chat);
 
-        initializeViews();
-        setupListeners();
-    }
+        otherUser = AndroidUtil.getUserModelFromIntent(getIntent());
 
-    private void initializeViews() {
-        searchInput = findViewById(R.id.seach_username_input);
-        searchButton = findViewById(R.id.search_user_btn);
-        backButton = findViewById(R.id.back_btn);
-        recyclerView = findViewById(R.id.search_user_recycler_view);
+        messageInput = findViewById(R.id.chat_message_input);
+        sendMessageBtn = findViewById(R.id.message_send_btn);
+        backBtn = findViewById(R.id.back_btn);
+        otherUsername = findViewById(R.id.other_username);
+        recyclerView = findViewById(R.id.chat_recycler_view);
 
-        searchInput.requestFocus();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void setupListeners() {
-        backButton.setOnClickListener(v -> onBackPressed());
-
-        searchButton.setOnClickListener(v -> {
-            String searchTerm = searchInput.getText().toString().trim();
-            if (TextUtils.isEmpty(searchTerm) || searchTerm.length() < 3) {
-                searchInput.setError("Invalid Username");
-                return;
-            }
-            setupSearchRecyclerView(searchTerm);
+        otherUsername.setText(otherUser.getName());
+        ImageButton back = findViewById(R.id.back_btn);
+        ImageButton searchButton = findViewById(R.id.main_search_btn);
+        back.setOnClickListener(v ->  {
+            onBackPressed();
         });
-    }
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    private void setupSearchRecyclerView(String searchTerm) {
-        Query query = FirebaseUtil.allUserCollectionReference()
-                .whereGreaterThanOrEqualTo("name", searchTerm)
-                .whereLessThanOrEqualTo("name", searchTerm + '\uf8ff');
-
-        FirestoreRecyclerOptions<Client> options = new FirestoreRecyclerOptions.Builder<Client>()
-                .setQuery(query, Client.class)
-                .build();
-
-        if (adapter != null) {
-            adapter.stopListening();
-        }
-
-        adapter = new SearchUserAdapter(options, this);
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (adapter != null) {
-            adapter.startListening();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (adapter != null) {
-            adapter.stopListening();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (adapter != null) {
-            adapter.startListening();
-        }
+                Intent intent = new Intent(ChatActivity.this, SearchUserActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

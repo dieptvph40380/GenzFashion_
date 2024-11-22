@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new MyWishlistFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_chat) {
-                    // Navigate to ChatActivity
-                    Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                    startActivity(intent);
+                    replaceFragment(new ChatUserFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_profile) {
                     replaceFragment(new ProfileFragment());
