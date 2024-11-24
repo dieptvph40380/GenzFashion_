@@ -131,7 +131,6 @@ public class CheckOutFragment extends Fragment {
                         Toast.makeText(safeContext, "Missing required data to place order.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
                     // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
                     OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products);
                     Gson gson = new Gson();

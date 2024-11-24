@@ -6,40 +6,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 
 import java.util.ArrayList;
 
-import fpl.md37.genz_fashion.models.CartData;
+import fpl.md37.genz_fashion.handel.Item_Handel_checkOrder;
 import fpl.md37.genz_fashion.models.Order;
 import fpl.md37.genz_fashion.models.ProducItem;
-import fpl.md37.genz_fashion.models.Product;
-import fpl.md37.genz_fashion.models.Size;
 
 public class AdapterOderActive extends RecyclerView.Adapter<AdapterOderActive.OrderActiveViewHolder> {
 
     private ArrayList<Order> orderList;
     private Context context;
+    private Item_Handel_checkOrder listener;
 
     // Constructor
-    public AdapterOderActive(ArrayList<Order> orderList, Context context) {
+    public AdapterOderActive(ArrayList<Order> orderList, Context context,Item_Handel_checkOrder listener) {
         this.orderList = orderList;
         this.context = context;
+        this.listener = listener;
     }
 
-    // Update data in the adapter
-    public void setOrderList(ArrayList<Order> orderList) {
-        this.orderList = orderList;
-        notifyDataSetChanged();
-    }
 
     @NonNull
     @Override
@@ -55,17 +48,26 @@ public class AdapterOderActive extends RecyclerView.Adapter<AdapterOderActive.Or
         holder.timeOrder.setText(order.getTimeOrder());
 
         ArrayList<ProducItem> productList = new ArrayList<>(order.getProducts());
-        Log.d("AdapterOderActive", "Number of products: " + productList.size());
+        int totalQuantity = 0;
+        for (ProducItem productItem : productList) {
+            totalQuantity += productItem.getQuantity();
+        }
+
+        holder.total.setText(""+ totalQuantity+" items: "+ order.getTotalAmount());
+
+
+
         if (!productList.isEmpty()) {
-            ProductAdapter productAdapter = new ProductAdapter(productList, context);
+            ProductACAdapter productAdapter = new ProductACAdapter(productList, context);
             holder.rvProductList.setAdapter(productAdapter);
         } else {
             Log.d("AdapterOderActive", "Product list is empty.");
         }
 
-
         holder.btnTrackOrder.setOnClickListener(v -> {
-
+            if (listener != null) {
+                listener.onTrackOrderClick(order);
+            }
         });
     }
 
@@ -76,7 +78,7 @@ public class AdapterOderActive extends RecyclerView.Adapter<AdapterOderActive.Or
 
     // ViewHolder class
     public static class OrderActiveViewHolder extends RecyclerView.ViewHolder {
-        TextView timeOrder;
+        TextView timeOrder,total;
         RecyclerView rvProductList;
         Button btnTrackOrder;
 
@@ -84,6 +86,7 @@ public class AdapterOderActive extends RecyclerView.Adapter<AdapterOderActive.Or
             super(itemView);
             rvProductList = itemView.findViewById(R.id.rvProductList_order);
             btnTrackOrder = itemView.findViewById(R.id.btnTrackOrder);
+            total = itemView.findViewById(R.id.total_order);
             timeOrder = itemView.findViewById(R.id.timeorder);
             rvProductList.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         }
