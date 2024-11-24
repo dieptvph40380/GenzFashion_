@@ -25,7 +25,7 @@
             android:gravity="start|center_vertical">
             <!-- Product List -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvProductList_order_cp"
+                android:id="@+id/rvProductList_order_cl"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -39,7 +39,7 @@
                 android:layout_gravity="bottom">
 
                 <TextView
-                    android:id="@+id/timeorder_cp"
+                    android:id="@+id/timeorder_cl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Order placed: Today"
@@ -50,7 +50,7 @@
 
                 <!-- Order Total -->
                 <TextView
-                    android:id="@+id/total_order_cp"
+                    android:id="@+id/total_order_cl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12 items: 20000 VND"
@@ -67,6 +67,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end|center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="State: Canclled"/>
 
 
     </LinearLayout>

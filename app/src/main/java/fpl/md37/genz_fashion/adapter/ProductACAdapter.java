@@ -1,7 +1,6 @@
 package fpl.md37.genz_fashion.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,11 @@ import fpl.md37.genz_fashion.models.Product; // Import đúng Product
 import fpl.md37.genz_fashion.models.Size;   // Import đúng Size
 import fpl.md37.genz_fashion.models.ProducItem; // Import đúng ProducItem
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ProductACAdapter extends RecyclerView.Adapter<ProductACAdapter.ProductViewHolder> {
     private ArrayList<ProducItem> productItemList;
     private Context context;
 
-    public ProductAdapter(ArrayList<ProducItem> productItemList, Context context) {
+    public ProductACAdapter(ArrayList<ProducItem> productItemList, Context context) {
         this.productItemList = productItemList;
         this.context = context;
     }
@@ -33,7 +32,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_product_order, parent, false); // Sử dụng layout item_product_order.xml cho sản phẩm
+        View view = inflater.inflate(R.layout.item_product_order, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -41,18 +40,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         ProducItem productItem = productItemList.get(position);
         Product product = productItem.getProductId();
-//        Size size = productItem.getSizeId();
+        Size size = productItem.getSizeId();
 
         if (product != null) {
             holder.tvProductName.setText(product.getProduct_name());
-            holder.tvProductPrice.setText(String.valueOf(product.getPrice()));
+            holder.tvProductPrice.setText("$"+String.valueOf(product.getPrice()));
 
 
-//            if (size != null) {
-//                holder.tvProductSizeQty.setText("Size: " + size.getName() + " | Qty: " + productItem.getQuantity());
-//            } else {
-//                holder.tvProductSizeQty.setText("Size: N/A | Qty: " + productItem.getQuantity());
-//            }
+            if (size != null) {
+                holder.tvProductSizeQty.setText("Size: " + size.getName() + " | Qty: " + productItem.getQuantity());
+            } else {
+                holder.tvProductSizeQty.setText("Size: N/A | Qty: " + productItem.getQuantity());
+            }
             // Kiểm tra xem có ảnh không trước khi load
             if (product.getImage() != null && !product.getImage().isEmpty()) {
                 Glide.with(context).load(product.getImage().get(0)).into(holder.ivProductImage);

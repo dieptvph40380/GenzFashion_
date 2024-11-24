@@ -59,7 +59,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         holder.cart_name.setText(product.getProductId().getProduct_name());
 
         // Cập nhật giá sản phẩm
-        holder.cart_price.setText(product.getProductId().getPrice() + " VND");
+        holder.cart_price.setText("$ "+product.getProductId().getPrice());
 
         // Cập nhật số lượng
         int quantity = product.getQuantity();

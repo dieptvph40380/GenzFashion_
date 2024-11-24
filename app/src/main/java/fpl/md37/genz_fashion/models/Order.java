@@ -18,11 +18,13 @@
         private double totalAmount;    // total_amount
         @SerializedName("order_time")
         private String timeOrder;
+        @SerializedName("cancleOrder_time")
+        private String timeCancleOrder;
 
         public Order() {
         }
 
-        public Order(String id, String idClient, List<ProducItem> products, int state, String paymentMethod, double totalAmount, String timeOrder) {
+        public Order(String id, String idClient, List<ProducItem> products, int state, String paymentMethod, double totalAmount, String timeOrder, String timeCancleOrder) {
             this.id = id;
             this.idClient = idClient;
             this.products = products;
@@ -30,6 +32,7 @@
             this.paymentMethod = paymentMethod;
             this.totalAmount = totalAmount;
             this.timeOrder = timeOrder;
+            this.timeCancleOrder = timeCancleOrder;
         }
 
         public String getId() {
@@ -86,5 +89,13 @@
 
         public void setTimeOrder(String timeOrder) {
             this.timeOrder = timeOrder;
+        }
+
+        public String getTimeCancleOrder() {
+            return timeCancleOrder;
+        }
+
+        public void setTimeCancleOrder(String timeCancleOrder) {
+            this.timeCancleOrder = timeCancleOrder;
         }
     }
