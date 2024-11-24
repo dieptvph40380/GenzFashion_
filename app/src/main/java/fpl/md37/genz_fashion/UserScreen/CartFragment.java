@@ -52,6 +52,7 @@ public class CartFragment extends Fragment implements Item_Handel_check {
     private HttpRequest httpRequest;
     private ImageView btn_back;
     private List<ProducItem> products;
+    private boolean isProductSelected = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,10 +84,16 @@ public class CartFragment extends Fragment implements Item_Handel_check {
             String userId = currentUser.getUid();
             httpRequest.callApi().getCart(userId).enqueue(getCartID);
         }
-
+        btn_checkout.setEnabled(false);
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (!isProductSelected) {
+                    // Hiển thị thông báo khi không có sản phẩm nào được chọn
+                    Toast.makeText(getContext(), "Vui lòng chọn ít nhất một sản phẩm để tiếp tục", Toast.LENGTH_SHORT).show();
+                    return; // Dừng lại và không chuyển màn
+                }
                 // Tạo một instance mới của Fragment
                 CheckOutFragment newFragment = new CheckOutFragment();
 
@@ -155,6 +162,8 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                     }
                 }
                 adapter.setProducts(products);
+                isProductSelected = products.stream().anyMatch(product -> product.isSelected());
+                btn_checkout.setEnabled(isProductSelected);
             } else {
                 Toast.makeText(getContext(), "Failed to fetch cart: " + response.message(), Toast.LENGTH_SHORT).show();
             }
@@ -196,8 +205,13 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
                         // Cập nhật lại giỏ hàng sau khi thay đổi sản phẩm
+                        // Kiểm tra trạng thái sản phẩm
+                        isProductSelected = !selectedProductIds.isEmpty();
+                        btn_checkout.setEnabled(isProductSelected);
                         httpRequest.callApi().getCart(userId).enqueue(getCartID);
                     } else {
+                        isProductSelected = !selectedProductIds.isEmpty();
+                        btn_checkout.setEnabled(isProductSelected);
                         httpRequest.callApi().getCart(userId).enqueue(getCartID);
                     }
                 }
