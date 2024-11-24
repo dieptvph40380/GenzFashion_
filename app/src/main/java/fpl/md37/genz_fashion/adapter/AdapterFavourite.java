@@ -1,6 +1,7 @@
 package fpl.md37.genz_fashion.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,11 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import fpl.md37.genz_fashion.UserScreen.DetailUser;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.handel.Item_Handel_delete;
 import fpl.md37.genz_fashion.models.FavouriteItem;
+import fpl.md37.genz_fashion.models.Product;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +36,7 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
     private List<FavouriteItem> products;
     private HttpRequest httpRequest; // Đối tượng gọi API
     private Item_Handel_delete items;
+    private ArrayList<Product> listProduct;
 
     // Constructor nhận context và khởi tạo danh sách trống
     public AdapterFavourite(Context context,Item_Handel_delete items) {
@@ -86,6 +90,16 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
         } else {
             Log.d("FavouriteItem", "No image available");
         }
+
+        // Sự kiện click mở màn hình chi tiết
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailUser.class);
+
+            // Truyền dữ liệu sản phẩm
+            intent.putExtra("product",productItem.getProductId()); // Lấy thông tin Product từ FavouriteItem
+            context.startActivity(intent);
+        });
+
 
         // Ở đây bạn có thể thêm sự kiện click vào icon wishlist nếu cần
         holder.imgHeart.setOnClickListener(v -> {
