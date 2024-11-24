@@ -115,26 +115,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- Select All Section -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center|start">
 
-                    <CheckBox
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:buttonTint="@color/blue"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="All"
-                        android:textSize="14sp"
-
-                        android:layout_marginStart="5dp" />
-                </LinearLayout>
 
                 <!-- Total Price Section -->
                 <LinearLayout

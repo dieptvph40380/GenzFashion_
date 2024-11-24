@@ -84,7 +84,6 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
             if (currentQuantity > 1) {
                 product.setQuantity(currentQuantity - 1);
                 holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
-                notifyItemChanged(position);
 
                 // Cập nhật dữ liệu server hoặc cơ sở dữ liệu nếu cần
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -112,10 +111,10 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
                 return false;
             }
         });
+
         holder.btn_add.setOnClickListener(view -> {
             product.setQuantity(product.getQuantity() + 1);
             holder.cart_quantity.setText(String.valueOf(product.getQuantity()));
-            notifyItemChanged(position);
 
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = mAuth.getCurrentUser();
