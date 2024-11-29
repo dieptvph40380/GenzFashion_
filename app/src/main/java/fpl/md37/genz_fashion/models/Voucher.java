@@ -29,6 +29,15 @@ public class Voucher {
 
     @SerializedName("minimumOrderValue")
     private double minimumOrderValue;
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     // Getters và Setters
     public String getId() {

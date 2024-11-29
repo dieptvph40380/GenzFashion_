@@ -1,7 +1,10 @@
 package fpl.md37.genz_fashion.UserScreen;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -48,7 +51,7 @@ import retrofit2.Response;
 public class CartFragment extends Fragment implements Item_Handel_check {
     private RecyclerView recyclerView;
     private AdapterCart adapter;
-    private TextView txtotal, btn_checkout;
+    private TextView txtotal, btn_checkout,name_voucher_tv;
     private HttpRequest httpRequest;
     private ImageView btn_back;
     private List<ProducItem> products;
@@ -63,7 +66,7 @@ public class CartFragment extends Fragment implements Item_Handel_check {
         voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment newFragment = new VoucherFragment();
+                Fragment newFragment = new SelectedVoucherFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
                 transaction.replace(R.id.frameLayout_cart, newFragment);
@@ -71,6 +74,21 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                 transaction.commit();
             }
         });
+        TextView select = view.findViewById(R.id.select);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("VoucherPrefs", Context.MODE_PRIVATE);
+        String voucherName = sharedPreferences.getString("voucher_name", "Select Vouchers");
+
+        select.setText(voucherName);
+        if (!voucherName.equals("Select Vouchers")) {
+            // Nếu đã chọn voucher, hiển thị tên voucher và màu chữ xanh
+            select.setText(voucherName);
+            select.setTextColor(Color.parseColor("#32CD32"));  // Màu xanh
+        } else {
+            // Nếu chưa chọn voucher, hiển thị chữ đen
+            select.setText("Select Vouchers");
+            select.setTextColor(Color.BLACK);  // Màu đen
+        }
         recyclerView = view.findViewById(R.id.recycler_view_cart);
         txtotal = view.findViewById(R.id.total_cart);
         btn_checkout = view.findViewById(R.id.btn_CheckOut);

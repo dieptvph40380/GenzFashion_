@@ -19,6 +19,7 @@ import fpl.md37.genz_fashion.models.Suppliers;
 import fpl.md37.genz_fashion.models.TypeProduct;
 import fpl.md37.genz_fashion.models.UpdateQuantityRequest;
 import fpl.md37.genz_fashion.models.Voucher;
+import fpl.md37.genz_fashion.models.VoucherRequest;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -185,6 +186,10 @@ public interface ApiService {
     Call<ResponseBody> updateProductQuantity(@Body UpdateQuantityRequest request);
     @POST("remove-product")
     Call<ResponseBody> removeCart(@Body RemoveFavouriteRequest request);
+    @POST("select-voucher")
+    Call<ResponseCart> selectVoucher(@Body VoucherRequest request);
+    @POST("unselect-voucher")
+    Call<ResponseCart> unselectVoucher(@Body VoucherRequest request);
     //add to cart
     @POST("add-favourite")
     Call<ResponseBody> addToFavourite(@Body FavouriteResponseBody body);
