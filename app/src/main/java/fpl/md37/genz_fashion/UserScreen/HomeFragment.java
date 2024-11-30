@@ -13,35 +13,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import fpl.md37.genz_fashion.adapter.AdapterTypeProduct;
+import androidx.appcompat.widget.SearchView;
+
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.genz_fashion.R;
+import com.example.genz_fashion.databinding.FragmentHomeBinding;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
+
+import fpl.md37.genz_fashion.adapter.AdapterProductUser;
 import fpl.md37.genz_fashion.adapter.AdapterTypeProductUser;
+import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.handel.Item_Handel_click;
 import fpl.md37.genz_fashion.handel.Item_Handle_MyWishlist;
 import fpl.md37.genz_fashion.models.FavouriteResponseBody;
+import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.TypeProduct;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.genz_fashion.R;
-import com.example.genz_fashion.databinding.FragmentHomeBinding;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import fpl.md37.genz_fashion.adapter.AdapterProductUser;
-import fpl.md37.genz_fashion.adapter.CategoryAdapter;
-import fpl.md37.genz_fashion.api.HttpRequest;
-import fpl.md37.genz_fashion.models.Product;
 
 public class HomeFragment extends Fragment implements Item_Handel_click, Item_Handle_MyWishlist {
 
@@ -49,7 +45,7 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
     private FragmentHomeBinding binding;
     private CountDownTimer countDownTimer;
     private HttpRequest httpRequest;
-    private ArrayList<Product> productList = new ArrayList<>();  // Empty list initialization
+    private ArrayList<Product> productList = new ArrayList<>();
     private RecyclerView rcv, rcv2;
     private AdapterTypeProductUser adapter;
 
@@ -70,6 +66,29 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
         fetchProducts();
         fetchTypeProducts();
 
+        // Search functionality
+        SearchView searchView = binding.searchView;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                filterProductsByName(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()) {
+
+                    setupRecyclerView(productList);
+                } else {
+
+                    filterProductsByName(newText);
+                }
+                return true;
+            }
+        });
+
         // Initialize image slider
         ArrayList<SlideModel> slideModels = new ArrayList<>();
         slideModels.add(new SlideModel(R.drawable.banner1, ScaleTypes.FIT));
@@ -82,7 +101,7 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
 
     private void setupRecyclerView(ArrayList<Product> products) {
         if (products == null) {
-            products = new ArrayList<>();  // Initialize empty list if null
+            products = new ArrayList<>();
         }
         AdapterProductUser adapter = new AdapterProductUser(getContext(), products, this);
         rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -95,18 +114,18 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
         rcv2.setAdapter(adapter);
     }
 
-    private void filterProductsByType(String typeId) {
+    private void filterProductsByName(String query) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
-        if (productList != null) {
+        if (productList != null && !query.isEmpty()) {
             for (Product product : productList) {
-                if (Objects.equals(product.getTypeProductId(), typeId)) {
+                if (product.getProduct_name().toLowerCase().contains(query.toLowerCase())) {
                     filteredProducts.add(product);
                 }
             }
         }
 
         if (filteredProducts.isEmpty() && isAdded()) {
-            Toast.makeText(requireContext(), "No Product", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "No products found", Toast.LENGTH_SHORT).show();
         }
 
         setupRecyclerView(filteredProducts);
@@ -118,12 +137,6 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
             public void onResponse(Call<Response<ArrayList<TypeProduct>>> call, retrofit2.Response<Response<ArrayList<TypeProduct>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getStatus() == 200) {
                     typeProducts = response.body().getData();
-                    if (typeProducts != null) {
-                        for (TypeProduct typeProduct : typeProducts) {
-                            Log.d("TypeProduct", "ID: " + typeProduct.getId() + ", Name: " + typeProduct.getImage() +
-                                    ", Sizes: " + (typeProduct.getSizes() != null ? typeProduct.getSizes().size() : "null"));
-                        }
-                    }
                     setupRecyclerView2(typeProducts);
                 } else {
                     Log.e("FetchTypeProducts", "Failed response: " + response.code());
@@ -143,9 +156,6 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
             public void onResponse(Call<Response<ArrayList<Product>>> call, retrofit2.Response<Response<ArrayList<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     productList = response.body().getData();
-                    if (productList == null) {
-                        productList = new ArrayList<>();
-                    }
                     setupRecyclerView(productList);
                 } else if (isAdded()) {
                     Toast.makeText(requireContext(), "Error fetching products", Toast.LENGTH_SHORT).show();
@@ -190,39 +200,36 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        binding = null; // Avoid memory leaks
+        binding = null;
     }
 
     @Override
     public void onTypeProductClick(String typeId) {
-        filterProductsByType(typeId);
+        filterProductsByName(typeId); // Update as per typeId if needed
     }
 
     @Override
     public void addToFavourite(String userId, Product product) {
-        FavouriteResponseBody request=new FavouriteResponseBody(userId,product.getId());
-
+        FavouriteResponseBody request = new FavouriteResponseBody(userId, product.getId());
         httpRequest.callApi().addToFavourite(request).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Toast.makeText(getContext(), "Add to favourite successfully", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     try {
-                        // Xử lý khi thêm vào giỏ hàng không thành công
-                        String errorBody = response.errorBody().string(); // Get error message from error body
-
-                        Toast.makeText( getContext(), "Failed to add to Favourite: " + errorBody, Toast.LENGTH_SHORT).show();
+                        String errorBody = response.errorBody().string();
+                        Toast.makeText(getContext(), "Failed to add to Favourite: " + errorBody, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Log.e("API Error", "IOException: " + e.getMessage());
-                        Toast.makeText( getContext(), "Failed to add to Favourite: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Failed to add to Favourite: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("...","onFailure"+t.getMessage());
+                Log.e("AddToFavourite", "onFailure: " + t.getMessage());
             }
         });
     }

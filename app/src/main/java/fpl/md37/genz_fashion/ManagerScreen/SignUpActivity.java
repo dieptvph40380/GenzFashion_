@@ -1,19 +1,14 @@
 package fpl.md37.genz_fashion.ManagerScreen;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import fpl.md37.genz_fashion.UserScreen.MainActivity;
-import fpl.md37.genz_fashion.UserScreen.SendOtpActivity;
 
 import com.example.genz_fashion.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import fpl.md37.genz_fashion.UserScreen.MainActivity;
+
 public class SignUpActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -39,92 +36,129 @@ public class SignUpActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         mAuth = FirebaseAuth.getInstance();
+        fstore = FirebaseFirestore.getInstance();
         setContentView(binding.getRoot());
 
-        fstore = FirebaseFirestore.getInstance();
-
-        binding.edtNhaplaiPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.tvDangNhap.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivity(intent);
+            finish();
         });
-        binding.buttonDangKy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email,password,name,repass,phone,address;
-                address = String.valueOf(binding.edtAddress.getText());
-                email = String.valueOf(binding.edtEmail.getText());
-                password = String.valueOf(binding.edtPassword.getText());
-                name = String.valueOf(binding.edtUsername.getText());
-                phone = String.valueOf(binding.edtPhone.getText());
-                repass = String.valueOf(binding.edtNhaplaiPassword.getText());
-                if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(SignUpActivity.this, "Enter name", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(SignUpActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(SignUpActivity.this, "Enter phone", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(repass)) {
-                    Toast.makeText(SignUpActivity.this, "Enter repassword", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(address)) {
-                    Toast.makeText(SignUpActivity.this, "Enter repassword", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                    userID = mAuth.getCurrentUser().getUid();
-                                    DocumentReference documentReference = fstore.collection("Client").document(userID);
-                                    Map<String,Object> user = new HashMap<>();
-                                    user.put("name",name);
-                                    user.put("email",email);
-                                    user.put("phone",phone);
-                                    user.put("address",address);
-                                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Log.d(TAG,"onSuccess: user Profile is created for" + userID);
-                                        }
-                                    });
-                                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                                } else {
 
-                                    Toast.makeText(SignUpActivity.this, "failed.", Toast.LENGTH_SHORT).show();
+        binding.buttonDangKy.setOnClickListener(view -> {
+            String email = binding.edtEmail.getText().toString().trim();
+            String password = binding.edtPassword.getText().toString().trim();
+            String repass = binding.edtNhaplaiPassword.getText().toString().trim();
+            String name = binding.edtUsername.getText().toString().trim();
+            String phone = binding.edtPhone.getText().toString().trim();
+            String address = binding.edtAddress.getText().toString().trim();
 
-                                }
+            // Validate fields
+            if (!validateFields(name, email, phone, address, password, repass)) {
+                return; // Stop if validation fails
+            }
+
+            // Create user in Firebase Auth
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SignUpActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+
+                                userID = mAuth.getCurrentUser().getUid();
+                                DocumentReference documentReference = fstore.collection("Client").document(userID);
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("userId", userID);
+                                user.put("name", name);
+                                user.put("email", email);
+                                user.put("phone", phone);
+                                user.put("address", address);
+
+                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(SignUpActivity.this, "User profile created.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                // Redirect to MainActivity
+                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                finish();
+
+                            } else {
+                                Toast.makeText(SignUpActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        });
-            }
+                        }
+                    });
         });
-
     }
+
+    private boolean validateFields(String name, String email, String phone, String address, String password, String repass) {
+        // Validate name
+        if (TextUtils.isEmpty(name)) {
+            binding.edtUsername.setError("Username is required.");
+            binding.edtUsername.requestFocus();
+            return false;
+        }
+
+        // Validate email
+        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.edtEmail.setError("Enter a valid email address.");
+            binding.edtEmail.requestFocus();
+            return false;
+        }
+
+        // Validate phone
+        if (TextUtils.isEmpty(phone) || phone.length() < 10) {
+            binding.edtPhone.setError("Enter a valid phone number (at least 10 digits).");
+            binding.edtPhone.requestFocus();
+            return false;
+        }
+
+        // Validate address
+        if (TextUtils.isEmpty(address)) {
+            binding.edtAddress.setError("Address is required.");
+            binding.edtAddress.requestFocus();
+            return false;
+        }
+
+        // Validate password
+        if (!isValidPassword(password)) {
+            binding.passwordTil.setError("Password must be at least 8 characters, include a number, a letter");
+            binding.edtPassword.requestFocus();
+            return false;
+        } else {
+            binding.passwordTil.setError(null);
+        }
+
+        // Validate re-entered password
+        if (!password.equals(repass)) {
+            binding.passwordTilConfirm.setError("Passwords do not match.");
+            binding.edtNhaplaiPassword.requestFocus();
+            return false;
+        } else {
+            binding.passwordTilConfirm.setError(null);
+        }
+
+        return true;
+    }
+
+    private boolean isValidPassword(String password) {
+        String passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d).{8,}$";
+        return password != null && password.matches(passwordPattern);
+    }
+
 }
