@@ -22,34 +22,52 @@
             >
 
             <!-- Thanh tiêu đề -->
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/topBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
+                <!-- Nút quay lại -->
                 <ImageView
                     android:id="@+id/backArrow"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/iconout" />
+                    android:src="@drawable/iconout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
+                <!-- Tiêu đề -->
                 <TextView
                     android:id="@+id/productDetailsTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
                     android:text="Product Details"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:gravity="center" />
-            </LinearLayout>
+                    android:gravity="center"
+                    app:layout_constraintStart_toEndOf="@id/backArrow"
+                    app:layout_constraintEnd_toStartOf="@id/cartIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5" />
+
+                <!-- Biểu tượng giỏ hàng -->
+                <ImageView
+                    android:id="@+id/cartIcon"
+                    android:layout_width="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/cart1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <!-- Ảnh sản phẩm -->
-            <ImageView
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/productImagePlaceholder"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
@@ -66,6 +84,20 @@
                 android:text="$89.97"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="18sp" />
+<!--        <LinearLayout-->
+
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="end|center_vertical">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/ImgHeart"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:src="@drawable/heart1"-->
+<!--                android:layout_marginEnd="10dp" />-->
+<!--        </LinearLayout>-->
 
             <!-- Đánh giá và ngôi sao (Căn phải) -->
             <LinearLayout
@@ -91,17 +123,44 @@
                     android:src="@drawable/ic_star"
                     android:layout_marginStart="8dp" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <!-- Tên sản phẩm -->
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Light Brown Jacket"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Icon trái tim -->
+                <ImageView
+                    android:id="@+id/ImgHeart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/heart1" />
+            </LinearLayout>
+
+
 
             <!-- Tên sản phẩm -->
-            <TextView
-                android:layout_marginLeft="16dp"
-                android:id="@+id/productName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Light Brown Jacket"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:layout_marginLeft="16dp"-->
+<!--                android:id="@+id/productName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:text="Light Brown Jacket"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold" />-->
 
             <!-- Tiêu đề mô tả -->
             <TextView

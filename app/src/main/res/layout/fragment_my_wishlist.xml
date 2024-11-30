@@ -28,19 +28,19 @@
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Filters Section -->
-    <LinearLayout
-        android:id="@+id/filters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="center">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/filters"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:padding="10dp"-->
+<!--        android:gravity="center">-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv1_frm_wishlist_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rcv1_frm_wishlist_user"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
+<!--    </LinearLayout>-->
     <!-- Main Wishlist RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWishlist"

@@ -4,15 +4,19 @@ import static android.app.PendingIntent.getActivity;
 import static androidx.core.content.ContentProviderCompat.requireContext;
 import static java.security.AccessController.getContext;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
@@ -27,9 +31,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fpl.md37.genz_fashion.adapter.ImageSliderAdapter;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.models.CartResponseBody;
+import fpl.md37.genz_fashion.models.FavouriteResponseBody;
 import fpl.md37.genz_fashion.models.Product;
+import fpl.md37.genz_fashion.models.RemoveFavouriteRequest;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.SizeQuantity;
@@ -40,16 +47,25 @@ import retrofit2.Callback;
 
 public class DetailUser extends AppCompatActivity {
 
-    private ImageView backArrow, productImagePlaceholder;
+    private ImageSliderAdapter imageSliderAdapter;
+    private ImageView backArrow,heart;
+    private ViewPager2 productImagePlaceholder;
     private TextView productName, productPrice, productDescription;
     private Product product;
     private HttpRequest httpRequest = new HttpRequest();
     private Map<String, String> sizeIdMap = new HashMap<>();  // Lưu trữ id của các size
+    private boolean isFavorite; // Biến này sẽ lưu trạng thái yêu thích
+    private SharedPreferences sharedPreferences; // SharedPreferences để lưu trạng thái yêu thích
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail);
+
+        // Khởi tạo SharedPreferences
+        sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
         // Ánh xạ các view trong layout
         backArrow = findViewById(R.id.backArrow);
@@ -57,6 +73,35 @@ public class DetailUser extends AppCompatActivity {
         productName = findViewById(R.id.productName);
         productPrice = findViewById(R.id.productPrice);
         productDescription = findViewById(R.id.productDescription);
+
+        heart=findViewById(R.id.ImgHeart);
+
+        heart.setOnClickListener(view -> {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+
+            if (currentUser != null) {
+                String userId = currentUser.getUid();
+
+                if (isFavorite) {
+                    // Nếu đang yêu thích, xóa khỏi danh sách
+                    removeFromFavorite(userId, product);
+                    heart.setImageResource(R.drawable.heart1); // Đổi icon thành outline
+                    isFavorite = false; // Cập nhật trạng thái yêu thích
+                } else {
+                    // Nếu chưa yêu thích, thêm vào danh sách
+                    addToFavorite(userId, product);
+                    heart.setImageResource(R.drawable.heart); // Đổi icon thành filled
+                    isFavorite = true; // Cập nhật trạng thái yêu thích
+                }
+                // Lưu trạng thái yêu thích vào SharedPreferences
+                saveFavoriteState(isFavorite);
+            } else {
+                Toast.makeText(DetailUser.this, "Vui lòng đăng nhập để thêm yêu thích!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         // Nút thêm vào giỏ hàng và mua ngay
         LinearLayout addToCartButton = findViewById(R.id.addToCart);
@@ -78,19 +123,23 @@ public class DetailUser extends AppCompatActivity {
 
     private void updateProductDetails(Product product) {
         if (product != null) {
-            String imageUrl = product.getImage() != null && !product.getImage().isEmpty() ? product.getImage().get(0) : "";
-            if (!TextUtils.isEmpty(imageUrl)) {
-                Glide.with(this)
-                        .load(imageUrl)
-                        .into(productImagePlaceholder);
-            } else {
-                productImagePlaceholder.setImageResource(R.drawable.shark); // Placeholder image
+            List<String> imageUrls = product.getImage();
+            if (imageUrls != null && !imageUrls.isEmpty()) {
+                imageSliderAdapter = new ImageSliderAdapter(this, imageUrls);
+                productImagePlaceholder.setAdapter(imageSliderAdapter);
             }
 
             productName.setText(TextUtils.isEmpty(product.getProduct_name()) ? "Unknown Product" : product.getProduct_name());
             productPrice.setText(TextUtils.isEmpty(product.getPrice()) ? "Price Not Available" : product.getPrice());
             productDescription.setText(TextUtils.isEmpty(product.getDescription()) ? "No description available." : product.getDescription());
 
+            // Đọc trạng thái yêu thích từ SharedPreferences
+            boolean isFavorite = sharedPreferences.getBoolean("isFavorite_" + product.getId(), false);  // Mặc định là false nếu không tìm thấy
+            if (isFavorite) {
+                heart.setImageResource(R.drawable.heart); // Đổi icon thành filled
+            } else {
+                heart.setImageResource(R.drawable.heart1); // Đổi icon thành outline
+            }
             // Lấy và cập nhật danh sách kích thước từ API
             loadSizesFromApi();
         }
@@ -290,5 +339,55 @@ public class DetailUser extends AppCompatActivity {
         }
         return 0;
     }
+
+    private void addToFavorite(String userId, Product product) {
+        FavouriteResponseBody requestBody = new FavouriteResponseBody(userId, product.getId());
+
+        httpRequest.callApi().addToFavourite(requestBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(DetailUser.this, "Đã thêm vào yêu thích!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetailUser.this, "Không thể thêm vào yêu thích!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(DetailUser.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void removeFromFavorite(String userId, Product product) {
+        RemoveFavouriteRequest requestBody = new RemoveFavouriteRequest(userId, product.getId());
+
+        httpRequest.callApi().removeFavourite(requestBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(DetailUser.this, "Đã xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetailUser.this, "Không thể xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(DetailUser.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void saveFavoriteState(boolean isFavorite) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isFavorite_" + product.getId(), isFavorite); // Lưu trạng thái yêu thích của sản phẩm theo id
+        editor.apply();
+    }
+
+
+
+
+
 
 }
