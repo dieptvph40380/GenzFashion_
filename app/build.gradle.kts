@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.firebase.database)
     implementation(fileTree(mapOf(
-        "dir" to "${rootDir}/app/ZaloPay",  // Đường dẫn tương đối từ thư mục gốc của dự án
+        "dir" to "${rootDir}/app/ZaloPay",
         "include" to listOf("*.aar", "*.jar"),
         "exclude" to listOf("")
     )))
