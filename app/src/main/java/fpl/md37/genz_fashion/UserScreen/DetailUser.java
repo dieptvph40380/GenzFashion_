@@ -412,9 +412,9 @@ public class DetailUser extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(DetailUser.this, "Đã thêm vào yêu thích!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailUser.this, "Added to favorites!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(DetailUser.this, "Không thể thêm vào yêu thích!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailUser.this, "Cannot add to favorites!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -432,9 +432,9 @@ public class DetailUser extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(DetailUser.this, "Đã xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailUser.this, "Removed from favorites!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(DetailUser.this, "Không thể xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailUser.this, "Cannot delete favorites!", Toast.LENGTH_SHORT).show();
                 }
             }
 
