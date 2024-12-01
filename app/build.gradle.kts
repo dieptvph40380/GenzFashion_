@@ -49,6 +49,13 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.database)
+    implementation(fileTree(mapOf(
+        "dir" to "${rootDir}/app/ZaloPay",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
+    implementation("com.squareup.okhttp3:okhttp:4.6.0")
+    implementation("commons-codec:commons-codec:1.14")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
