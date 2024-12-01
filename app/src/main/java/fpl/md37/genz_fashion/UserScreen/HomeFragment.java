@@ -219,12 +219,18 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
     }
 
 
-        private void fetchTypeProducts() {
+    private void fetchTypeProducts() {
         httpRequest.callApi().getAlltypeproduct().enqueue(new Callback<Response<ArrayList<TypeProduct>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<TypeProduct>>> call, retrofit2.Response<Response<ArrayList<TypeProduct>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getStatus() == 200) {
                     typeProducts = response.body().getData();
+                    // Thêm mục "All" vào đầu danh sách
+                    TypeProduct allTypeProduct = new TypeProduct("all", "All");
+                    allTypeProduct.setId("all");
+                    allTypeProduct.setName("All");
+                    typeProducts.add(0, allTypeProduct);
+
                     setupRecyclerView2(typeProducts);
                 } else {
                     Log.e("FetchTypeProducts", "Failed response: " + response.code());
@@ -237,6 +243,7 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
             }
         });
     }
+
 
     private void fetchProducts() {
         httpRequest.callApi().getAllProducts().enqueue(new Callback<Response<ArrayList<Product>>>() {
@@ -293,8 +300,15 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
 
     @Override
     public void onTypeProductClick(String typeId) {
-        filterProductsByType(typeId); // Update as per typeId if needed
+        if ("all".equals(typeId)) {
+            // Hiển thị tất cả sản phẩm
+            setupRecyclerView(productList);
+        } else {
+            // Lọc sản phẩm theo loại
+            filterProductsByType(typeId);
+        }
     }
+
 
     @Override
     public void addToFavourite(String userId, Product product) {
