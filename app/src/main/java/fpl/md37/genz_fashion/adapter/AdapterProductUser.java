@@ -75,18 +75,18 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         // Kiểm tra trạng thái yêu thích
 
         // Xử lý sự kiện nhấn trái tim
-        holder.heartIcon.setOnClickListener(view -> {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            if (currentUser != null) {
-                String userId = currentUser.getUid();
-                holder.heartIcon.setImageResource(R.drawable.heart);
-                items.addToFavourite(userId,product);
-            }
-
-
-
-        });
+//        holder.heartIcon.setOnClickListener(view -> {
+//            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//            FirebaseUser currentUser = mAuth.getCurrentUser();
+//            if (currentUser != null) {
+//                String userId = currentUser.getUid();
+//                holder.heartIcon.setImageResource(R.drawable.heart);
+//                items.addToFavourite(userId,product);
+//            }
+//
+//
+//
+//        });
 
 
 
