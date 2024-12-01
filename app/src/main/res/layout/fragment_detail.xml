@@ -50,36 +50,6 @@
                     android:gravity="center" />
 
 
-
-                <FrameLayout
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <!-- Biểu tượng giỏ hàng -->
-                    <ImageView
-                        android:id="@+id/cartIcon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/genz"
-                        />
-
-                    <!-- Badge hiển thị số lượng -->
-                    <TextView
-                        android:id="@+id/cartItemCount"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:background="@drawable/circle_background"
-                        android:text="99"
-                        android:gravity="center"
-
-                        android:textColor="@android:color/white"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:layout_gravity="end|top"
-                        android:layout_marginTop="-1dp"
-                        android:layout_marginEnd="-1dp" />
-                </FrameLayout>
             </LinearLayout>
 
             <!-- Ảnh sản phẩm -->

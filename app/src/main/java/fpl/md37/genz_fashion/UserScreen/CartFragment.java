@@ -141,7 +141,13 @@ public class CartFragment extends Fragment implements Item_Handel_check {
             @Override
             public void onClick(View view) {
                 showBottomNav();
-                getParentFragmentManager().popBackStack();
+                Fragment newFragment = new HomeFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                transaction.replace(R.id.frameLayout_cart, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
             }
         });
 

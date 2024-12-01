@@ -130,7 +130,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setDefaultAvatar() {
-        Glide.with(this)
+        Glide.with(imgProfile.getContext())
                 .load(R.drawable.default_avatar) // Ảnh mặc định từ drawable
                 .into(imgProfile);
     }
@@ -140,7 +140,7 @@ public class ProfileFragment extends Fragment {
         try {
             byte[] decodedString = Base64.decode(avatar, Base64.DEFAULT);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            Glide.with(this)
+            Glide.with(imgProfile.getContext())
                     .load(decodedBitmap)
                     .placeholder(R.drawable.default_avatar) // Đặt ảnh tạm trong khi tải
                     .into(imgProfile);

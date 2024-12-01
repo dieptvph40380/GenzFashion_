@@ -60,7 +60,7 @@ public class DetailUser extends AppCompatActivity {
     private Map<String, String> sizeIdMap = new HashMap<>();  // Lưu trữ id của các size
     private boolean isFavorite; // Biến này sẽ lưu trạng thái yêu thích
     private SharedPreferences sharedPreferences; // SharedPreferences để lưu trạng thái yêu thích
-    private ImageView imgcart;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -69,29 +69,7 @@ public class DetailUser extends AppCompatActivity {
         setContentView(R.layout.fragment_detail);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            httpRequest.callApi().getCart(userId).enqueue(getCartID);
-        }
-        imgcart=findViewById(R.id.cartIcon);
-        imgcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CartFragment cartFragment = new CartFragment();
 
-                // Lấy FragmentTransaction để thay thế Fragment trong Activity
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                // Thay thế Fragment hiện tại trong container (frame_layout) với CartFragment
-                transaction.replace(R.id.fragment_container, cartFragment);
-
-                // Nếu muốn giữ lại trạng thái Fragment khi quay lại, thêm vào back stack
-                transaction.addToBackStack(null);
-
-                // Commit transaction
-                transaction.commit();
-            }
-        });
         // Khởi tạo SharedPreferences
         sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
