@@ -247,8 +247,6 @@ public class CartFragment extends Fragment implements Item_Handel_check {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     // Giỏ hàng đã được cập nhật thành công
-                    Log.d("CartFragment", "Quantity updated successfully.");
-                    Toast.makeText(getContext(), "Quantity updated", Toast.LENGTH_SHORT).show();
 
                     // Lấy lại giỏ hàng mới
                     httpRequest.callApi().getCart(userId).enqueue(new Callback<ResponseCart>() {
