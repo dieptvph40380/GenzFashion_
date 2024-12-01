@@ -10,6 +10,7 @@ import fpl.md37.genz_fashion.models.OrderRequest;
 import fpl.md37.genz_fashion.models.OrderUpdateRequest;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.RemoveFavouriteRequest;
+import fpl.md37.genz_fashion.models.RemoveProductsRequest;
 import fpl.md37.genz_fashion.models.Response;
 import fpl.md37.genz_fashion.models.ResponseCart;
 import fpl.md37.genz_fashion.models.ResponseFavourite;
@@ -205,5 +206,8 @@ public interface ApiService {
     Call<ResponseBody> addOrder(@Body OrderRequest body);
     @PUT("update-order/{id}")
     Call<Order> updateOrder(@Path("id") String orderId, @Body OrderUpdateRequest updateRequest);
+    @POST("remove-products")
+    Call<ResponseBody> removeProducts(@Body RemoveProductsRequest request);
+
 
 }

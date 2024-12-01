@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fpl.md37.genz_fashion.adapter.AdapterCart;
@@ -42,6 +43,7 @@ import fpl.md37.genz_fashion.models.CartData;
 import fpl.md37.genz_fashion.models.Client;
 import fpl.md37.genz_fashion.models.OrderRequest;
 import fpl.md37.genz_fashion.models.ProducItem;
+import fpl.md37.genz_fashion.models.RemoveProductsRequest;
 import fpl.md37.genz_fashion.models.ResponseCart;
 import fpl.md37.genz_fashion.utils.AndroidUtil;
 import fpl.md37.genz_fashion.utils.FirebaseUtil;
@@ -142,10 +144,8 @@ public class CheckOutFragment extends Fragment {
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
                                 Toast.makeText(safeContext, "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getContext(), MyOrderActivity.class);
-                                startActivity(intent);
+                                removeProductsFromCart(products);
                             } else {
-                                // Log chi tiết lỗi từ server
                                 try {
                                     if (response.errorBody() != null) {
                                         String errorResponse = response.errorBody().string();
@@ -252,6 +252,34 @@ public class CheckOutFragment extends Fragment {
             Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
+    private void removeProductsFromCart(List<ProducItem> products) {
+        List<String> cartItemIds = new ArrayList<>();
+        for (ProducItem item : products) {
+            cartItemIds.add(item.getId()); // Lấy _id của từng sản phẩm
+        }
 
+        RemoveProductsRequest request = new RemoveProductsRequest(userId, cartItemIds);
+
+        httpRequest.callApi().removeProducts(request).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(safeContext, "Products removed successfully", Toast.LENGTH_SHORT).show();
+                    // Làm mới giao diện hoặc chuyển sang màn hình khác
+                    Intent intent = new Intent(getContext(), MyOrderActivity.class);
+                    startActivity(intent);
+                } else {
+                    Log.e("RemoveProductsError", "Failed to remove products: " + response.message());
+                    Toast.makeText(safeContext, "Failed to remove products.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("RemoveProductsError", "Network error: " + t.getMessage());
+                Toast.makeText(safeContext, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }
