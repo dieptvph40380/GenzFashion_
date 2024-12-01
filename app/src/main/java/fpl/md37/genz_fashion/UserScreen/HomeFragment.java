@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -21,9 +24,12 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.genz_fashion.R;
 import com.example.genz_fashion.databinding.FragmentHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import fpl.md37.genz_fashion.adapter.AdapterProductUser;
@@ -31,9 +37,12 @@ import fpl.md37.genz_fashion.adapter.AdapterTypeProductUser;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.handel.Item_Handel_click;
 import fpl.md37.genz_fashion.handel.Item_Handle_MyWishlist;
+import fpl.md37.genz_fashion.models.CartData;
 import fpl.md37.genz_fashion.models.FavouriteResponseBody;
+import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Response;
+import fpl.md37.genz_fashion.models.ResponseCart;
 import fpl.md37.genz_fashion.models.TypeProduct;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -48,7 +57,8 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
     private ArrayList<Product> productList = new ArrayList<>();
     private RecyclerView rcv, rcv2;
     private AdapterTypeProductUser adapter;
-
+    private ImageView imgcart;
+    private boolean isCartLoaded = false;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -65,7 +75,28 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
 
         fetchProducts();
         fetchTypeProducts();
+        loadCart();
+        imgcart=view.findViewById(R.id.cartIcon);
+        imgcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+                if (bottomNavigationView != null) {
+                    bottomNavigationView.setVisibility(View.GONE);
+                }
+                CartFragment cartFragment = new CartFragment();
 
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction(); // Dùng trong Fragment
+                // Thay thế Fragment hiện tại trong container (frame_layout) với CartFragment
+                transaction.replace(R.id.fragment_container, cartFragment);
+
+                // Nếu muốn giữ lại trạng thái Fragment khi quay lại, thêm vào back stack
+                transaction.addToBackStack(null);
+
+                // Commit transaction
+                transaction.commit();
+            }
+        });
         // Search functionality
         SearchView searchView = binding.searchView;
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -97,6 +128,46 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
         binding.slide.setImageList(slideModels, ScaleTypes.FIT);
 
         startCountdownTimer(2 * 60 * 60 * 1000); // 2 hours
+    }
+    Callback<ResponseCart> getCartID = new Callback<ResponseCart>() {
+        @Override
+        public void onResponse(Call<ResponseCart> call, retrofit2.Response<ResponseCart> response) {
+            if (response.isSuccessful()) {
+                CartData cartData = response.body().getData();
+                List<ProducItem> products = cartData.getProducts();
+                updateCartItemCount(products.size());
+                isCartLoaded=true;
+            }
+
+            else {
+
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ResponseCart> call, Throwable t) {
+            Log.e("zzzzz Failure", "Network error: " + t.getMessage());
+        }
+    };
+    private void loadCart() {
+        if (!isCartLoaded) {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if (currentUser != null) {
+                String userId = currentUser.getUid();
+                httpRequest.callApi().getCart(userId).enqueue(getCartID);
+            }
+        }
+    }
+    public void updateCartItemCount(int count) {
+        View view = getView(); // Lấy View của Fragment
+        if (view != null) {
+            TextView cartItemCount = view.findViewById(R.id.cartItemCount);
+            if (cartItemCount != null) {
+                cartItemCount.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+                cartItemCount.setText(String.valueOf(count));
+            }
+        }
     }
 
     private void setupRecyclerView(ArrayList<Product> products) {
@@ -130,8 +201,25 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
 
         setupRecyclerView(filteredProducts);
     }
+    private void filterProductsByType(String typeId) {
+        ArrayList<Product> filteredProducts = new ArrayList<>();
+        if (productList != null) { // Kiểm tra productList không null
+            for (Product product : productList) {
+               // Đảm bảo sử dụng đúng getter
+                    if (Objects.equals(product.getTypeProductId(), typeId)) { // Đảm bảo sử dụng đúng getter
+                        filteredProducts.add(product);
+                    }
+                }
 
-    private void fetchTypeProducts() {
+            if (filteredProducts.isEmpty()) {
+                Toast.makeText(getContext(), "No Product ", Toast.LENGTH_SHORT).show();
+            }
+            setupRecyclerView(filteredProducts);
+        }
+    }
+
+
+        private void fetchTypeProducts() {
         httpRequest.callApi().getAlltypeproduct().enqueue(new Callback<Response<ArrayList<TypeProduct>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<TypeProduct>>> call, retrofit2.Response<Response<ArrayList<TypeProduct>>> response) {
@@ -205,7 +293,7 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
 
     @Override
     public void onTypeProductClick(String typeId) {
-        filterProductsByName(typeId); // Update as per typeId if needed
+        filterProductsByType(typeId); // Update as per typeId if needed
     }
 
     @Override

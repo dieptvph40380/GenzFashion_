@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
@@ -33,11 +34,14 @@ import java.util.Map;
 
 import fpl.md37.genz_fashion.adapter.ImageSliderAdapter;
 import fpl.md37.genz_fashion.api.HttpRequest;
+import fpl.md37.genz_fashion.models.CartData;
 import fpl.md37.genz_fashion.models.CartResponseBody;
 import fpl.md37.genz_fashion.models.FavouriteResponseBody;
+import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.RemoveFavouriteRequest;
 import fpl.md37.genz_fashion.models.Response;
+import fpl.md37.genz_fashion.models.ResponseCart;
 import fpl.md37.genz_fashion.models.Size;
 import fpl.md37.genz_fashion.models.SizeQuantity;
 import fpl.md37.genz_fashion.models.TypeProduct;
@@ -56,14 +60,38 @@ public class DetailUser extends AppCompatActivity {
     private Map<String, String> sizeIdMap = new HashMap<>();  // Lưu trữ id của các size
     private boolean isFavorite; // Biến này sẽ lưu trạng thái yêu thích
     private SharedPreferences sharedPreferences; // SharedPreferences để lưu trạng thái yêu thích
-
+    private ImageView imgcart;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_detail);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            httpRequest.callApi().getCart(userId).enqueue(getCartID);
+        }
+        imgcart=findViewById(R.id.cartIcon);
+        imgcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CartFragment cartFragment = new CartFragment();
 
+                // Lấy FragmentTransaction để thay thế Fragment trong Activity
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                // Thay thế Fragment hiện tại trong container (frame_layout) với CartFragment
+                transaction.replace(R.id.fragment_container, cartFragment);
+
+                // Nếu muốn giữ lại trạng thái Fragment khi quay lại, thêm vào back stack
+                transaction.addToBackStack(null);
+
+                // Commit transaction
+                transaction.commit();
+            }
+        });
         // Khởi tạo SharedPreferences
         sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
@@ -77,8 +105,7 @@ public class DetailUser extends AppCompatActivity {
         heart=findViewById(R.id.ImgHeart);
 
         heart.setOnClickListener(view -> {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = mAuth.getCurrentUser();
+
 
             if (currentUser != null) {
                 String userId = currentUser.getUid();
@@ -121,6 +148,44 @@ public class DetailUser extends AppCompatActivity {
         }
     }
 
+
+    Callback<ResponseCart> getCartID = new Callback<ResponseCart>() {
+        @Override
+        public void onResponse(Call<ResponseCart> call, retrofit2.Response<ResponseCart> response) {
+            if (response.isSuccessful()) {
+                CartData cartData = response.body().getData();
+                List<ProducItem> products = cartData.getProducts();
+                updateCartItemCount(products.size());
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    String userId = currentUser.getUid();
+                    httpRequest.callApi().getCart(userId).enqueue(getCartID);
+                }
+            }
+
+            else {
+
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ResponseCart> call, Throwable t) {
+            Log.e("zzzzz Failure", "Network error: " + t.getMessage());
+        }
+    };
+    private void updateCartItemCount(int itemCount) {
+        TextView cartItemCountTextView = findViewById(R.id.cartItemCount);
+        // Cập nhật số lượng sản phẩm
+        cartItemCountTextView.setText(String.valueOf(itemCount));
+
+        // Nếu số lượng = 0, ẩn số lượng
+        if (itemCount > 0) {
+            cartItemCountTextView.setVisibility(View.VISIBLE);
+        } else {
+            cartItemCountTextView.setVisibility(View.GONE);
+        }
+    }
     private void updateProductDetails(Product product) {
         if (product != null) {
             List<String> imageUrls = product.getImage();
