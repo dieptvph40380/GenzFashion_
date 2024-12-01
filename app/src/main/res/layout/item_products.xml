@@ -26,13 +26,13 @@
                 android:src="@drawable/ic_launcher_background" />
 
             <!-- Wishlist Icon -->
-            <ImageView
-                android:id="@+id/wishlist_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/heart1"
-                android:layout_margin="8dp"
-                android:layout_gravity="end|top" />
+<!--            <ImageView-->
+<!--                android:id="@+id/wishlist_icon"-->
+<!--                android:layout_width="24dp"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:src="@drawable/heart1"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:layout_gravity="end|top" />-->
         </FrameLayout>
 
         <!-- Tên sản phẩm -->
