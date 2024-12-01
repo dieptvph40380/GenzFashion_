@@ -75,7 +75,12 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
 
         fetchProducts();
         fetchTypeProducts();
-        loadCart();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            httpRequest.callApi().getCart(userId).enqueue(getCartID);
+        }
         imgcart=view.findViewById(R.id.cartIcon);
         imgcart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +141,12 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
                 CartData cartData = response.body().getData();
                 List<ProducItem> products = cartData.getProducts();
                 updateCartItemCount(products.size());
-                isCartLoaded=true;
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    String userId = currentUser.getUid();
+                    httpRequest.callApi().getCart(userId).enqueue(getCartID);
+                }
             }
 
             else {
@@ -149,16 +159,7 @@ public class HomeFragment extends Fragment implements Item_Handel_click, Item_Ha
             Log.e("zzzzz Failure", "Network error: " + t.getMessage());
         }
     };
-    private void loadCart() {
-        if (!isCartLoaded) {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            if (currentUser != null) {
-                String userId = currentUser.getUid();
-                httpRequest.callApi().getCart(userId).enqueue(getCartID);
-            }
-        }
-    }
+
     public void updateCartItemCount(int count) {
         View view = getView(); // Lấy View của Fragment
         if (view != null) {
