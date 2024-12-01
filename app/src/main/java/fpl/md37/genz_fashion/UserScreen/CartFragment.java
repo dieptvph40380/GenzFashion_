@@ -113,23 +113,17 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                     Toast.makeText(getContext(), "Vui lòng chọn ít nhất một sản phẩm để tiếp tục", Toast.LENGTH_SHORT).show();
                     return; // Dừng lại và không chuyển màn
                 }
-                // Tạo một instance mới của Fragment
-                CheckOutFragment newFragment = new CheckOutFragment();
+                // Tạo Intent để chuyển đến Activity mới
+                Intent intent = new Intent(getContext(), CheckOutActivity.class);
 
-                // Lấy đối tượng FragmentTransaction để thực hiện thay đổi fragment
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                // Nếu cần truyền dữ liệu qua Intent, có thể dùng:
+                // intent.putExtra("key", value);
 
-                // Áp dụng hiệu ứng chuyển động khi thay đổi fragment
-                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                // Khởi chạy Activity
+                startActivity(intent);
 
-                // Thay thế Fragment hiện tại bằng Fragment mới
-                transaction.replace(R.id.frameLayout_cart, newFragment);
-
-                // Thêm giao diện vào back stack để người dùng có thể quay lại
-                transaction.addToBackStack(null);
-
-                // Xác nhận giao dịch và thay đổi fragment
-                transaction.commit();
+                // Áp dụng hiệu ứng chuyển động khi chuyển Activity
+                getActivity().overridePendingTransition(R.anim.bounce_in, R.anim.bounce_out);
             }
         });
 

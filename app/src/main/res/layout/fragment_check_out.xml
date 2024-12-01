@@ -72,7 +72,7 @@
                         android:id="@+id/tv_ClName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nguyen Van A"
+                        android:text=""
                         android:textSize="15sp"
                         android:textColor="@color/black"
                         android:textStyle="bold"/>
@@ -81,7 +81,7 @@
                         android:id="@+id/tv_ClPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(+84) 0123456789"
+                        android:text=""
                         android:textSize="14sp"
                         android:textStyle="bold"/>
 
@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="4dp"
-                        android:text="Thach That, Ha Noi, Viet Nam"
+                        android:text=""
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -297,6 +297,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
+                    android:text="Add Card"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tv_Methods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Add Card"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
