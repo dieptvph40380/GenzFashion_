@@ -14,15 +14,11 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 
 import vn.zalopay.sdk.Environment;
 import vn.zalopay.sdk.ZaloPayError;
 import vn.zalopay.sdk.ZaloPaySDK;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,7 +73,7 @@ public class CheckOutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.fragment_check_out);
+        setContentView(R.layout.activity_check_out);
 
         tvName=findViewById(R.id.tv_ClName);
         tvPhone=findViewById(R.id.tv_ClPhone);
@@ -145,11 +141,12 @@ public class CheckOutActivity extends AppCompatActivity {
             if (isChecked) {
                 // Nếu checkbox được chọn, thiết lập tvMethods là "add payment"
                 tv_Methods.setText("Add Card");
-                selectedPaymentMethod = tv_Methods.getText().toString();
+                selectedPaymentMethod = tvPayment.getText().toString();
                 Log.d("CheckOutActivity", "Selected Payment Method: " + tv_Methods.getText().toString());
-                Toast.makeText(CheckOutActivity.this, "Selected Payment: " + tv_Methods.getText().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Selected Payment: " + tv_Methods.getText().toString(), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(CheckOutActivity.this, "ZaloPay is selected, unchecking the box.", Toast.LENGTH_SHORT).show();
+                selectedPaymentMethod = tv_Methods.getText().toString();
+                Toast.makeText(getApplicationContext(), "ZaloPay is selected, unchecking the box.", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -161,7 +158,7 @@ public class CheckOutActivity extends AppCompatActivity {
                 if (cbChekOut.isChecked()) {
                     // Kiểm tra điều kiện để đảm bảo các dữ liệu cần thiết đã có
                     if (currentUserModel == null || selectedPaymentMethod == null || cartData == null || cartData.getProducts().isEmpty()) {
-                        Toast.makeText(CheckOutActivity.this, "Missing required data to place order.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Missing required data to place order.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
@@ -174,17 +171,17 @@ public class CheckOutActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
-                                Toast.makeText(CheckOutActivity.this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                                 removeProductsFromCart(products);
                             } else {
                                 try {
                                     if (response.errorBody() != null) {
                                         String errorResponse = response.errorBody().string();
                                         Log.e("OrderError", "Server error: " + errorResponse);
-                                        Toast.makeText(CheckOutActivity.this, "Failed to place order: " + errorResponse, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Failed to place order: " + errorResponse, Toast.LENGTH_SHORT).show();
                                     } else {
                                         Log.e("OrderError", "Unknown server error.");
-                                        Toast.makeText(CheckOutActivity.this, "Failed to place order: Unknown error.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Failed to place order: Unknown error.", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {
                                     Log.e("OrderError", "Error parsing errorBody: " + e.getMessage());
@@ -195,7 +192,7 @@ public class CheckOutActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             // Xử lý lỗi kết nối hoặc hệ thống
-                            Toast.makeText(CheckOutActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.e("OrderError", "Network error: " + t.getMessage());
                         }
                     });
@@ -208,7 +205,7 @@ public class CheckOutActivity extends AppCompatActivity {
                         Payment();
                         // Gọi phương thức Payment khi thanh toán bằng ZaloPay
                     }
-                    Toast.makeText(CheckOutActivity.this, "Please select the payment method before proceeding.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please select the payment method before proceeding.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -246,10 +243,10 @@ public class CheckOutActivity extends AppCompatActivity {
                         tvPhone.setText(currentUserModel.getPhone());
                         tvAddress.setText(currentUserModel.getAddress());
                     } else {
-                        AndroidUtil.showToast(this, "User data not found."); // Dùng this thay cho safeContext
+                        AndroidUtil.showToast(getApplicationContext(), "User data not found."); // Dùng this thay cho safeContext
                     }
                 } else {
-                    AndroidUtil.showToast(this, "Failed to fetch user data."); // Dùng this thay cho safeContext
+                    AndroidUtil.showToast(getApplicationContext(), "Failed to fetch user data."); // Dùng this thay cho safeContext
                 }
             }
         });
@@ -284,14 +281,14 @@ public class CheckOutActivity extends AppCompatActivity {
                 adapter.setProducts(products);
             } else {
                 Log.e("zzzzz Error", "Failed to fetch cart: " + response.message());
-                Toast.makeText(CheckOutActivity.this, "Failed to fetch cart: " + response.message(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Failed to fetch cart: " + response.message(), Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public void onFailure(Call<ResponseCart> call, Throwable t) {
             Log.e("zzzzz Failure", "Network error: " + t.getMessage());
-            Toast.makeText(CheckOutActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -307,20 +304,26 @@ public class CheckOutActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(CheckOutActivity.this, "Products removed successfully", Toast.LENGTH_SHORT).show();
-                    // Làm mới giao diện hoặc chuyển sang màn hình khác
-                    Intent intent = new Intent(CheckOutActivity.this, MyOrderActivity.class);
-                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Products removed successfully", Toast.LENGTH_SHORT).show();
+
+                        Fragment newFragment = new MyOrderFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                        transaction.replace(R.id.layout_checkout, newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
+
                 } else {
                     Log.e("RemoveProductsError", "Failed to remove products: " + response.message());
-                    Toast.makeText(CheckOutActivity.this, "Failed to remove products.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to remove products.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("RemoveProductsError", "Network error: " + t.getMessage());
-                Toast.makeText(CheckOutActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -373,7 +376,7 @@ public class CheckOutActivity extends AppCompatActivity {
     void order(){
         // Kiểm tra điều kiện để đảm bảo các dữ liệu cần thiết đã có
         if (currentUserModel == null || selectedPaymentMethod == null || cartData == null || cartData.getProducts().isEmpty()) {
-            Toast.makeText(CheckOutActivity.this, "Missing required data to place order.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Missing required data to place order.", Toast.LENGTH_SHORT).show();
             return;
         }
         // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
@@ -386,17 +389,17 @@ public class CheckOutActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(CheckOutActivity.this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                     removeProductsFromCart(products);
                 } else {
                     try {
                         if (response.errorBody() != null) {
                             String errorResponse = response.errorBody().string();
                             Log.e("OrderError", "Server error: " + errorResponse);
-                            Toast.makeText(CheckOutActivity.this, "Failed to place order: " + errorResponse, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed to place order: " + errorResponse, Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e("OrderError", "Unknown server error.");
-                            Toast.makeText(CheckOutActivity.this, "Failed to place order: Unknown error.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed to place order: Unknown error.", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         Log.e("OrderError", "Error parsing errorBody: " + e.getMessage());
@@ -407,7 +410,7 @@ public class CheckOutActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 // Xử lý lỗi kết nối hoặc hệ thống
-                Toast.makeText(CheckOutActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("OrderError", "Network error: " + t.getMessage());
             }
         });

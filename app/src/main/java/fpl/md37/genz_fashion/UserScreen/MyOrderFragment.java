@@ -9,10 +9,13 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.genz_fashion.R;
 import fpl.md37.genz_fashion.adapter.ViewPagerOderAdapter;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -36,10 +39,16 @@ public class MyOrderFragment extends Fragment {
         ViewPagerOderAdapter adapter = new ViewPagerOderAdapter(requireActivity());
         viewPager.setAdapter(adapter);
 
+
         // Nút Back
         btnBack.setOnClickListener(v -> {
-            // Quay về Fragment trước đó
-            requireActivity().onBackPressed();
+            showBottomNav();
+            Fragment newFragment = new ProfileFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+            transaction.replace(R.id.frameLayout_myorder, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         // Thiết lập TabLayout và ViewPager
@@ -58,5 +67,11 @@ public class MyOrderFragment extends Fragment {
         }).attach();
 
         return view;
+    }
+    private void showBottomNav() {
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+        }
     }
 }

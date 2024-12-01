@@ -5,40 +5,49 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.genz_fashion.R;
 
+
 public class PaymentNotication extends AppCompatActivity {
     TextView txtNotication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_payment_notication);
 
+        txtNotication = findViewById(R.id.tv_Notification);
         Intent intent = getIntent();
-        txtNotication=findViewById(R.id.tv_Notification);
         String result = intent.getStringExtra("result");
 
-        Intent itenIntent =getIntent();
-        txtNotication.setText(itenIntent.getStringExtra("result"));
+        txtNotication.setText(result);
+
         // Sử dụng Handler để chuyển màn hình sau 2 giây
         new Handler().postDelayed(() -> {
-            Intent nextIntent;
             if ("Thanh toán thành công".equals(result)) {
-                nextIntent = new Intent(PaymentNotication.this, MyOrderActivity.class); // Màn hình sau khi thanh toán thành công
+                // Chuyển tới MyOrderFragment
+                navigateToFragment(new MyOrderFragment());
             } else if ("Hủy thanh toán".equals(result)) {
-                nextIntent = new Intent(PaymentNotication.this, CheckOutActivity.class); // Màn hình sau khi hủy thanh toán
+                // Chuyển tới CheckOutActivity
+                Intent nextIntent = new Intent(PaymentNotication.this, CheckOutActivity.class);
+                startActivity(nextIntent);
             } else {
-                nextIntent = new Intent(PaymentNotication.this, MainActivity.class); // Màn hình mặc định
+                // Chuyển tới MainActivity
+                Intent nextIntent = new Intent(PaymentNotication.this, MainActivity.class);
+                startActivity(nextIntent);
             }
-            startActivity(nextIntent);
             finish(); // Đóng PaymentNotication sau khi chuyển màn hình
         }, 2000); // 2 giây
+    }
+
+    // Hàm chuyển tới một Fragment
+    private void navigateToFragment(MyOrderFragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment) // `R.id.container` là vùng chứa Fragment trong MainActivity
+                .addToBackStack(null) // Lưu trạng thái để quay lại nếu cần
+                .commit();
     }
 }

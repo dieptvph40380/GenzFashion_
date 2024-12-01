@@ -7,7 +7,7 @@
     android:background="@color/background_color"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
-    tools:context="fpl.md37.genz_fashion.UserScreen.CheckOutFragment">
+    tools:context="fpl.md37.genz_fashion.UserScreen.CheckOutActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                tools:listitem="@layout/s3_item_layout_checkout" />
+                 />
 
             <View
                 android:layout_width="match_parent"
