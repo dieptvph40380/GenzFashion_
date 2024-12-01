@@ -57,6 +57,7 @@ public class CartFragment extends Fragment implements Item_Handel_check {
     private List<ProducItem> products;
     private boolean isProductSelected = false;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -140,21 +141,7 @@ public class CartFragment extends Fragment implements Item_Handel_check {
             @Override
             public void onClick(View view) {
                 showBottomNav();
-                Fragment newFragment = new HomeFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-                transaction.replace(R.id.frameLayout_cart, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
-
-                bottomNavigationView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        bottomNavigationView.setSelectedItemId(R.id.nav_home);
-                    }
-                }, 300);
+                getParentFragmentManager().popBackStack();
             }
         });
 

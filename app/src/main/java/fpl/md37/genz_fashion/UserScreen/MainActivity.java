@@ -37,14 +37,16 @@ public class MainActivity extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.nav_home) {
                     replaceFragment(new HomeFragment());
                     return true;
-                } else if (menuItem.getItemId() == R.id.nav_bag) {
-                    replaceFragment(new CartFragment());
-                    View bottomNavigationView = findViewById(R.id.bottom_nav);
-                    if (bottomNavigationView != null) {
-                        bottomNavigationView.setVisibility(View.GONE);
-                    }
-                    return true;
-                }else if (menuItem.getItemId() == R.id.nav_favorite) {
+                }
+//                else if (menuItem.getItemId() == R.id.nav_bag) {
+//                    replaceFragment(new CartFragment());
+//                    View bottomNavigationView = findViewById(R.id.bottom_nav);
+//                    if (bottomNavigationView != null) {
+//                        bottomNavigationView.setVisibility(View.GONE);
+//                    }
+//                    return true;
+//                }
+               else if (menuItem.getItemId() == R.id.nav_favorite) {
                     replaceFragment(new MyWishlistFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_chat) {
