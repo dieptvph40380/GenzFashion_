@@ -38,7 +38,7 @@ public class AdapterOderCompeleted extends RecyclerView.Adapter<AdapterOderCompe
     @Override
     public void onBindViewHolder(@NonNull OrderCompleledViewHolder holder, int position) {
         Order order = orderList.get(position);
-        holder.timecancle_cp.setText(order.getTimeCancleOrder());
+        holder.timecancle_cp.setText(order.getTimeCompletion());
 
         ArrayList<ProducItem> productList = new ArrayList<>(order.getProducts());
         int totalQuantity = 0;

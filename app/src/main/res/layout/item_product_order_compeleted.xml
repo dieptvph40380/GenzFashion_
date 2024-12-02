@@ -52,4 +52,13 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="4dp" />
     </LinearLayout>
+
+    <!-- Review Button -->
+    <Button
+        android:id="@+id/btnReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Review"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical" />
 </LinearLayout>
