@@ -88,19 +88,10 @@ public class DetailUser extends AppCompatActivity {
             if (currentUser != null) {
                 String userId = currentUser.getUid();
 
-                if (isFavorite) {
-                    // Nếu đang yêu thích, xóa khỏi danh sách
-                    removeFromFavorite(userId, product);
-                    heart.setImageResource(R.drawable.heart1); // Đổi icon thành outline
-                    isFavorite = false; // Cập nhật trạng thái yêu thích
-                } else {
-                    // Nếu chưa yêu thích, thêm vào danh sách
+
                     addToFavorite(userId, product);
-                    heart.setImageResource(R.drawable.heart); // Đổi icon thành filled
-                    isFavorite = true; // Cập nhật trạng thái yêu thích
-                }
-                // Lưu trạng thái yêu thích vào SharedPreferences
-                saveFavoriteState(isFavorite);
+
+
             } else {
                 Toast.makeText(DetailUser.this, "Vui lòng đăng nhập để thêm yêu thích!", Toast.LENGTH_SHORT).show();
             }
@@ -177,12 +168,12 @@ public class DetailUser extends AppCompatActivity {
             productDescription.setText(TextUtils.isEmpty(product.getDescription()) ? "No description available." : product.getDescription());
 
             // Đọc trạng thái yêu thích từ SharedPreferences
-            boolean isFavorite = sharedPreferences.getBoolean("isFavorite_" + product.getId(), false);  // Mặc định là false nếu không tìm thấy
-            if (isFavorite) {
-                heart.setImageResource(R.drawable.heart); // Đổi icon thành filled
-            } else {
-                heart.setImageResource(R.drawable.heart1); // Đổi icon thành outline
-            }
+//            boolean isFavorite = sharedPreferences.getBoolean("isFavorite_" + product.getId(), false);  // Mặc định là false nếu không tìm thấy
+//            if (isFavorite) {
+//                heart.setImageResource(R.drawable.heart); // Đổi icon thành filled
+//            } else {
+//                heart.setImageResource(R.drawable.heart1); // Đổi icon thành outline
+//            }
             // Lấy và cập nhật danh sách kích thước từ API
             loadSizesFromApi();
         }
