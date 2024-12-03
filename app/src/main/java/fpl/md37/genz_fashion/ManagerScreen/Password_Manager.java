@@ -4,26 +4,32 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.genz_fashion.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import fpl.md37.genz_fashion.UserScreen.ProfileFragment;
+
 
 public class Password_Manager extends Fragment {
     TextInputEditText edt_Current,edt_NewPass,edt_Confirm;
     FirebaseAuth mAuth;
     Button btnChangePassword;
+    ImageView back;
 
 
     public Password_Manager() {
@@ -38,11 +44,23 @@ public class Password_Manager extends Fragment {
         View v=inflater.inflate(R.layout.fragment_password_manager, container, false);
 
         mAuth=FirebaseAuth.getInstance();
-
+        back = v.findViewById(R.id.back_buttonn);
         edt_Current=v.findViewById(R.id.edt_CurrentPass);
         edt_NewPass=v.findViewById(R.id.edt_NewPass);
         edt_Confirm=v.findViewById(R.id.edt_ConfirmPass);
         btnChangePassword=v.findViewById(R.id.btnChange);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomNav();
+                Fragment newFragment = new ProfileFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out); // hiệu ứng mở dần
+                transaction.replace(R.id.frameLayout_passwor_dmanager, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +126,12 @@ public class Password_Manager extends Fragment {
                     Toast.makeText(getContext(), "Mật khẩu hiện tại không đúng", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+    private void showBottomNav() {
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 

@@ -33,23 +33,23 @@ public class MyOrderFragment extends Fragment {
         // Ánh xạ các thành phần giao diện
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
-        btnBack = view.findViewById(R.id.btnBack_order);
+//        btnBack = view.findViewById(R.id.btnBack_order);
 
         // Thiết lập Adapter cho ViewPager
         ViewPagerOderAdapter adapter = new ViewPagerOderAdapter(requireActivity());
         viewPager.setAdapter(adapter);
 
 
-        // Nút Back
-        btnBack.setOnClickListener(v -> {
-            showBottomNav();
-            Fragment newFragment = new ProfileFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-            transaction.replace(R.id.frameLayout_myorder, newFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
+//        // Nút Back
+//        btnBack.setOnClickListener(v -> {
+//            showBottomNav();
+//            Fragment newFragment = new ProfileFragment();
+//            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+//            transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+//            transaction.replace(R.id.frameLayout_myorder, newFragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+//        });
 
         // Thiết lập TabLayout và ViewPager
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {

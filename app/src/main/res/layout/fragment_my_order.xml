@@ -19,16 +19,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:gravity="center"
         >
 
-        <ImageView
-            android:id="@+id/btnBack_order"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="Back"
-            android:src="@drawable/iconout"
-            android:layout_marginEnd="16dp" />
+<!--        <ImageView-->
+<!--            android:id="@+id/btnBack_order"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:contentDescription="Back"-->
+<!--            android:src="@drawable/iconout"-->
+<!--            android:layout_marginEnd="16dp" />-->
 
         <TextView
             android:id="@+id/tvCheckoutTitle"
@@ -37,7 +37,8 @@
             android:text="My Order"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginLeft="110dp"
+
+            android:gravity="center"
             android:layout_gravity="center" />
     </LinearLayout>
 

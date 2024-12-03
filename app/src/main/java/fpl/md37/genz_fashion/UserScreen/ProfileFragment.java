@@ -71,8 +71,8 @@ public class ProfileFragment extends Fragment {
         layout_payment = view.findViewById(R.id.profile_payment);
         layout_payment.setOnClickListener(v ->navigateToActivity(PayMothodsFragment.class));
 
-        layout_order = view.findViewById(R.id.profile_cart);
-        layout_order.setOnClickListener(v -> replaceFragment(new MyOrderFragment(), R.id.frameLayout));
+//        layout_order = view.findViewById(R.id.profile_cart);
+//        layout_order.setOnClickListener(v -> replaceFragment(new MyOrderFragment(), R.id.frameLayout));
 
         layout_setting = view.findViewById(R.id.profile_setting);
         layout_setting.setOnClickListener(view12 -> replaceFragment(new SettingFragment(), R.id.frameLayout));

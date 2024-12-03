@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new MyWishlistFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_chat) {
-                    replaceFragment(new ChatUserFragment());
+                    replaceFragment(new MyOrderFragment());
                     return true;
                 }else if (menuItem.getItemId() == R.id.nav_profile) {
                     replaceFragment(new ProfileFragment());
