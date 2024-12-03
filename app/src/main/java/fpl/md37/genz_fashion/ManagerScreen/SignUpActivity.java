@@ -122,11 +122,12 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         // Validate phone
-        if (TextUtils.isEmpty(phone) || phone.length() < 10) {
-            binding.edtPhone.setError("Enter a valid phone number (at least 10 digits).");
+        if (TextUtils.isEmpty(phone) || !phone.matches("\\d{10,}")) {
+            binding.edtPhone.setError("Enter a valid phone number (only digits, at least 10 digits).");
             binding.edtPhone.requestFocus();
             return false;
         }
+
 
         // Validate address
         if (TextUtils.isEmpty(address)) {
