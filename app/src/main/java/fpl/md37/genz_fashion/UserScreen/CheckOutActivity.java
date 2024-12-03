@@ -329,6 +329,7 @@ public class CheckOutActivity extends AppCompatActivity {
     }
 
     void Payment(){
+        order();
         CreateOrder orderApi = new CreateOrder();
         Log.d("CreateOrder", "Response data: " + totalString);
         try {
@@ -342,8 +343,13 @@ public class CheckOutActivity extends AppCompatActivity {
                     @Override
                     public void onPaymentSucceeded(String s, String s1, String s2) {
                         Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
+                        Gson gson = new Gson();
+                        String productsJson = gson.toJson(products);
+                        Intent intent = new Intent(CheckOutActivity.this, PaymentNotication.class);
                         intent1.putExtra("result","Thanh toán thành công");
-
+                        intent.putExtra("productsJson", productsJson);
+                        intent1.putExtra("userId", userId);
+                        intent1.putExtra("paymentMethod", selectedPaymentMethod);
                         startActivity(intent1);
                     }
 
