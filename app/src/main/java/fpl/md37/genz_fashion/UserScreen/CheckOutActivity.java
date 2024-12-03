@@ -1,7 +1,9 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -21,6 +23,7 @@ import vn.zalopay.sdk.ZaloPaySDK;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,6 +71,8 @@ public class CheckOutActivity extends AppCompatActivity {
     String totalString;
     List<ProducItem> products;
     private ActivityResultLauncher<Intent> selectPaymentMethodLauncher;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +206,7 @@ public class CheckOutActivity extends AppCompatActivity {
                     // Hiển thị thông báo nếu checkbox chưa được chọn
                     // Kiểm tra nếu tvPayment là "ZaloPay" thì gọi phương thức Payment
                     if ("ZaloPay".equals(tv_Methods.getText().toString())) {
-                        order();
+                        Toast.makeText(getApplicationContext(), "111111", Toast.LENGTH_SHORT).show();
                         Payment();
                         // Gọi phương thức Payment khi thanh toán bằng ZaloPay
                     }
@@ -232,12 +237,14 @@ public class CheckOutActivity extends AppCompatActivity {
         Log.d("ZaloPay", "onNewIntent triggered");
         ZaloPaySDK.getInstance().onResult(intent);
     }
+
+
+
     void getUserData() {
         FirebaseUtil.currentUserDetails().get().addOnCompleteListener(task -> {
             if (!isFinishing() && !isDestroyed()) { // Thay thế isAdded() cho Activity
                 if (task.isSuccessful() && task.getResult() != null) {
                     currentUserModel = task.getResult().toObject(Client.class);
-
                     if (currentUserModel != null) {
                         tvName.setText(currentUserModel.getName());
                         tvPhone.setText(currentUserModel.getPhone());
@@ -341,9 +348,15 @@ public class CheckOutActivity extends AppCompatActivity {
                 ZaloPaySDK.getInstance().payOrder(CheckOutActivity.this, token, "demozpdk://app", new PayOrderListener() {
                     @Override
                     public void onPaymentSucceeded(String s, String s1, String s2) {
+                        Gson gson = new Gson();
+                        String productsJson = gson.toJson(products);
                         Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent1.putExtra("result","Thanh toán thành công");
-
+                        intent1.putExtra("productsJson", productsJson);
+                        intent1.putExtra("userId", userId);
+                        intent1.putExtra("selectedPaymentMethod", selectedPaymentMethod);
+//                        intent1.putParcelableArrayListExtra("products", new ArrayList<>(products));
                         startActivity(intent1);
                     }
 
@@ -351,6 +364,7 @@ public class CheckOutActivity extends AppCompatActivity {
                     public void onPaymentCanceled(String s, String s1) {
                         Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
                         intent1.putExtra("result","Hủy thanh toán");
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         Log.d("ZaloPay", "Payment Canceled");
                         startActivity(intent1);
                     }
@@ -358,6 +372,7 @@ public class CheckOutActivity extends AppCompatActivity {
                     @Override
                     public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
                         Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent1.putExtra("result","Lỗi thanh toán");
                         Log.e("ZaloPay", "Payment Error: " + zaloPayError);
 //                          q // Nếu có
