@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CompletedFragment extends Fragment {
+public class CompletedFragment extends Fragment{
     private HttpRequest httpRequest;
     private RecyclerView recyclerView;
     private AdapterOderCompeleted adapter;
