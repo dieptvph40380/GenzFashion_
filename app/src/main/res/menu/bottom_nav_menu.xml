@@ -16,8 +16,8 @@
 
     <item
         android:id="@+id/nav_chat"
-        android:icon="@drawable/baseline_chat_24"
-        android:title="Chats" />
+        android:icon="@drawable/shopping_cart"
+        android:title="My Orders" />
 
     <item
         android:id="@+id/nav_profile"

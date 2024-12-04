@@ -1,5 +1,7 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.genz_fashion.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
@@ -331,6 +334,7 @@ public class CheckOutActivity extends AppCompatActivity {
             }
         });
     }
+
 
     void Payment(String methods){
 

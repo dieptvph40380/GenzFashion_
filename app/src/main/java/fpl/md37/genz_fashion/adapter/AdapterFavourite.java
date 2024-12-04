@@ -102,28 +102,28 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
 
 
         // Ở đây bạn có thể thêm sự kiện click vào icon wishlist nếu cần
-//        holder.imgHeart.setOnClickListener(v -> {
-//            // Tạo AlertDialog xác nhận xóa
-//            new android.app.AlertDialog.Builder(context)
-//                    .setMessage("Do you want to remove this product from your favourites?")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Yes", (dialog, id) -> {
-//                        // Xóa sản phẩm khỏi yêu thích khi người dùng nhấn Yes
-//                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//                        FirebaseUser currentUser = mAuth.getCurrentUser();
-//                        if (currentUser != null) {
-//                            String userId = currentUser.getUid();
-//                            String favouriteId = productItem.getProductId().getId();
-//                            Log.d("FavouriteItem", "User ID: " + userId);
-//                            Log.d("FavouriteItem", "Product ID to remove: " + favouriteId);// Lấy ID của sản phẩm yêu thích
-//                            if (favouriteId != null) {
-//                                items.removeFromFavourite(userId, favouriteId); // Gọi hàm xóa sản phẩm
-//                            }
-//                        }
-//                    })
-//                    .setNegativeButton("No", (dialog, id) -> dialog.cancel()) // Hủy bỏ khi người dùng chọn No
-//                    .show();
-//        });
+        holder.imgHeart.setOnClickListener(v -> {
+            // Tạo AlertDialog xác nhận xóa
+            new android.app.AlertDialog.Builder(context)
+                    .setMessage("Do you want to remove this product from your favourites?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", (dialog, id) -> {
+                        // Xóa sản phẩm khỏi yêu thích khi người dùng nhấn Yes
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        if (currentUser != null) {
+                            String userId = currentUser.getUid();
+                            String favouriteId = productItem.getProductId().getId();
+                            Log.d("FavouriteItem", "User ID: " + userId);
+                            Log.d("FavouriteItem", "Product ID to remove: " + favouriteId);// Lấy ID của sản phẩm yêu thích
+                            if (favouriteId != null) {
+                                items.removeFromFavourite(userId, favouriteId); // Gọi hàm xóa sản phẩm
+                            }
+                        }
+                    })
+                    .setNegativeButton("No", (dialog, id) -> dialog.cancel()) // Hủy bỏ khi người dùng chọn No
+                    .show();
+        });
 
     }
 

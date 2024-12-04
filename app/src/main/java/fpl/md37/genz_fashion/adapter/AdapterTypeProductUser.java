@@ -22,7 +22,7 @@ public class AdapterTypeProductUser extends RecyclerView.Adapter<AdapterTypeProd
     private Context context;
     private Item_Handel_click listener;
     private ArrayList<TypeProduct> typeProducts;
-    private int selectedPosition = -1; // Biến lưu vị trí item được chọn
+    private int selectedPosition = 0;
 
     public AdapterTypeProductUser(Context context, ArrayList<TypeProduct> typeProducts, Item_Handel_click listener) {
         this.context = context;
@@ -43,20 +43,21 @@ public class AdapterTypeProductUser extends RecyclerView.Adapter<AdapterTypeProd
         TypeProduct typeProduct = typeProducts.get(position);
         holder.name.setText(typeProduct.getName());
 
-        // Kiểm tra nếu item này được chọn hay không
+        // Kiểm tra trạng thái được chọn
         if (position == selectedPosition) {
-            holder.name.setBackgroundColor(context.getResources().getColor(R.color.blue)); // Màu khi được chọn
-            holder.name.setTextColor(context.getResources().getColor(R.color.white));  // Màu chữ khi chọn
+            holder.name.setBackgroundColor(context.getResources().getColor(R.color.blue)); // Màu nền khi chọn
+            holder.name.setTextColor(context.getResources().getColor(R.color.white));     // Màu chữ khi chọn
         } else {
-            holder.name.setBackgroundColor(context.getResources().getColor(R.color.white)); // Màu mặc định
-            holder.name.setTextColor(context.getResources().getColor(R.color.black));   // Màu chữ mặc định
+            holder.name.setBackgroundColor(context.getResources().getColor(R.color.white)); // Màu nền mặc định
+            holder.name.setTextColor(context.getResources().getColor(R.color.black));      // Màu chữ mặc định
         }
 
         holder.type.setOnClickListener(v -> {
-            // Cập nhật vị trí được chọn và thông báo sự kiện
+            // Cập nhật trạng thái được chọn
             selectedPosition = position;
             notifyDataSetChanged(); // Thông báo RecyclerView cập nhật giao diện
 
+            // Gọi callback khi item được chọn
             if (listener != null) {
                 listener.onTypeProductClick(typeProduct.getId());
             }
@@ -71,9 +72,10 @@ public class AdapterTypeProductUser extends RecyclerView.Adapter<AdapterTypeProd
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         LinearLayout type;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            type=itemView.findViewById(R.id.itemType);
+            type = itemView.findViewById(R.id.itemType);
             name = itemView.findViewById(R.id.tvFilter);
         }
     }
