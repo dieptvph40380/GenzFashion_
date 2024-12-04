@@ -93,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#000000"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Finding Your Version"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif-medium" />
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your appearance shows your quality so give your best for your best fashion"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="14sp"
             android:layout_marginTop="5dp"
             android:layout_gravity="center_horizontal"
@@ -124,7 +124,8 @@
         <!-- Nút bắt đầu -->
         <Button
             android:id="@+id/startButton_Wcl"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Get started"

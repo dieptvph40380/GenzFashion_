@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout_paymentfail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="16dp"
+        tools:context="fpl.md37.genz_fashion.UserScreen.OrderFailActivity">
+
+
+        <!-- Circle with checkmark -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/circle_successfull"
+                android:backgroundTint="@color/red"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/checkmark"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/baseline_clear_24"
+                    android:contentDescription="Checkmark"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+            <!-- Payment Success Text -->
+            <TextView
+                android:id="@+id/paymentSuccessText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order failed!"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="16dp" />
+
+            <!-- Description Text -->
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please try again or contact support for assistance"
+                android:textSize="14sp"
+                android:textColor="@color/den_xam"
+                android:gravity="center"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+
+        <!-- View Order Button -->
+        <Button
+            android:id="@+id/homebutton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Back to Home"
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+</FrameLayout>

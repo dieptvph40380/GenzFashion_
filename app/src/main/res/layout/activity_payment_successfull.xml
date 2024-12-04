@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout_paymentsuccessfull"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background_color"
+    android:fitsSystemWindows="true">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
@@ -38,7 +44,7 @@
             android:id="@+id/paymentSuccessText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Payment Successful!"
+            android:text="Order Successful!"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -50,9 +56,9 @@
             android:id="@+id/descriptionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thank you for your purchase"
+            android:text="Thank you for your purchase."
             android:textSize="14sp"
-            android:textColor="@color/gray"
+            android:textColor="@color/den_xam"
             android:gravity="center"
             android:layout_marginTop="8dp" />
     </LinearLayout>
@@ -70,3 +76,4 @@
         android:layout_marginBottom="16dp" />
 
 </LinearLayout>
+</FrameLayout>
