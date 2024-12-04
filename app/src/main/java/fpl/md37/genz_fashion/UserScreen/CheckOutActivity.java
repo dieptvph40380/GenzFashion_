@@ -209,6 +209,7 @@ public class CheckOutActivity extends AppCompatActivity {
                     if ("ZaloPay".equals(tv_Methods.getText().toString())) {
                         String methods =tv_Methods.getText().toString();
                         Payment(methods);
+                        finish();
                         // Gọi phương thức Payment khi thanh toán bằng ZaloPay
                     }
                     Toast.makeText(getApplicationContext(), "Please select the payment method before proceeding.", Toast.LENGTH_SHORT).show();
@@ -272,7 +273,6 @@ public class CheckOutActivity extends AppCompatActivity {
                 Log.d("CheckOutFragment", "Cart ID: " + idCart);
                 products = cartData.getProducts();
 
-//                String voucher =Voucher.getText().toString();
                 String voucher =tvPC_Voucher.getText().toString();
                 PriceVoucher=Double.parseDouble(voucher);
 
