@@ -46,10 +46,10 @@
         android:layout_alignStart="@id/welcomeText" />
 
     <ImageView
-        android:id="@+id/notificationIcon"
+        android:id="@+id/AD_logout"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/notification"
+        android:src="@drawable/logout"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp" />

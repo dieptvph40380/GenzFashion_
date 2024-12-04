@@ -65,7 +65,7 @@ public class CheckOutActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CheckOutAdapter adapter;
     private HttpRequest httpRequest;
-    private String selectedPaymentMethod;
+    String selectedPaymentMethod;
     private String userId;
     CartData cartData;
     String totalString;
@@ -140,6 +140,9 @@ public class CheckOutActivity extends AppCompatActivity {
             // Mở PayMothodsFragment và chờ kết quả trả về
         });
 
+        String voucherPrice =getIntent().getStringExtra("voucher_price");
+        tvPC_Voucher.setText(voucherPrice);
+
         cbChekOut.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // Nếu checkbox được chọn, thiết lập tvMethods là "add payment"
@@ -204,8 +207,8 @@ public class CheckOutActivity extends AppCompatActivity {
                     // Hiển thị thông báo nếu checkbox chưa được chọn
                     // Kiểm tra nếu tvPayment là "ZaloPay" thì gọi phương thức Payment
                     if ("ZaloPay".equals(tv_Methods.getText().toString())) {
-                        order();
-                        Payment();
+                        String methods =tv_Methods.getText().toString();
+                        Payment(methods);
                         // Gọi phương thức Payment khi thanh toán bằng ZaloPay
                     }
                     Toast.makeText(getApplicationContext(), "Please select the payment method before proceeding.", Toast.LENGTH_SHORT).show();
@@ -223,7 +226,7 @@ public class CheckOutActivity extends AppCompatActivity {
                 transaction.replace(R.id.layout_checkout, newFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-
+                finish();
             }
         });
 
@@ -275,8 +278,9 @@ public class CheckOutActivity extends AppCompatActivity {
 
                 String ship= tvPC_Shipping.getText().toString();
                 PriceShip=Double.parseDouble(ship);
-                tvPC_ToTal.setText("" + totalPrice);
-                PricePayment= totalPrice-(PriceVoucher+PriceShip);
+                PriceTotal=totalPrice+PriceVoucher;
+                tvPC_ToTal.setText("" + PriceTotal);
+                PricePayment= totalPrice-PriceShip;
                 tvPC_Payment.setText(""+PricePayment);
                 totalcheckout.setText(""+PricePayment);
                 totalString = String.format("%.0f", PricePayment);
@@ -332,7 +336,8 @@ public class CheckOutActivity extends AppCompatActivity {
     }
 
 
-    void Payment(){
+    void Payment(String methods){
+
         CreateOrder orderApi = new CreateOrder();
         Log.d("CreateOrder", "Response data: " + totalString);
         try {
@@ -346,8 +351,16 @@ public class CheckOutActivity extends AppCompatActivity {
                     @Override
                     public void onPaymentSucceeded(String s, String s1, String s2) {
                         Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
+                        Gson gson = new Gson();
+                        String productsJson = gson.toJson(products);
                         intent1.putExtra("result","Thanh toán thành công");
-
+                        intent1.putExtra("productsJson", productsJson);
+                        intent1.putExtra("userId", userId);
+                        intent1.putExtra("paymentMethod", methods
+                        );
+                        Log.d("PaymentNotification", "Products JSON: " + productsJson);
+                        Log.d("PaymentNotification", "UserID: " + userId);
+                        Log.d("PaymentNotification", "PaymentMethod: " + methods);
                         startActivity(intent1);
                     }
 
