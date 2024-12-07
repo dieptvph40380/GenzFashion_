@@ -70,7 +70,7 @@
             android:id="@+id/viewOrderButton"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="View Order"
+            android:text="Back to home"
             android:backgroundTint="@color/blue"
             android:textColor="@color/white"
             android:textAllCaps="false"
