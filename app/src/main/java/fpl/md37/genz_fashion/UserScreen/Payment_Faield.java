@@ -1,5 +1,6 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -32,13 +33,13 @@ public class Payment_Faield extends Fragment {
         HomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                // Khởi chạy Activity
+                startActivity(intent);
+                // Áp dụng hiệu ứng chuyển động khi chuyển Activity
+                getActivity().overridePendingTransition(R.anim.bounce_in, R.anim.bounce_out);
 
-                Fragment newFragment = new ProfileFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-                transaction.replace(R.id.frameLayout_paymentfailed, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                getActivity().finish();
 
             }
         });

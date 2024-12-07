@@ -53,14 +53,13 @@ public class PaymentSuccessfullActivity extends Fragment {
         ViewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment newFragment = new MyOrderFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-                transaction.replace(R.id.layout_Payment, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                // Khởi chạy Activity
+                startActivity(intent);
+                // Áp dụng hiệu ứng chuyển động khi chuyển Activity
+                getActivity().overridePendingTransition(R.anim.bounce_in, R.anim.bounce_out);
 
-                showBottomNav();
+                getActivity().finish();
 
             }
         });
