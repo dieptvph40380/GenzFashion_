@@ -66,8 +66,7 @@
         <activity
             android:name="fpl.md37.genz_fashion.QaA.Question3"
             android:exported="false" />
-        <activity
-            android:name="fpl.md37.genz_fashion.QaA.Question4"
+        <activity/-strong/-heart:>:o:-((:-h android:name="fpl.md37.genz_fashion.QaA.Question4"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.DetailUser"
