@@ -241,14 +241,11 @@ public class CheckOutActivity extends AppCompatActivity {
         ZaloPaySDK.getInstance().onResult(intent);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        // Hiển thị lại BottomNavigation khi quay lại Activity
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-        if (bottomNavigationView != null) {
-            bottomNavigationView.setVisibility(View.VISIBLE);
-        }
+    public void switchToFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.layout_checkout, fragment) // Thay thế Fragment hiện tại
+                .addToBackStack(null) // Lưu trạng thái vào back stack nếu cần
+                .commit();
     }
 
     void getUserData() {
@@ -285,7 +282,6 @@ public class CheckOutActivity extends AppCompatActivity {
                 Log.d("CheckOutFragment", "Cart ID: " + idCart);
                 products = cartData.getProducts();
 
-//                String voucher =Voucher.getText().toString();
                 String voucher = tvPC_Voucher.getText().toString();
                 PriceVoucher = Double.parseDouble(voucher);
 
@@ -297,6 +293,9 @@ public class CheckOutActivity extends AppCompatActivity {
                 tvPC_Payment.setText("" + PricePayment);
                 totalcheckout.setText("" + PricePayment);
                 totalString = String.format("%.0f", PricePayment);
+
+//                String voucher =Voucher.getText().toString();
+
                 // Hiển thị danh sách sản phẩm trong giỏ hàng
                 adapter.setProducts(products);
             } else {
@@ -330,13 +329,9 @@ public class CheckOutActivity extends AppCompatActivity {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
                     transaction.replace(R.id.layout_checkout, newFragment);
-                    transaction.addToBackStack(null);
+                    transaction.addToBackStack(null);;
                     transaction.commit();
 
-                    BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-                    if (bottomNavigationView != null) {
-                        bottomNavigationView.setVisibility(View.VISIBLE);
-                    }
 
                 } else {
                     Log.e("RemoveProductsError", "Failed to remove products: " + response.message());
@@ -384,7 +379,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
                     @Override
                     public void onPaymentCanceled(String s, String s1) {
-                        Intent intent1 = new Intent(CheckOutActivity.this, PaymentNotication.class);
+                        Intent intent1 = new Intent(CheckOutActivity.this, Payment_Faield.class);
                         intent1.putExtra("result", "Hủy thanh toán");
                         Log.d("ZaloPay", "Payment Canceled");
                         startActivity(intent1);
@@ -392,7 +387,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
                     @Override
                     public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
-                        Intent intent1 = new Intent(CheckOutActivity.this, PaymentNotication.class);
+                        Intent intent1 = new Intent(CheckOutActivity.this, Payment_Faield.class);
                         intent1.putExtra("result", "Lỗi thanh toán");
                         Log.e("ZaloPay", "Payment Error: " + zaloPayError);
 //                          q // Nếu có
@@ -451,5 +446,6 @@ public class CheckOutActivity extends AppCompatActivity {
         });
 
     }
+
 
 }
