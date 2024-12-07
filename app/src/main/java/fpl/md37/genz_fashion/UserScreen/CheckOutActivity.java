@@ -281,9 +281,9 @@ public class CheckOutActivity extends AppCompatActivity {
                 String idCart = cartData.getId();
                 Log.d("CheckOutFragment", "Cart ID: " + idCart);
                 products = cartData.getProducts();
-
-                String voucher = tvPC_Voucher.getText().toString();
-                PriceVoucher = Double.parseDouble(voucher);
+//                String voucher =Voucher.getText().toString();
+//                String voucher =tvPC_Voucher.getText().toString();
+//                PriceVoucher=Double.parseDouble(voucher);
 
                 String ship = tvPC_Shipping.getText().toString();
                 PriceShip = Double.parseDouble(ship);

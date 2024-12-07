@@ -93,7 +93,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white"
+
+        android:background="#FFFFFF"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -122,16 +124,18 @@
             android:gravity="center" />
 
         <!-- Nút bắt đầu -->
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/startButton_Wcl"
-            android:layout_width="350dp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Get started"
-            android:backgroundTint="@color/blue"
-            android:textColor="#FFFFFF"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="8dp" />
+
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Get Start"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            app:cornerRadius="12dp"
+            android:backgroundTint="#6394B7"
+            />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

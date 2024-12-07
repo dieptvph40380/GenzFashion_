@@ -1,13 +1,18 @@
 package fpl.md37.genz_fashion.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +20,8 @@ import com.example.genz_fashion.R;
 
 import java.util.ArrayList;
 
+import fpl.md37.genz_fashion.UserScreen.CartFragment;
+import fpl.md37.genz_fashion.UserScreen.EvaluateFragment;
 import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Size;
@@ -59,6 +66,25 @@ public class ProductCPAdapter extends RecyclerView.Adapter<ProductCPAdapter.Prod
                 Glide.with(context).load(R.drawable.ic_launcher_background).into(holder.ivProductImage_cp); // placeholder nếu không có ảnh
             }
         }
+        holder.btnrv_cp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof FragmentActivity) {
+                    FragmentActivity fragmentActivity = (FragmentActivity) context;
+                    Fragment newFragment = new EvaluateFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("product_item_data", productItem); // Truyền ProducItem vào Bundle
+                    newFragment.setArguments(bundle);
+                    FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                    transaction.replace(R.id.frameLayout_myorder, newFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } else {
+                    throw new IllegalStateException("Context is not a FragmentActivity");
+                }
+            }
+        });
     }
 
     @Override
@@ -70,9 +96,11 @@ public class ProductCPAdapter extends RecyclerView.Adapter<ProductCPAdapter.Prod
     public static class ProductCPViewHolder extends RecyclerView.ViewHolder {
         TextView tvProductName_cp, tvProductPrice_cp, tvProductSizeQty_cp;
         ImageView ivProductImage_cp;
+        Button btnrv_cp;
 
         public ProductCPViewHolder(View itemView) {
             super(itemView);
+            btnrv_cp = itemView.findViewById(R.id.btnReview);
             tvProductName_cp = itemView.findViewById(R.id.tvProductName_cp);
             tvProductPrice_cp = itemView.findViewById(R.id.tvProductPrice_cp);
             tvProductSizeQty_cp = itemView.findViewById(R.id.tvProductSizeQty_cp);
