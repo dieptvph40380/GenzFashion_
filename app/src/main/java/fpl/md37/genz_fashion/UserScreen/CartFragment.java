@@ -119,9 +119,14 @@ public class CartFragment extends Fragment implements Item_Handel_check {
 
                 // Nếu cần truyền dữ liệu qua Intent, có thể dùng:
                 // intent.putExtra("key", value);
-
-                intent.putExtra("voucher_price",voucherPrice);
-
+                if (!voucherName.equals("Select Vouchers")) {
+                    intent.putExtra("voucher_price",voucherPrice);
+                    // Màu xanh
+                } else {
+                    select.setText("Select Vouchers");
+                    intent.putExtra("voucher_price","0.0");// Màu đen
+                }
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 // Khởi chạy Activity
                 startActivity(intent);
 

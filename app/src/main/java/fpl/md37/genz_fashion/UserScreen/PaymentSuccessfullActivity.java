@@ -53,8 +53,6 @@ public class PaymentSuccessfullActivity extends Fragment {
         ViewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showBottomNav();
-
                 Fragment newFragment = new MyOrderFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
@@ -62,7 +60,7 @@ public class PaymentSuccessfullActivity extends Fragment {
                 transaction.addToBackStack(null);
                 transaction.commit();
 
-
+                showBottomNav();
 
             }
         });
@@ -73,7 +71,7 @@ public class PaymentSuccessfullActivity extends Fragment {
     private void showBottomNav() {
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
         if (bottomNavigationView != null) {
-            bottomNavigationView.setVisibility(View.GONE);
+            bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 
