@@ -273,8 +273,8 @@ public class CheckOutActivity extends AppCompatActivity {
                 products = cartData.getProducts();
 
 //                String voucher =Voucher.getText().toString();
-                String voucher =tvPC_Voucher.getText().toString();
-                PriceVoucher=Double.parseDouble(voucher);
+//                String voucher =tvPC_Voucher.getText().toString();
+//                PriceVoucher=Double.parseDouble(voucher);
 
                 String ship= tvPC_Shipping.getText().toString();
                 PriceShip=Double.parseDouble(ship);
