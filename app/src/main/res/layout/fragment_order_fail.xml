@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout_paymentfail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_Payment"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fpl.md37.genz_fashion.UserScreen.PaymentSuccessfullActivity">
+    android:background="@color/background_color"
+    android:fitsSystemWindows="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:background="@color/white"
         android:padding="16dp"
-        >
+        tools:context="fpl.md37.genz_fashion.UserScreen.OrderFailActivity">
 
 
         <!-- Circle with checkmark -->
@@ -29,13 +28,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/circle_successfull"
+                android:backgroundTint="@color/red"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/checkmark"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/baseline_check_24"
+                    android:src="@drawable/baseline_clear_24"
                     android:contentDescription="Checkmark"
                     app:tint="@color/white" />
             </LinearLayout>
@@ -45,7 +45,7 @@
                 android:id="@+id/paymentSuccessText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Successful!"
+                android:text="Order failed!"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -57,9 +57,9 @@
                 android:id="@+id/descriptionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thank you for your purchase"
+                android:text="Please try again or contact support for assistance"
                 android:textSize="14sp"
-                android:textColor="@color/gray"
+                android:textColor="@color/den_xam"
                 android:gravity="center"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
@@ -67,10 +67,10 @@
 
         <!-- View Order Button -->
         <Button
-            android:id="@+id/viewOrderButton"
+            android:id="@+id/homebutton"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="View Order"
+            android:text="Back to Home"
             android:backgroundTint="@color/blue"
             android:textColor="@color/white"
             android:textAllCaps="false"

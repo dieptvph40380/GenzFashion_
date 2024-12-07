@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import vn.zalopay.sdk.Environment;
 import vn.zalopay.sdk.ZaloPayError;
 import vn.zalopay.sdk.ZaloPaySDK;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -55,12 +56,12 @@ import retrofit2.Response;
 import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class CheckOutActivity extends AppCompatActivity {
-    TextView tvName,tvPhone,tvAddress,totalcheckout,tvPayment,tvPC_ToTal,tvPC_Shipping,tvPC_Voucher,tvPC_Payment,Voucher,tvOrder,tv_Methods;
+    TextView tvName, tvPhone, tvAddress, totalcheckout, tvPayment, tvPC_ToTal, tvPC_Shipping, tvPC_Voucher, tvPC_Payment, Voucher, tvOrder, tv_Methods;
     CheckBox cbChekOut;
     Client currentUserModel;
     ImageView btnBack;
     ActivityResultLauncher<Intent> imagePickLauncher;
-    Double PriceTotal =0.0,PriceShip =0.0,PriceVoucher =0.0,PricePayment=0.0;
+    Double PriceTotal = 0.0, PriceShip = 0.0, PriceVoucher = 0.0, PricePayment = 0.0;
     Context safeContext;    // Lưu trữ context an toàn
     private RecyclerView recyclerView;
     private CheckOutAdapter adapter;
@@ -78,20 +79,20 @@ public class CheckOutActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_check_out);
 
-        tvName=findViewById(R.id.tv_ClName);
-        tvPhone=findViewById(R.id.tv_ClPhone);
-        tvAddress=findViewById(R.id.tv_ClAddress);
-        totalcheckout=findViewById(R.id.total_CheckOut);
-        tvPayment=findViewById(R.id.tv_Payment);
-        cbChekOut=findViewById(R.id.cb_CheckOut);
-        tvPC_ToTal=findViewById(R.id.tv_TotalPrice);
-        tvPC_Shipping=findViewById(R.id.tv_DiscountShipping);
-        tvPC_Voucher=findViewById(R.id.tv_DiscountVouchers);
-        tvPC_Payment=findViewById(R.id.tv_TotalPayment);
-        Voucher=findViewById(R.id.Voucher_Cl);
-        tvOrder=findViewById(R.id.tv_Order);
-        tv_Methods=findViewById(R.id.tv_Methods);
-        btnBack=findViewById(R.id.btnBack);
+        tvName = findViewById(R.id.tv_ClName);
+        tvPhone = findViewById(R.id.tv_ClPhone);
+        tvAddress = findViewById(R.id.tv_ClAddress);
+        totalcheckout = findViewById(R.id.total_CheckOut);
+        tvPayment = findViewById(R.id.tv_Payment);
+        cbChekOut = findViewById(R.id.cb_CheckOut);
+        tvPC_ToTal = findViewById(R.id.tv_TotalPrice);
+        tvPC_Shipping = findViewById(R.id.tv_DiscountShipping);
+        tvPC_Voucher = findViewById(R.id.tv_DiscountVouchers);
+        tvPC_Payment = findViewById(R.id.tv_TotalPayment);
+        Voucher = findViewById(R.id.Voucher_Cl);
+        tvOrder = findViewById(R.id.tv_Order);
+        tv_Methods = findViewById(R.id.tv_Methods);
+        btnBack = findViewById(R.id.btnBack);
 
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -102,7 +103,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
         getUserData();
 
-        recyclerView =findViewById(R.id.rcv_ClCheckOut);
+        recyclerView = findViewById(R.id.rcv_ClCheckOut);
         recyclerView.setLayoutManager(new LinearLayoutManager(CheckOutActivity.this));
         adapter = new CheckOutAdapter(CheckOutActivity.this);
         recyclerView.setAdapter(adapter);
@@ -140,7 +141,7 @@ public class CheckOutActivity extends AppCompatActivity {
             // Mở PayMothodsFragment và chờ kết quả trả về
         });
 
-        String voucherPrice =getIntent().getStringExtra("voucher_price");
+        String voucherPrice = getIntent().getStringExtra("voucher_price");
         tvPC_Voucher.setText(voucherPrice);
 
         cbChekOut.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -207,8 +208,8 @@ public class CheckOutActivity extends AppCompatActivity {
                     // Hiển thị thông báo nếu checkbox chưa được chọn
                     // Kiểm tra nếu tvPayment là "ZaloPay" thì gọi phương thức Payment
                     if ("ZaloPay".equals(tv_Methods.getText().toString())) {
-                        String methods =tv_Methods.getText().toString();
-                        Payment(methods);
+                        String methods = tv_Methods.getText().toString();
+                        Payment(userId, methods, products);
                         // Gọi phương thức Payment khi thanh toán bằng ZaloPay
                     }
                     Toast.makeText(getApplicationContext(), "Please select the payment method before proceeding.", Toast.LENGTH_SHORT).show();
@@ -232,12 +233,21 @@ public class CheckOutActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d("ZaloPay", "onNewIntent triggered");
         ZaloPaySDK.getInstance().onResult(intent);
     }
+
+    public void switchToFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.layout_checkout, fragment) // Thay thế Fragment hiện tại
+                .addToBackStack(null) // Lưu trạng thái vào back stack nếu cần
+                .commit();
+    }
+
     void getUserData() {
         FirebaseUtil.currentUserDetails().get().addOnCompleteListener(task -> {
             if (!isFinishing() && !isDestroyed()) { // Thay thế isAdded() cho Activity
@@ -271,19 +281,21 @@ public class CheckOutActivity extends AppCompatActivity {
                 String idCart = cartData.getId();
                 Log.d("CheckOutFragment", "Cart ID: " + idCart);
                 products = cartData.getProducts();
-
 //                String voucher =Voucher.getText().toString();
 //                String voucher =tvPC_Voucher.getText().toString();
 //                PriceVoucher=Double.parseDouble(voucher);
 
-                String ship= tvPC_Shipping.getText().toString();
-                PriceShip=Double.parseDouble(ship);
-                PriceTotal=totalPrice+PriceVoucher;
+                String ship = tvPC_Shipping.getText().toString();
+                PriceShip = Double.parseDouble(ship);
+                PriceTotal = totalPrice + PriceVoucher;
                 tvPC_ToTal.setText("" + PriceTotal);
-                PricePayment= totalPrice-PriceShip;
-                tvPC_Payment.setText(""+PricePayment);
-                totalcheckout.setText(""+PricePayment);
+                PricePayment = totalPrice - PriceShip;
+                tvPC_Payment.setText("" + PricePayment);
+                totalcheckout.setText("" + PricePayment);
                 totalString = String.format("%.0f", PricePayment);
+
+//                String voucher =Voucher.getText().toString();
+
                 // Hiển thị danh sách sản phẩm trong giỏ hàng
                 adapter.setProducts(products);
             } else {
@@ -313,12 +325,12 @@ public class CheckOutActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Products removed successfully", Toast.LENGTH_SHORT).show();
 
-                        Fragment newFragment = new MyOrderFragment();
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-                        transaction.replace(R.id.layout_checkout, newFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                    Fragment newFragment = new PaymentSuccessfullActivity();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                    transaction.replace(R.id.layout_checkout, newFragment);
+                    transaction.addToBackStack(null);;
+                    transaction.commit();
 
 
                 } else {
@@ -336,7 +348,7 @@ public class CheckOutActivity extends AppCompatActivity {
     }
 
 
-    void Payment(String methods){
+    void Payment(String userId, String methods, List<ProducItem> products) {
 
         CreateOrder orderApi = new CreateOrder();
         Log.d("CreateOrder", "Response data: " + totalString);
@@ -350,32 +362,33 @@ public class CheckOutActivity extends AppCompatActivity {
                 ZaloPaySDK.getInstance().payOrder(CheckOutActivity.this, token, "demozpdk://app", new PayOrderListener() {
                     @Override
                     public void onPaymentSucceeded(String s, String s1, String s2) {
-                        Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
-                        Gson gson = new Gson();
-                        String productsJson = gson.toJson(products);
-                        intent1.putExtra("result","Thanh toán thành công");
-                        intent1.putExtra("productsJson", productsJson);
-                        intent1.putExtra("userId", userId);
-                        intent1.putExtra("paymentMethod", methods
-                        );
-                        Log.d("PaymentNotification", "Products JSON: " + productsJson);
-                        Log.d("PaymentNotification", "UserID: " + userId);
-                        Log.d("PaymentNotification", "PaymentMethod: " + methods);
-                        startActivity(intent1);
+                        order(userId, methods, products);
+//                        Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
+//                        Gson gson = new Gson();
+//                        String productsJson = gson.toJson(products);
+//                        intent1.putExtra("result","Thanh toán thành công");
+//                        intent1.putExtra("productsJson", productsJson);
+//                        intent1.putExtra("userId", userId);
+//                        intent1.putExtra("paymentMethod", methods
+//                        );
+//                        Log.d("PaymentNotification", "Products JSON: " + productsJson);
+//                        Log.d("PaymentNotification", "UserID: " + userId);
+//                        Log.d("PaymentNotification", "PaymentMethod: " + methods);
+//                        startActivity(intent1);
                     }
 
                     @Override
                     public void onPaymentCanceled(String s, String s1) {
-                        Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
-                        intent1.putExtra("result","Hủy thanh toán");
+                        Intent intent1 = new Intent(CheckOutActivity.this, Payment_Faield.class);
+                        intent1.putExtra("result", "Hủy thanh toán");
                         Log.d("ZaloPay", "Payment Canceled");
                         startActivity(intent1);
                     }
 
                     @Override
                     public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
-                        Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
-                        intent1.putExtra("result","Lỗi thanh toán");
+                        Intent intent1 = new Intent(CheckOutActivity.this, Payment_Faield.class);
+                        intent1.putExtra("result", "Lỗi thanh toán");
                         Log.e("ZaloPay", "Payment Error: " + zaloPayError);
 //                          q // Nếu có
                         Log.e("ZaloPay", "Additional Info: " + s + ", " + s1);
@@ -390,7 +403,7 @@ public class CheckOutActivity extends AppCompatActivity {
         }
     }
 
-    void order(){
+    void order(String userId, String selectedPaymentMethod, List<ProducItem> products) {
         // Kiểm tra điều kiện để đảm bảo các dữ liệu cần thiết đã có
         if (currentUserModel == null || selectedPaymentMethod == null || cartData == null || cartData.getProducts().isEmpty()) {
             Toast.makeText(getApplicationContext(), "Missing required data to place order.", Toast.LENGTH_SHORT).show();
@@ -433,5 +446,6 @@ public class CheckOutActivity extends AppCompatActivity {
         });
 
     }
+
 
 }

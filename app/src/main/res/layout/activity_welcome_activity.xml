@@ -93,7 +93,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+
         android:background="#FFFFFF"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -125,6 +127,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/startButton_Wcl"
+
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="Get Start"
@@ -133,5 +136,6 @@
             app:cornerRadius="12dp"
             android:backgroundTint="#6394B7"
             />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
