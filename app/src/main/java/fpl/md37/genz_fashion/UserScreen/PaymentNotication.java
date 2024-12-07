@@ -64,49 +64,44 @@ CheckOutActivity checkout;
             @Override
             public void onClick(View v) {
                 order(userId,selectedPaymentMethod,products);
-                Toast.makeText(getApplicationContext(), "" +userId+""+ selectedPaymentMethod+"product : "+products+"productsJson :"+productsJson,Toast.LENGTH_SHORT).show();
-            }
-        });
-        // Sử dụng Handler để chuyển màn hình sau 2 giây
-        new Handler().postDelayed(() -> {
-            if ("Thanh toán thành công".equals(result)) {
-                order(userId,selectedPaymentMethod,products);
-
-                Log.d("RemoveProductsError", "Network error: "+"" +userId+""+ selectedPaymentMethod+"product : "+products+"productsJson :"+productsJson);
-            } else if ("Hủy thanh toán".equals(result)) {
-                Fragment newFragment = new CartFragment();
+                Fragment newFragment = new MyOrderFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
                 transaction.replace(R.id.layout_payment, newFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                finish();
-            } else {
-                // Chuyển tới MainActivity
                 Toast.makeText(getApplicationContext(), "" +userId+""+ selectedPaymentMethod+"product : "+products+"productsJson :"+productsJson,Toast.LENGTH_SHORT).show();
-                Intent nextIntent = new Intent(PaymentNotication.this, MainActivity.class);
-                startActivity(nextIntent);
             }
-            finish(); // Đóng PaymentNotication sau khi chuyển màn hình
-        }, 6000); // 2 giây
+        });
+        // Sử dụng Handler để chuyển màn hình sau 2 giây
+//        new Handler().postDelayed(() -> {
+//            if ("Thanh toán thành công".equals(result)) {
+//                order(userId,selectedPaymentMethod,products);
+//                Fragment newFragment = new MyOrderFragment();
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+//                transaction.replace(R.id.layout_payment, newFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//                finish();
+//                Log.d("RemoveProductsError", "Network error: "+"" +userId+""+ selectedPaymentMethod+"product : "+products+"productsJson :"+productsJson);
+//            } else if ("Hủy thanh toán".equals(result)) {
+//                Fragment newFragment = new CartFragment();
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+//                transaction.replace(R.id.layout_payment, newFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//                finish();
+//            } else {
+//                // Chuyển tới MainActivity
+//                Toast.makeText(getApplicationContext(), "" +userId+""+ selectedPaymentMethod+"product : "+products+"productsJson :"+productsJson,Toast.LENGTH_SHORT).show();
+//                Intent nextIntent = new Intent(PaymentNotication.this, MainActivity.class);
+//                startActivity(nextIntent);
+//            }// Đóng PaymentNotication sau khi chuyển màn hình
+//        }, 6000); // 2 giây
     }
 
-    // Hàm chuyển tới một Fragment
-    private void navigateToFragment(MyOrderFragment fragment) {
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.container, fragment) // `R.id.container` là vùng chứa Fragment trong MainActivity
-//                .addToBackStack(null) // Lưu trạng thái để quay lại nếu cần
-//                .commit();
-//        finish();
-        Fragment newFragment = new CartFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-        transaction.replace(R.id.layout_payment, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        finish();
-    }
 
     void order(String userId, String selectedPaymentMethod, List<ProducItem> products) {
         // Kiểm tra điều kiện để đảm bảo các dữ liệu cần thiết đã có
@@ -122,6 +117,7 @@ CheckOutActivity checkout;
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                     removeProductsFromCart(userId, products);
+
                 } else {
                     try {
                         if (response.errorBody() != null) {
@@ -162,13 +158,6 @@ CheckOutActivity checkout;
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Products removed successfully", Toast.LENGTH_SHORT).show();
 
-                    Fragment newFragment = new MyOrderFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-                    transaction.replace(R.id.layout_payment, newFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    finish();
 
                 } else {
                     Log.e("RemoveProductsError", "Failed to remove products: " + response.message());
