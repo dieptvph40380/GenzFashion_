@@ -32,33 +32,7 @@
                 android:orientation="vertical"
                 android:paddingEnd="8dp"/>
             <!-- Order Time -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="bottom">
 
-                <TextView
-                    android:id="@+id/timeorder_cl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Order placed: Today"
-                    android:textSize="12sp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/darker_gray"
-                    />
-
-                <!-- Order Total -->
-                <TextView
-                    android:id="@+id/total_order_cl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="12 items: 20000 VND"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:layout_marginBottom="8dp"/>
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <!-- Track Order Section -->
@@ -68,10 +42,51 @@
         android:orientation="horizontal"
         android:gravity="end|center_vertical">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/timeorder_cl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order placed: Today"
+                android:textSize="12sp"
+                android:paddingBottom="10dp"
+                android:textColor="@android:color/darker_gray"
+                />
+
+            <!-- Order Total -->
+            <TextView
+                android:id="@+id/total_order_cl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12 items: 20000 VND"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end|center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="State: Canclled"/>
+            android:text="State:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/red"
+            android:textStyle="bold"/>
+        </LinearLayout>
 
 
     </LinearLayout>

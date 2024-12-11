@@ -18,27 +18,27 @@ import java.util.ArrayList;
 import fpl.md37.genz_fashion.models.Order;
 import fpl.md37.genz_fashion.models.ProducItem;
 
-public class AdapterOderCompeleted extends RecyclerView.Adapter<AdapterOderCompeleted.OrderCompleledViewHolder>{
+public class AdapterOrderPendingAdapter extends RecyclerView.Adapter<AdapterOrderPendingAdapter.ViewHolder>{
     Context context;
     private ArrayList<Order> orderList;
 
-    public AdapterOderCompeleted(Context context, ArrayList<Order> orderList) {
+    public AdapterOrderPendingAdapter(Context context, ArrayList<Order> orderList) {
         this.context = context;
         this.orderList = orderList;
     }
 
     @NonNull
     @Override
-    public OrderCompleledViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterOrderPendingAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_compeleted, parent, false);
-        return new AdapterOderCompeleted.OrderCompleledViewHolder(view);
+        View view = inflater.inflate(R.layout.item_pending_payment, parent, false);
+        return new AdapterOrderPendingAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderCompleledViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterOrderPendingAdapter.ViewHolder holder, int position) {
         Order order = orderList.get(position);
-        holder.timecancle_cp.setText(order.getTimeCompletion());
+        holder.timecancle_pm.setText(order.getTimeCancleOrder());
 
         ArrayList<ProducItem> productList = new ArrayList<>(order.getProducts());
         int totalQuantity = 0;
@@ -46,13 +46,13 @@ public class AdapterOderCompeleted extends RecyclerView.Adapter<AdapterOderCompe
             totalQuantity += productItem.getQuantity();
         }
 
-        holder.total_cp.setText(""+ totalQuantity+" items: "+ order.getTotalAmount());
+        holder.total_pm.setText(""+ totalQuantity+" items: "+ order.getTotalAmount());
 
 
 
         if (!productList.isEmpty()) {
-            ProductCPAdapter productAdapter = new ProductCPAdapter(productList, context);
-            holder.rvProductList_cp.setAdapter(productAdapter);
+            ProductPMAdapter productAdapter = new ProductPMAdapter(productList, context);
+            holder.rvProductList_pm.setAdapter(productAdapter);
         } else {
             Log.d("AdapterOderActive", "Product list is empty.");
         }
@@ -63,20 +63,20 @@ public class AdapterOderCompeleted extends RecyclerView.Adapter<AdapterOderCompe
         return orderList == null ? 0 : orderList.size();
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView timecancle_pm,total_pm;
+        RecyclerView rvProductList_pm;
 
-    public static class OrderCompleledViewHolder extends RecyclerView.ViewHolder {
-        TextView timecancle_cp,total_cp;
-        RecyclerView rvProductList_cp;
-
-        public OrderCompleledViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            rvProductList_cp = itemView.findViewById(R.id.rvProductList_order_cp);
-            total_cp = itemView.findViewById(R.id.total_order_cp);
-            timecancle_cp = itemView.findViewById(R.id.timeorder_cp);
+            rvProductList_pm = itemView.findViewById(R.id.rvProductList_order_pm);
+            total_pm = itemView.findViewById(R.id.total_order_pm);
+            timecancle_pm = itemView.findViewById(R.id.timeorder_pm);
             LinearLayoutManager layoutManager = new LinearLayoutManager(itemView.getContext());
             layoutManager.setReverseLayout(true);
-            rvProductList_cp.setLayoutManager(layoutManager);
+            rvProductList_pm.setLayoutManager(layoutManager);
 
         }
     }
 }
+

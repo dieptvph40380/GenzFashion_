@@ -58,10 +58,13 @@ public class MyOrderFragment extends Fragment {
                     tab.setText("Active");
                     break;
                 case 1:
-                    tab.setText("Completed");
+                    tab.setText("Pending");
                     break;
                 case 2:
                     tab.setText("Cancelled");
+                    break;
+                case 3:
+                    tab.setText("Completed");
                     break;
             }
         }).attach();

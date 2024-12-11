@@ -173,11 +173,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void replaceFragment(Fragment targetFragment, int frameId) {
+//        if (getActivity() != null) {
+//            View bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+//            if (bottomNavigationView != null) {
+//                bottomNavigationView.setVisibility(View.GONE);
+//            }
+//            getActivity().getSupportFragmentManager().beginTransaction()
+//                    .setCustomAnimations(R.anim.sile_right, R.anim.slide_left)
+//                    .replace(frameId, targetFragment)
+//                    .addToBackStack(null)
+//                    .commit();
+//        }
         if (getActivity() != null) {
-            View bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
-            if (bottomNavigationView != null) {
-                bottomNavigationView.setVisibility(View.GONE);
-            }
+            // Không ẩn BottomNavigationView nữa
             getActivity().getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.sile_right, R.anim.slide_left)
                     .replace(frameId, targetFragment)

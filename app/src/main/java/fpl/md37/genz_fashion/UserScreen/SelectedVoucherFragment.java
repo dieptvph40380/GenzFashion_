@@ -39,19 +39,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class SelectedVoucherFragment extends Fragment implements Item_Handel_selected_voucher {
-ImageView btnback;
-AdapterSelectedVoucher adapter;
-RecyclerView recyclerView;
-HttpRequest httpRequest;
-AdapterProduct adapterProduct;
- ArrayList<Voucher> listvoucher;
+    ImageView btnback;
+    AdapterSelectedVoucher adapter;
+    RecyclerView recyclerView;
+    HttpRequest httpRequest;
+    AdapterProduct adapterProduct;
+    ArrayList<Voucher> listvoucher;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_selected_voucher, container, false);
-        btnback=view.findViewById(R.id.btnBack_voucher);
-        recyclerView=view.findViewById(R.id.rvVoucherList);
+        btnback = view.findViewById(R.id.btnBack_voucher);
+        recyclerView = view.findViewById(R.id.rvVoucherList);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,10 +64,11 @@ AdapterProduct adapterProduct;
                 transaction.commit();
             }
         });
-        httpRequest=new HttpRequest();
+        httpRequest = new HttpRequest();
         fetchVoucher();
         return view;
     }
+
     private void fetchVoucher() {
         httpRequest.callApi().getAllVoucher().enqueue(new Callback<Response<ArrayList<Voucher>>>() {
             @Override
@@ -85,8 +87,9 @@ AdapterProduct adapterProduct;
             }
         });
     }
+
     private void setupRecyclerView(ArrayList<Voucher> ds) {
-        adapter = new AdapterSelectedVoucher(getContext(), ds,this);
+        adapter = new AdapterSelectedVoucher(getContext(), ds, this);
         adapter.startDailyUpdate();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
@@ -116,27 +119,30 @@ AdapterProduct adapterProduct;
     }
 
     @Override
-        public void onVoucherSelected(Voucher voucher) {
-            String voucherName = voucher.getName();
-            Log.d("SelectedVoucher", "Voucher Name: " + voucherName);
+    public void onVoucherSelected(Voucher voucher) {
+        String voucherName = voucher.getName();
+        Double voucherPrice = voucher.getDiscountValue();
+        Log.d("SelectedVoucher", "Voucher Name: " + voucherName);
 
-            // Lưu voucherName vào SharedPreferences
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("VoucherPrefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("voucher_name", voucherName);  // Lưu tên voucher với key là "voucher_name"
-            editor.apply();  // Lưu dữ liệu
+        // Lưu voucherName vào SharedPreferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("VoucherPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("voucher_name", voucherName);
+        editor.putString("voucher_price", String.valueOf(voucherPrice));// Lưu tên voucher với key là "voucher_name"
+        editor.apply();  // Lưu dữ liệu
 
-            // Tiến hành chuyển Fragment
-            CartFragment cartFragment = new CartFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("name", voucherName); // Truyền tên voucher vào Bundle
-            cartFragment.setArguments(bundle);
+        // Tiến hành chuyển Fragment
+        CartFragment cartFragment = new CartFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("name", voucherName);
+        bundle.putString("price", String.valueOf(voucherPrice)); // Truyền tên voucher vào Bundle
+        cartFragment.setArguments(bundle);
 
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayout_voucher, cartFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayout_voucher, cartFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 
     @Override
@@ -160,6 +166,7 @@ AdapterProduct adapterProduct;
             }
         });
     }
+
     public void unVoucherDeselected(String userId) {
         // Ghi log thông báo bỏ chọn voucher
         Log.d("DeselectedVoucher", "Voucher deselected");
@@ -185,7 +192,6 @@ AdapterProduct adapterProduct;
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 
 
 }

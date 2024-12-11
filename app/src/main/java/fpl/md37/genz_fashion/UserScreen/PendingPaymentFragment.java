@@ -20,8 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-import fpl.md37.genz_fashion.adapter.AdapterOderCanclled;
 import fpl.md37.genz_fashion.adapter.AdapterOderCompeleted;
+import fpl.md37.genz_fashion.adapter.AdapterOrderPendingAdapter;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.models.Order;
 import fpl.md37.genz_fashion.models.OrderResponse;
@@ -29,10 +29,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CompletedFragment extends Fragment{
+
+public class PendingPaymentFragment extends Fragment {
     private HttpRequest httpRequest;
     private RecyclerView recyclerView;
-    private AdapterOderCompeleted adapter;
+    private AdapterOrderPendingAdapter adapter;
     private ArrayList<Order> orderList = new ArrayList<>();
     private String userId;
     private TextView tvEmptyMessage;
@@ -40,15 +41,15 @@ public class CompletedFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_completed, container, false);
+        return inflater.inflate(R.layout.fragment_pending_payment, container, false);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tvEmptyMessage = view.findViewById(R.id.tvNoOrders);
-        recyclerView = view.findViewById(R.id.rvProductList_cp);
+        recyclerView = view.findViewById(R.id.rvProductList_pm);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterOderCompeleted(getContext(), orderList);
+        adapter = new AdapterOrderPendingAdapter(getContext(), orderList);
         recyclerView.setAdapter(adapter);
 
         // Đảm bảo đã khởi tạo httpRequest và FirebaseAuth
@@ -69,7 +70,7 @@ public class CompletedFragment extends Fragment{
         }
 
         userId = currentUser.getUid();
-        int state = 1;
+        int state = 3;
 
         // Gọi API sử dụng Retrofit
         httpRequest.callApi().getOrders(userId, state).enqueue(new Callback<OrderResponse>() {
@@ -89,7 +90,7 @@ public class CompletedFragment extends Fragment{
                 }
 
                 adapter.notifyDataSetChanged();
-                updateUIBasedOnOrders(); // Cập nhật giao diện sau khi tải dữ liệu
+
             }
 
             @Override
@@ -98,13 +99,5 @@ public class CompletedFragment extends Fragment{
             }
         });
     }
-    private void updateUIBasedOnOrders() {
-        if (orderList.isEmpty()) {
-            tvEmptyMessage.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            tvEmptyMessage.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
+
 }

@@ -2,7 +2,9 @@ package fpl.md37.genz_fashion.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProducItem {
+import java.io.Serializable;
+
+public class ProducItem implements Serializable {
     @SerializedName("_id")
     private String id;
     @SerializedName("productId")

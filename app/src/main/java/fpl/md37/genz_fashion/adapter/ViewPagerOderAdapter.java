@@ -9,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import fpl.md37.genz_fashion.UserScreen.ActiveFragment;
 import fpl.md37.genz_fashion.UserScreen.CancelledFragment;
 import fpl.md37.genz_fashion.UserScreen.CompletedFragment;
+import fpl.md37.genz_fashion.UserScreen.PendingPaymentFragment;
 
 public class ViewPagerOderAdapter extends FragmentStateAdapter {
     public ViewPagerOderAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -22,9 +23,11 @@ public class ViewPagerOderAdapter extends FragmentStateAdapter {
             case 0:
                 return new ActiveFragment();
             case 1:
-                return new CompletedFragment();
+                return new PendingPaymentFragment();
             case 2:
                 return new CancelledFragment();
+            case 3:
+                return new CompletedFragment();
             default:
                 return new ActiveFragment();
         }
@@ -32,6 +35,6 @@ public class ViewPagerOderAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

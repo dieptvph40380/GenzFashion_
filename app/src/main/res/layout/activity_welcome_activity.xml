@@ -93,7 +93,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#000000"
+
+        android:background="#FFFFFF"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -104,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Finding Your Version"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif-medium" />
@@ -115,22 +117,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your appearance shows your quality so give your best for your best fashion"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="14sp"
             android:layout_marginTop="5dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center" />
 
         <!-- Nút bắt đầu -->
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/startButton_Wcl"
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Get started"
-            android:backgroundTint="@color/blue"
-            android:textColor="#FFFFFF"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="60dp"
+            android:text="Get Start"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            app:cornerRadius="12dp"
+            android:backgroundTint="#6394B7"
+            />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
