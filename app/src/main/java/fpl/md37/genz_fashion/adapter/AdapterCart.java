@@ -20,8 +20,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fpl.md37.genz_fashion.handel.Item_Handel_check;
 import fpl.md37.genz_fashion.models.ProducItem;
@@ -59,7 +61,10 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         holder.cart_name.setText(product.getProductId().getProduct_name());
 
         // Cập nhật giá sản phẩm
-        holder.cart_price.setText("$ "+product.getProductId().getPrice());
+        double priceValue = Double.parseDouble(product.getProductId().getPrice());
+        NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String formattedAmount = numberFormat.format(priceValue);
+        holder.cart_price.setText("$ "+formattedAmount);
 
         // Cập nhật số lượng
         int quantity = product.getQuantity();

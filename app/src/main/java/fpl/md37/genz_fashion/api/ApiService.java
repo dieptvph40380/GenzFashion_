@@ -1,7 +1,10 @@
 package fpl.md37.genz_fashion.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fpl.md37.genz_fashion.models.EvaluationRequest;
+import fpl.md37.genz_fashion.models.EvaluationRequest2;
 import fpl.md37.genz_fashion.models.Order;
 import fpl.md37.genz_fashion.models.OrderResponse;
 import fpl.md37.genz_fashion.models.CartResponseBody;
@@ -211,5 +214,8 @@ public interface ApiService {
     @POST("remove-products")
     Call<ResponseBody> removeProducts(@Body RemoveProductsRequest request);
 
-
+    @POST("submit-evaluation")
+    Call<ResponseBody> submitEvaluation(@Body EvaluationRequest request);
+    @GET("get-evaluation/{productId}")
+    Call<List<EvaluationRequest2>> getProductReviews(@Path("productId") String productId);
 }
