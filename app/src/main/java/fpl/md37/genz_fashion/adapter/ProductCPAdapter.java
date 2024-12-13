@@ -1,7 +1,8 @@
 package fpl.md37.genz_fashion.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
-import fpl.md37.genz_fashion.UserScreen.CartFragment;
-import fpl.md37.genz_fashion.UserScreen.EvaluateFragment;
+import fpl.md37.genz_fashion.UserScreen.EvaluateActivity;
 import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.Product;
 import fpl.md37.genz_fashion.models.Size;
@@ -51,40 +50,29 @@ public class ProductCPAdapter extends RecyclerView.Adapter<ProductCPAdapter.Prod
 
         if (product != null) {
             holder.tvProductName_cp.setText(product.getProduct_name());
-            holder.tvProductPrice_cp.setText("$"+String.valueOf(product.getPrice()));
-
+            double priceValue = Double.parseDouble(product.getPrice());
+            NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+            String formattedAmount = numberFormat.format(priceValue);
+            holder.tvProductPrice_cp.setText("$" + formattedAmount);
 
             if (size != null) {
                 holder.tvProductSizeQty_cp.setText("Size: " + size.getName() + " | Qty: " + productItem.getQuantity());
             } else {
                 holder.tvProductSizeQty_cp.setText("Size: N/A | Qty: " + productItem.getQuantity());
             }
-            // Kiểm tra xem có ảnh không trước khi load
+
+
             if (product.getImage() != null && !product.getImage().isEmpty()) {
                 Glide.with(context).load(product.getImage().get(0)).into(holder.ivProductImage_cp);
             } else {
-                Glide.with(context).load(R.drawable.ic_launcher_background).into(holder.ivProductImage_cp); // placeholder nếu không có ảnh
+                Glide.with(context).load(R.drawable.ic_launcher_background).into(holder.ivProductImage_cp);
             }
+                 holder.btnrv_cp.setOnClickListener(v -> {
+                    Intent intent = new Intent(context, EvaluateActivity.class);
+                    intent.putExtra("product_item_data", productItem);
+                    context.startActivity(intent);
+                });
         }
-        holder.btnrv_cp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (context instanceof FragmentActivity) {
-                    FragmentActivity fragmentActivity = (FragmentActivity) context;
-                    Fragment newFragment = new EvaluateFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("product_item_data", productItem); // Truyền ProducItem vào Bundle
-                    newFragment.setArguments(bundle);
-                    FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-                    transaction.replace(R.id.frameLayout_myorder, newFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                } else {
-                    throw new IllegalStateException("Context is not a FragmentActivity");
-                }
-            }
-        });
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +30,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fpl.md37.genz_fashion.ManagerScreen.VoucherFragment;
 import fpl.md37.genz_fashion.adapter.AdapterCart;
@@ -143,13 +146,8 @@ public class CartFragment extends Fragment implements Item_Handel_check {
             @Override
             public void onClick(View view) {
                 showBottomNav();
-                Fragment newFragment = new HomeFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
-                transaction.replace(R.id.frameLayout_cart, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -161,11 +159,12 @@ public class CartFragment extends Fragment implements Item_Handel_check {
         public void onResponse(Call<ResponseCart> call, Response<ResponseCart> response) {
             if (response.isSuccessful()) {
                 CartData cartData = response.body().getData();
-                double totalPrice = cartData.getTotalPrice();
+                NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+                String formattedAmount = numberFormat.format(cartData.getTotalPrice());
                 List<ProducItem> products = cartData.getProducts();
 
-                txtotal.setText("Total Price: $" + totalPrice);
-                Log.d("CartFragment", "Total Price: " + totalPrice);
+                txtotal.setText("Total Price: $ " + formattedAmount);
+                Log.d("CartFragment", "Total Price: " + formattedAmount);
                 if (products != null && !products.isEmpty()) {
                     for (ProducItem product : products) {
                         Log.d("CartFragment", "Product ID: " + product.getId());

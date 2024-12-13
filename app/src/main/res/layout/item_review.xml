@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/background_item_review"
+    android:layout_margin="8dp"
+    android:elevation="6dp">
+
+    <!-- Header: User Info -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/default_avatar"
+            android:layout_marginEnd="12dp" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:textColor="#333333" />
+    </LinearLayout>
+
+    <!-- Rating -->
+    <RatingBar
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="4"
+        android:stepSize="0.5"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:theme="@style/Base.Theme.GenZ_Fashion"
+         />
+
+    <!-- Product Info -->
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PRODUCT NAME + SIZE"
+        android:textSize="14sp"
+        android:paddingTop="6dp"
+        android:paddingBottom="4dp"
+        android:textColor="#555555"
+        android:textStyle="italic" />
+
+    <!-- Review Text -->
+    <TextView
+        android:id="@+id/reviewText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a review text that provides user feedback."
+        android:textSize="15sp"
+        android:layout_marginBottom="8dp"
+        android:textColor="#333333"
+        android:textStyle="bold"
+        android:paddingTop="6dp"
+        android:lineSpacingExtra="4dp" />
+</LinearLayout>

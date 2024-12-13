@@ -19,8 +19,10 @@ import com.example.genz_fashion.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import fpl.md37.genz_fashion.UserScreen.DetailUser;
@@ -63,7 +65,10 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
                     .into(holder.image);
         }
         holder.name.setText(product.getProduct_name());
-        holder.price.setText("$"+product.getPrice());
+        double priceValue = Double.parseDouble(product.getPrice());
+        NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String formattedAmount = numberFormat.format(priceValue);
+        holder.price.setText("$ " + formattedAmount);
 //        if (product.isState()) {
 //            holder.status.setText("Còn hàng");
 //            holder.status.setTextColor(context.getResources().getColor(R.color.green));
