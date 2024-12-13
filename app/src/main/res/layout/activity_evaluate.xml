@@ -1,10 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_evaluate"
     android:layout_width="match_parent"
-    android:id="@+id/frameLayout_evaluate"
     android:layout_height="match_parent"
-    tools:context="fpl.md37.genz_fashion.UserScreen.EvaluateFragment">
-
+    android:background="@color/background_color"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    tools:context="fpl.md37.genz_fashion.UserScreen.EvaluateActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +22,7 @@
 
             <!-- Back Button -->
             <ImageButton
-                android:id="@+id/btn_back"
+                android:id="@+id/btn_back_ev"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/iconout"
@@ -49,8 +52,8 @@
 
             <ImageView
                 android:id="@+id/img_product_ev"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:contentDescription="Product Image" />
 
             <LinearLayout
@@ -66,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:text="Red Jacket"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -75,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:text="Size: XL | Qty: 10pcs"
                     android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_product_price_ev"
@@ -83,11 +86,71 @@
                     android:layout_height="wrap_content"
                     android:text="$83.97"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
 
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="How many stars"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Rating Bar -->
+        <LinearLayout
+            android:id="@+id/linear_layout_stars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/star_1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/favorite"
+                android:padding="4dp"
+                android:contentDescription="Star 1" />
+
+            <ImageView
+                android:id="@+id/star_2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/favorite"
+                android:padding="4dp"
+                android:contentDescription="Star 2" />
+
+            <ImageView
+                android:id="@+id/star_3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/favorite"
+                android:padding="4dp"
+                android:contentDescription="Star 3" />
+
+            <ImageView
+                android:id="@+id/star_4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/favorite"
+                android:padding="4dp"
+                android:contentDescription="Star 4" />
+
+            <ImageView
+                android:id="@+id/star_5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/favorite"
+                android:padding="4dp"
+                android:contentDescription="Star 5" />
+        </LinearLayout>
+
+
 
         <!-- Review Section -->
         <TextView
@@ -96,7 +159,7 @@
             android:layout_marginTop="24dp"
             android:text="How is your order"
             android:textColor="#000000"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
@@ -109,29 +172,7 @@
             android:gravity="top"
             android:padding="12dp" />
 
-        <!-- Add Photo -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/iv_add_photo"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/camera"
-                android:contentDescription="Add Photo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Add photo"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-        </LinearLayout>
 
         <!-- Buttons -->
         <LinearLayout
@@ -141,20 +182,12 @@
             android:layout_marginTop="24dp"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/btn_cancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cancel"
-                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="16dp"
                 android:text="Submit"
                 android:textColor="#FFFFFF" />
         </LinearLayout>

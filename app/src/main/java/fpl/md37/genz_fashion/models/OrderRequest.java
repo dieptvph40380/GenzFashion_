@@ -3,7 +3,6 @@ package fpl.md37.genz_fashion.models;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-
 public class OrderRequest {
 
     @SerializedName("id_client")
@@ -15,10 +14,14 @@ public class OrderRequest {
     @SerializedName("products")
     private List<ProducItem> products;
 
-    public OrderRequest(String idClient, String paymentMethod, List<ProducItem> products) {
+    @SerializedName("total_amount")
+    private double totalAmount;
+
+    public OrderRequest(String idClient, String paymentMethod, List<ProducItem> products, double totalAmount) {
         this.idClient = idClient;
         this.paymentMethod = paymentMethod;
         this.products = products;
+        this.totalAmount = totalAmount;
     }
 
     public String getIdClient() {
@@ -44,5 +47,12 @@ public class OrderRequest {
     public void setProducts(List<ProducItem> products) {
         this.products = products;
     }
-}
 
+    public double getTotalAmount() { // Getter cho totalAmount
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) { // Setter cho totalAmount
+        this.totalAmount = totalAmount;
+    }
+}

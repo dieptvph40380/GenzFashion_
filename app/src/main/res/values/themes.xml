@@ -2,7 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GenZ_Fashion" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorControlActivated">@android:color/holo_orange_light</item>
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlHighlight">@android:color/holo_orange_dark</item>
     </style>
 
     <style name="Theme.GenZ_Fashion" parent="Base.Theme.GenZ_Fashion" />

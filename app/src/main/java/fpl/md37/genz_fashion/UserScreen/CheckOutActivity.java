@@ -168,7 +168,7 @@ public class CheckOutActivity extends AppCompatActivity {
                         return;
                     }
                     // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
-                    OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products);
+                    OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products,PricePayment);
                     Gson gson = new Gson();
                     String orderRequestJson = gson.toJson(orderRequest);
                     Log.d("OrderRequest", "Data sent to API: " + orderRequestJson);
@@ -322,8 +322,6 @@ public class CheckOutActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Products removed successfully", Toast.LENGTH_SHORT).show();
-
                     Fragment newFragment = new PaymentSuccessfullActivity();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
@@ -409,7 +407,7 @@ public class CheckOutActivity extends AppCompatActivity {
             return;
         }
         // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
-        OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products);
+        OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products,PricePayment);
         Gson gson = new Gson();
         String orderRequestJson = gson.toJson(orderRequest);
         Log.d("OrderRequest", "Data sent to API: " + orderRequestJson);

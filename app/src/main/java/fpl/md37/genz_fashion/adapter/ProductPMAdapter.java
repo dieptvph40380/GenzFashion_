@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.Product;
@@ -44,7 +46,10 @@ public class ProductPMAdapter extends RecyclerView.Adapter<ProductPMAdapter.View
 
         if (product != null) {
             holder.tvProductName_pm.setText(product.getProduct_name());
-            holder.tvProductPrice_pm.setText("$"+String.valueOf(product.getPrice()));
+            double priceValue = Double.parseDouble(product.getPrice());
+            NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+            String formattedAmount = numberFormat.format(priceValue);
+            holder.tvProductPrice_pm.setText("$"+formattedAmount);
 
 
             if (size != null) {
