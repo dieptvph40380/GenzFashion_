@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_evaluate"
+    android:id="@+id/layout_evaluate_ac"
     android:layout_height="match_parent"
     tools:context="fpl.md37.genz_fashion.UserScreen.EvaluateSuccessfull">
     <LinearLayout
@@ -12,8 +12,6 @@
         android:background="@color/white"
         android:padding="16dp"
         >
-
-
         <!-- Circle with checkmark -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +40,7 @@
                 android:id="@+id/paymentSuccessText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Successful!"
+                android:text="Evaluate Successful!"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -54,7 +52,7 @@
                 android:id="@+id/descriptionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thank you for your purchase"
+                android:text="Thanks for your review!"
                 android:textSize="14sp"
                 android:textColor="@color/gray"
                 android:gravity="center"
@@ -64,15 +62,13 @@
 
         <!-- View Order Button -->
         <Button
-            android:id="@+id/viewOrderButton"
+            android:id="@+id/backhome_ev"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Back to home"
+            android:layout_marginBottom="30dp"
             android:backgroundTint="@color/blue"
-            android:textColor="@color/white"
+            android:text="Back to home"
             android:textAllCaps="false"
-            android:layout_marginBottom="16dp" />
-
+            android:textColor="@color/white" />
     </LinearLayout>
-
 </FrameLayout>

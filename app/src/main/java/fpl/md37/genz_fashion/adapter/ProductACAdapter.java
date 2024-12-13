@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;  // Thêm thư viện Glide vào đây
 import com.example.genz_fashion.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import fpl.md37.genz_fashion.models.Product; // Import đúng Product
 import fpl.md37.genz_fashion.models.Size;   // Import đúng Size
@@ -44,7 +46,10 @@ public class ProductACAdapter extends RecyclerView.Adapter<ProductACAdapter.Prod
 
         if (product != null) {
             holder.tvProductName.setText(product.getProduct_name());
-            holder.tvProductPrice.setText("$"+String.valueOf(product.getPrice()));
+            double priceValue = Double.parseDouble(product.getPrice());
+            NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+            String formattedAmount = numberFormat.format(priceValue);
+            holder.tvProductPrice.setText("$"+formattedAmount);
 
 
             if (size != null) {

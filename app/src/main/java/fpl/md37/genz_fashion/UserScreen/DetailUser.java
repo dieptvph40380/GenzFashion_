@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
@@ -28,14 +30,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import fpl.md37.genz_fashion.adapter.ImageSliderAdapter;
+import fpl.md37.genz_fashion.adapter.ReviewAdapter;
 import fpl.md37.genz_fashion.api.HttpRequest;
 import fpl.md37.genz_fashion.models.CartData;
 import fpl.md37.genz_fashion.models.CartResponseBody;
+import fpl.md37.genz_fashion.models.EvaluationRequest;
+import fpl.md37.genz_fashion.models.EvaluationRequest2;
 import fpl.md37.genz_fashion.models.FavouriteResponseBody;
 import fpl.md37.genz_fashion.models.ProducItem;
 import fpl.md37.genz_fashion.models.Product;
@@ -58,10 +65,7 @@ public class DetailUser extends AppCompatActivity {
     private Product product;
     private HttpRequest httpRequest = new HttpRequest();
     private Map<String, String> sizeIdMap = new HashMap<>();  // Lưu trữ id của các size
-    private boolean isFavorite; // Biến này sẽ lưu trạng thái yêu thích
     private SharedPreferences sharedPreferences; // SharedPreferences để lưu trạng thái yêu thích
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,54 +73,58 @@ public class DetailUser extends AppCompatActivity {
         setContentView(R.layout.fragment_detail);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         // Khởi tạo SharedPreferences
         sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
-
         // Ánh xạ các view trong layout
         backArrow = findViewById(R.id.backArrow);
         productImagePlaceholder = findViewById(R.id.productImagePlaceholder);
         productName = findViewById(R.id.productName);
         productPrice = findViewById(R.id.productPrice);
         productDescription = findViewById(R.id.productDescription);
-
         heart=findViewById(R.id.ImgHeart);
-
         heart.setOnClickListener(view -> {
-
-
             if (currentUser != null) {
                 String userId = currentUser.getUid();
-
-
                     addToFavorite(userId, product);
-
-
             } else {
                 Toast.makeText(DetailUser.this, "Vui lòng đăng nhập để thêm yêu thích!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
         // Nút thêm vào giỏ hàng và mua ngay
         LinearLayout addToCartButton = findViewById(R.id.addToCart);
-//        LinearLayout buyNowButton = findViewById(R.id.addBuyNow);
-
         addToCartButton.setOnClickListener(v -> showBottomSheet("Add to Cart"));
-//        buyNowButton.setOnClickListener(v -> showBottomSheet("Buy Now"));
-
         // Nhận dữ liệu sản phẩm từ Intent
         product = (Product) getIntent().getSerializableExtra("product");
-
         if (product != null) {
             updateProductDetails(product);
             backArrow.setOnClickListener(v -> onBackPressed());
         } else {
             Toast.makeText(this, "Product details not available", Toast.LENGTH_SHORT).show();
         }
-    }
 
+        getReview();
+    }
+    private void getReview() {
+        httpRequest.callApi().getProductReviews(product.getId()).enqueue(new Callback<List<EvaluationRequest2>>() {
+            @Override
+            public void onResponse(Call<List<EvaluationRequest2>> call, retrofit2.Response<List<EvaluationRequest2>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<EvaluationRequest2> reviews = response.body();
+                    ReviewAdapter reviewAdapter = new ReviewAdapter(reviews, DetailUser.this);
+                    RecyclerView reviewRecyclerView = findViewById(R.id.reviewRecyclerView);
+                    reviewRecyclerView.setAdapter(reviewAdapter);
+                    reviewRecyclerView.setLayoutManager(new LinearLayoutManager(DetailUser.this));
+                } else {
+                    Log.e("API Error", "Failed to fetch reviews: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EvaluationRequest2>> call, Throwable t) {
+                Log.e("API Failure", "Error: " + t.getMessage());
+            }
+        });
+    }
 
     Callback<ResponseCart> getCartID = new Callback<ResponseCart>() {
         @Override
@@ -143,11 +151,11 @@ public class DetailUser extends AppCompatActivity {
             Log.e("zzzzz Failure", "Network error: " + t.getMessage());
         }
     };
+
     private void updateCartItemCount(int itemCount) {
         TextView cartItemCountTextView = findViewById(R.id.cartItemCount);
         // Cập nhật số lượng sản phẩm
         cartItemCountTextView.setText(String.valueOf(itemCount));
-
         // Nếu số lượng = 0, ẩn số lượng
         if (itemCount > 0) {
             cartItemCountTextView.setVisibility(View.VISIBLE);
@@ -155,6 +163,7 @@ public class DetailUser extends AppCompatActivity {
             cartItemCountTextView.setVisibility(View.GONE);
         }
     }
+
     private void updateProductDetails(Product product) {
         if (product != null) {
             List<String> imageUrls = product.getImage();
@@ -164,24 +173,18 @@ public class DetailUser extends AppCompatActivity {
             }
 
             productName.setText(TextUtils.isEmpty(product.getProduct_name()) ? "Unknown Product" : product.getProduct_name());
-            productPrice.setText(TextUtils.isEmpty(product.getPrice()) ? "Price Not Available" : product.getPrice());
+            double priceValue = Double.parseDouble(product.getPrice());
+            NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+            String formattedAmount = numberFormat.format(priceValue);
+            productPrice.setText(TextUtils.isEmpty(formattedAmount) ? "Price Not Available" : "$ "+formattedAmount);
             productDescription.setText(TextUtils.isEmpty(product.getDescription()) ? "No description available." : product.getDescription());
 
-            // Đọc trạng thái yêu thích từ SharedPreferences
-//            boolean isFavorite = sharedPreferences.getBoolean("isFavorite_" + product.getId(), false);  // Mặc định là false nếu không tìm thấy
-//            if (isFavorite) {
-//                heart.setImageResource(R.drawable.heart); // Đổi icon thành filled
-//            } else {
-//                heart.setImageResource(R.drawable.heart1); // Đổi icon thành outline
-//            }
-            // Lấy và cập nhật danh sách kích thước từ API
             loadSizesFromApi();
         }
     }
 
     private void loadSizesFromApi() {
         httpRequest.callApi().getTypeProductById(product.getTypeProductId()).enqueue(new Callback<Response<TypeProduct>>() {
-
             @Override
             public void onResponse(Call<Response<TypeProduct>> call, retrofit2.Response<Response<TypeProduct>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getStatus() == 200) {
@@ -194,7 +197,6 @@ public class DetailUser extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<Response<TypeProduct>> call, Throwable t) {
                 Log.e("API Failure", "Error: " + t.getMessage());
@@ -353,8 +355,6 @@ public class DetailUser extends AppCompatActivity {
         }
     }
 
-
-
     private int getAvailableQuantity(String selectedSize, List<SizeQuantity> sizeQuantities) {
         if (sizeQuantities == null || sizeIdMap.get(selectedSize) == null) {
             Log.d("SizeQuantity", "SizeQuantities hoặc SizeIdMap không hợp lệ.");
@@ -393,35 +393,6 @@ public class DetailUser extends AppCompatActivity {
             }
         });
     }
-
-    private void removeFromFavorite(String userId, Product product) {
-        RemoveFavouriteRequest requestBody = new RemoveFavouriteRequest(userId, product.getId());
-
-        httpRequest.callApi().removeFavourite(requestBody).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(DetailUser.this, "Removed from favorites!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(DetailUser.this, "Cannot delete favorites!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(DetailUser.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void saveFavoriteState(boolean isFavorite) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isFavorite_" + product.getId(), isFavorite); // Lưu trạng thái yêu thích của sản phẩm theo id
-        editor.apply();
-    }
-
-
-
-
 
 
 }

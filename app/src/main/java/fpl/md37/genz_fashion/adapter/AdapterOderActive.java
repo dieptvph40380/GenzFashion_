@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.genz_fashion.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import fpl.md37.genz_fashion.handel.Item_Handel_checkOrder;
 import fpl.md37.genz_fashion.models.Order;
@@ -54,7 +56,9 @@ public class AdapterOderActive extends RecyclerView.Adapter<AdapterOderActive.Or
             totalQuantity += productItem.getQuantity();
         }
 
-        holder.total.setText(""+ totalQuantity+" items: "+ order.getTotalAmount());
+        NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String formattedAmount = numberFormat.format(order.getTotalAmount());
+        holder.total.setText(totalQuantity + " items: " + formattedAmount + " VND");
 
 
 
