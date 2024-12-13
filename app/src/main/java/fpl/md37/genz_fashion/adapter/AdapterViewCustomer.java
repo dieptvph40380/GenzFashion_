@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,25 +50,42 @@ public class AdapterViewCustomer extends RecyclerView.Adapter<AdapterViewCustome
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterViewCustomer.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.name.setText(Client.get(position).getName());
-        holder.phone.setText(Client.get(position).getPhone());
-        holder.email.setText(Client.get(position).getEmail());
-        Glide.with(context).load(Client.get(position).getAvatar()).into(holder.avatar);
+    public void onBindViewHolder(@NonNull AdapterViewCustomer.ViewHolder holder, int position) {
+        Client client = Client.get(position);
+        holder.name.setText(client.getName());
+        holder.phone.setText(client.getPhone());
+        holder.email.setText(client.getEmail());
 
-        holder.btnview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(view.getContext(), ProfileCustomerFragment.class);
-                intent.putExtra("image",Client.get(position).getAvatar());
-                intent.putExtra("name",Client.get(position).getName());
-                intent.putExtra("phone",Client.get(position).getPhone());
-                intent.putExtra("email",Client.get(position).getEmail());
-                intent.putExtra("address",Client.get(position).getAddress());
-                view.getContext().startActivity(intent);
+        // Load avatar safely
+        try {
+            String avatarBase64 = client.getAvatar();
+            if (avatarBase64 != null && !avatarBase64.isEmpty()) {
+                byte[] decodedString = Base64.decode(avatarBase64, Base64.DEFAULT);
+                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Glide.with(context)
+                        .load(decodedBitmap)
+                        .placeholder(R.drawable.default_avatar) // Placeholder while loading
+                        .error(R.drawable.default_avatar)     // Error image
+                        .into(holder.avatar);
+            } else {
+                holder.avatar.setImageResource(R.drawable.default_avatar); // Fallback if empty
             }
+        } catch (Exception e) {
+            holder.avatar.setImageResource(R.drawable.default_avatar); // Fallback on error
+            e.printStackTrace(); // Optional: log the error for debugging
+        }
+
+        holder.btnview.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), ProfileCustomerFragment.class);
+            intent.putExtra("image", client.getAvatar());
+            intent.putExtra("name", client.getName());
+            intent.putExtra("phone", client.getPhone());
+            intent.putExtra("email", client.getEmail());
+            intent.putExtra("address", client.getAddress());
+            view.getContext().startActivity(intent);
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -85,4 +105,5 @@ public class AdapterViewCustomer extends RecyclerView.Adapter<AdapterViewCustome
             btnview=itemView.findViewById(R.id.btn_CusView);
         }
     }
+
 }

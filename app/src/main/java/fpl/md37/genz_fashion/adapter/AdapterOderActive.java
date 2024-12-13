@@ -39,6 +39,7 @@ public class AdapterOderActive extends RecyclerView.Adapter<AdapterOderActive.Or
     public OrderActiveViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_active, parent, false);
+
         return new OrderActiveViewHolder(view);
     }
 

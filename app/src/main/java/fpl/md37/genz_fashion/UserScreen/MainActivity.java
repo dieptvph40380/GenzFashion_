@@ -37,22 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.nav_home) {
                     replaceFragment(new HomeFragment());
                     return true;
-                }
-//                else if (menuItem.getItemId() == R.id.nav_bag) {
-//                    replaceFragment(new CartFragment());
-//                    View bottomNavigationView = findViewById(R.id.bottom_nav);
-//                    if (bottomNavigationView != null) {
-//                        bottomNavigationView.setVisibility(View.GONE);
-//                    }
-//                    return true;
-//                }
-               else if (menuItem.getItemId() == R.id.nav_favorite) {
+                } else if (menuItem.getItemId() == R.id.nav_favorite) {
                     replaceFragment(new MyWishlistFragment());
                     return true;
-                }else if (menuItem.getItemId() == R.id.nav_chat) {
+                } else if (menuItem.getItemId() == R.id.nav_chat) {
                     replaceFragment(new MyOrderFragment());
                     return true;
-                }else if (menuItem.getItemId() == R.id.nav_profile) {
+                } else if (menuItem.getItemId() == R.id.nav_profile) {
                     replaceFragment(new ProfileFragment());
                     return true;
                 }
@@ -60,9 +51,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Initially replace fragment with Home fragment
-        replaceFragment(new HomeFragment());
+        // Kiểm tra Intent và hiển thị Fragment tương ứng
+        handleIntent(getIntent());
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (intent != null) {
+            String fragmentName = intent.getStringExtra("navigate_to_fragment");
+            if (fragmentName != null) {
+                switch (fragmentName) {
+                    case "MyOrderFragment":
+                        bottomNavigationView.setSelectedItemId(R.id.nav_chat); // Cập nhật trạng thái
+                        replaceFragment(new MyOrderFragment());
+                        break;
+                    case "MyWishlistFragment":
+                        bottomNavigationView.setSelectedItemId(R.id.nav_favorite);
+                        replaceFragment(new MyWishlistFragment());
+                        break;
+                    case "ProfileFragment":
+                        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+                        replaceFragment(new ProfileFragment());
+                        break;
+                    default:
+                        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+                        replaceFragment(new HomeFragment());
+                        break;
+                }
+            } else {
+                // Mặc định hiển thị HomeFragment
+                bottomNavigationView.setSelectedItemId(R.id.nav_home);
+                replaceFragment(new HomeFragment());
+            }
+        }
+    }
+
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -70,5 +98,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-
 }

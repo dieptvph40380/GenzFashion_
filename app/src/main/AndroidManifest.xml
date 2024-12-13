@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -22,9 +23,6 @@
 
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.PayMothodsFragment"
-            android:exported="false" />
-        <activity
-            android:name="fpl.md37.genz_fashion.UserScreen.PaymentNotication"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.CheckOutActivity"
@@ -66,7 +64,7 @@
         <activity
             android:name="fpl.md37.genz_fashion.QaA.Question3"
             android:exported="false" />
-        <activity/-strong/-heart:>:o:-((:-h android:name="fpl.md37.genz_fashion.QaA.Question4"
+        <activity android:name="fpl.md37.genz_fashion.QaA.Question4"
             android:exported="false" />
         <activity
             android:name="fpl.md37.genz_fashion.UserScreen.DetailUser"

@@ -2,8 +2,14 @@ package fpl.md37.genz_fashion.UserScreen;
 
 import static android.app.PendingIntent.getActivity;
 
+import static java.security.AccessController.getContext;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -22,6 +28,7 @@ import vn.zalopay.sdk.ZaloPayError;
 import vn.zalopay.sdk.ZaloPaySDK;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -72,6 +79,7 @@ public class CheckOutActivity extends AppCompatActivity {
     String totalString;
     List<ProducItem> products;
     private ActivityResultLauncher<Intent> selectPaymentMethodLauncher;
+    private static final String CHANNEL_ID = "payment_success_channel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +101,7 @@ public class CheckOutActivity extends AppCompatActivity {
         tv_Methods = findViewById(R.id.tv_Methods);
         btnBack = findViewById(R.id.btnBack);
 
+        createNotificationChannel();
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -179,6 +188,7 @@ public class CheckOutActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                                 removeProductsFromCart(products);
+                                showNotification();
                             } else {
                                 try {
                                     if (response.errorBody() != null) {
@@ -216,6 +226,7 @@ public class CheckOutActivity extends AppCompatActivity {
 
             }
         });
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -443,6 +454,51 @@ public class CheckOutActivity extends AppCompatActivity {
                 Log.e("OrderError", "Network error: " + t.getMessage());
             }
         });
+
+    }
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Payment Success";
+            String description = "Notifications for payment success actions";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+    }
+    private void showNotification() {
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("navigate_to_fragment", "MyOrderFragment");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_app)
+                .setContentTitle("Payment Successful")
+                .setContentText("Your payment was successful! Click here to view your order.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        // Hiển thị thông báo
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(1, builder.build());
+        }
 
     }
 
