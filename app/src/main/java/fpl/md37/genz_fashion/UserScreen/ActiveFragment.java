@@ -1,11 +1,20 @@
 package fpl.md37.genz_fashion.UserScreen;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +54,7 @@ public class ActiveFragment extends Fragment implements Item_Handel_checkOrder {
     private AdapterOderActive adapter;
     private ArrayList<Order> orderList = new ArrayList<>();
     private String userId;
+    private static final String CHANNEL_ID = "payment_success_channel";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +70,7 @@ public class ActiveFragment extends Fragment implements Item_Handel_checkOrder {
         adapter = new AdapterOderActive(orderList, getContext(),this);
         recyclerView.setAdapter(adapter);
 
+        createNotificationChannel();
         // Đảm bảo đã khởi tạo httpRequest và FirebaseAuth
         if (httpRequest == null) {
             httpRequest = new HttpRequest();
@@ -121,6 +132,7 @@ public class ActiveFragment extends Fragment implements Item_Handel_checkOrder {
         btnYes.setOnClickListener(v -> {
             dialog.dismiss();
             cancelOrder(order);
+            showNotification();
         });
 
         btnNo.setOnClickListener(v -> {
@@ -128,6 +140,49 @@ public class ActiveFragment extends Fragment implements Item_Handel_checkOrder {
         });
 
         dialog.show();
+    }
+    private void showNotification() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra("navigate_to_fragment", "MyOrderFragment");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getActivity(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_app)
+                .setContentTitle("Order Canceled")
+                .setContentText("Your order has been successfully canceled. If you have any questions, please contact customer support.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        // Hiển thị thông báo
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(1, builder.build());
+        }
+    }
+        private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Payment Success";
+            String description = "Notifications for payment success actions";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
     }
     private void cancelOrder(Order order) {
         // Lấy thời gian hiện tại

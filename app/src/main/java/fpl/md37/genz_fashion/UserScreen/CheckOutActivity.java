@@ -299,7 +299,7 @@ public class CheckOutActivity extends AppCompatActivity {
                 PriceShip = Double.parseDouble(ship);
                 PriceTotal = totalPrice + PriceVoucher;
                 tvPC_ToTal.setText("" + PriceTotal);
-                PricePayment = totalPrice - PriceShip;
+                PricePayment = totalPrice + PriceShip;
                 tvPC_Payment.setText("" + PricePayment);
                 totalcheckout.setText("" + PricePayment);
                 totalString = String.format("%.0f", PricePayment);
@@ -371,6 +371,7 @@ public class CheckOutActivity extends AppCompatActivity {
                     @Override
                     public void onPaymentSucceeded(String s, String s1, String s2) {
                         order(userId, methods, products);
+                        showNotification();
 //                        Intent intent1=new Intent(CheckOutActivity.this, PaymentNotication.class);
 //                        Gson gson = new Gson();
 //                        String productsJson = gson.toJson(products);
@@ -387,22 +388,24 @@ public class CheckOutActivity extends AppCompatActivity {
 
                     @Override
                     public void onPaymentCanceled(String s, String s1) {
-                        Intent intent1 = new Intent(CheckOutActivity.this, Payment_Faield.class);
-                        intent1.putExtra("result", "Hủy thanh toán");
-                        Log.d("ZaloPay", "Payment Canceled");
-                        startActivity(intent1);
+                        Fragment newFragment = new Payment_Faield();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                        transaction.replace(R.id.layout_checkout, newFragment);
+                        transaction.addToBackStack(null);;
+                        transaction.commit();
                         showNotificationFailed();
                     }
 
                     @Override
                     public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
-                        Intent intent1 = new Intent(CheckOutActivity.this, Payment_Faield.class);
-                        intent1.putExtra("result", "Lỗi thanh toán");
-                        Log.e("ZaloPay", "Payment Error: " + zaloPayError);
-//                          q // Nếu có
-                        Log.e("ZaloPay", "Additional Info: " + s + ", " + s1);
 
-                        startActivity(intent1);
+                        Fragment newFragment = new Payment_Faield();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.bounce_in, R.anim.bounce_out);
+                        transaction.replace(R.id.layout_checkout, newFragment);
+                        transaction.addToBackStack(null);;
+                        transaction.commit();
                         showNotificationFailed();
                     }
                 });
@@ -472,7 +475,6 @@ public class CheckOutActivity extends AppCompatActivity {
         }
     }
     private void showNotification() {
-
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("navigate_to_fragment", "MyOrderFragment");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -499,7 +501,6 @@ public class CheckOutActivity extends AppCompatActivity {
         if (notificationManager != null) {
             notificationManager.notify(1, builder.build());
         }
-
     }
     private void showNotificationFailed() {
 

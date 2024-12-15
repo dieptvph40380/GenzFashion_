@@ -77,28 +77,6 @@ public class AdapterOderActive extends RecyclerView.Adapter<AdapterOderActive.Or
             if (listener != null) {
                 listener.onTrackOrderClick(order);
             }
-
-            // Gửi thông báo
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-            // Intent mở Activity khi nhấn thông báo
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-            // Tạo Notification
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "order_notifications")
-                    .setSmallIcon(R.drawable.logo_app) // Thay logo_app bằng icon của bạn
-                    .setContentTitle("Order Canceled")
-                    .setContentText("Your order has been successfully canceled. If you have any questions, please contact customer support.")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true); // Tự động ẩn thông báo khi nhấn vào
-
-            // Hiển thị thông báo
-            if (notificationManager != null) {
-                notificationManager.notify(position, builder.build()); // ID phải duy nhất cho mỗi thông báo
-            }
         });
     }
 
