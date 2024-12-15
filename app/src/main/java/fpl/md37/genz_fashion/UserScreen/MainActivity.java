@@ -3,7 +3,10 @@ package fpl.md37.genz_fashion.UserScreen;
 import static android.app.PendingIntent.getActivity;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String CHANNEL_ID = "order_notifications";
 
     private BottomNavigationView bottomNavigationView;
 
@@ -27,6 +31,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Tạo Notification Channel (chỉ thực hiện trên Android 8.0 trở lên)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Order Notifications";
+            String description = "Notifications for order updates";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // Đăng ký kênh với hệ thống
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
 
         // Initialize bottom navigation view
         bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -78,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
                         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
                         replaceFragment(new ProfileFragment());
                         break;
+                        case "HomeFragment":
+                            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+                            replaceFragment(new HomeFragment());
+                            break;
                     default:
                         bottomNavigationView.setSelectedItemId(R.id.nav_home);
                         replaceFragment(new HomeFragment());

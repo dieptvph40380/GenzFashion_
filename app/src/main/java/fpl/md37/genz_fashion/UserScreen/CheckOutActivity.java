@@ -391,6 +391,7 @@ public class CheckOutActivity extends AppCompatActivity {
                         intent1.putExtra("result", "Hủy thanh toán");
                         Log.d("ZaloPay", "Payment Canceled");
                         startActivity(intent1);
+                        showNotificationFailed();
                     }
 
                     @Override
@@ -402,6 +403,7 @@ public class CheckOutActivity extends AppCompatActivity {
                         Log.e("ZaloPay", "Additional Info: " + s + ", " + s1);
 
                         startActivity(intent1);
+                        showNotificationFailed();
                     }
                 });
             }
@@ -486,8 +488,38 @@ public class CheckOutActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo_app)
-                .setContentTitle("Payment Successful")
-                .setContentText("Your payment was successful! Click here to view your order.")
+                .setContentTitle("Order Successful")
+                .setContentText("You have successfully placed your order! Click here to view your order.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        // Hiển thị thông báo
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(1, builder.build());
+        }
+
+    }
+    private void showNotificationFailed() {
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("navigate_to_fragment", "HomeFragment");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_app)
+                .setContentTitle("Order Failed")
+                .setContentText("Your order could not be processed. Please try again or contact customer support for assistance.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);

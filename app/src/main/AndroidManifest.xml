@@ -97,6 +97,9 @@
             android:name="fpl.md37.genz_fashion.UserScreen.ForgotPassActivity"
             android:exported="false" />
         <activity
+            android:name="fpl.md37.genz_fashion.UserScreen.PayMothodsFragment"
+            android:exported="false" />
+        <activity
             android:name="fpl.md37.genz_fashion.ManagerScreen.MainActivityManager"
             android:exported="true"></activity>
         <activity
