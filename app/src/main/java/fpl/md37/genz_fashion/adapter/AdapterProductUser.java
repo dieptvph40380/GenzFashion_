@@ -68,7 +68,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         double priceValue = Double.parseDouble(product.getPrice());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
         String formattedAmount = numberFormat.format(priceValue);
-        holder.price.setText("$ " + formattedAmount);
+        holder.price.setText(formattedAmount + " VND");
 //        if (product.isState()) {
 //            holder.status.setText("Còn hàng");
 //            holder.status.setTextColor(context.getResources().getColor(R.color.green));

@@ -42,7 +42,7 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    public static String BASE_URL="http://192.168.1.14:3000/api/";
+    public static String BASE_URL="http://10.24.26.104:3000/api/";
 
     ApiService apiService  = new Retrofit.Builder()
             .baseUrl(ApiService.BASE_URL)

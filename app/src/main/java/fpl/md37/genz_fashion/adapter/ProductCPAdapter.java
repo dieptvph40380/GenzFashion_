@@ -53,7 +53,7 @@ public class ProductCPAdapter extends RecyclerView.Adapter<ProductCPAdapter.Prod
             double priceValue = Double.parseDouble(product.getPrice());
             NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
             String formattedAmount = numberFormat.format(priceValue);
-            holder.tvProductPrice_cp.setText("$" + formattedAmount);
+            holder.tvProductPrice_cp.setText(formattedAmount+ " VND");
 
             if (size != null) {
                 holder.tvProductSizeQty_cp.setText("Size: " + size.getName() + " | Qty: " + productItem.getQuantity());

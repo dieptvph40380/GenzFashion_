@@ -49,7 +49,7 @@ public class ProductPMAdapter extends RecyclerView.Adapter<ProductPMAdapter.View
             double priceValue = Double.parseDouble(product.getPrice());
             NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
             String formattedAmount = numberFormat.format(priceValue);
-            holder.tvProductPrice_pm.setText("$"+formattedAmount);
+            holder.tvProductPrice_pm.setText(formattedAmount + " VND");
 
 
             if (size != null) {

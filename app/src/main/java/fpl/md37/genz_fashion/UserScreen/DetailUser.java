@@ -176,7 +176,7 @@ public class DetailUser extends AppCompatActivity {
             double priceValue = Double.parseDouble(product.getPrice());
             NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
             String formattedAmount = numberFormat.format(priceValue);
-            productPrice.setText(TextUtils.isEmpty(formattedAmount) ? "Price Not Available" : "$ "+formattedAmount);
+            productPrice.setText(TextUtils.isEmpty(formattedAmount) ? "Price Not Available" :formattedAmount + " VND");
             productDescription.setText(TextUtils.isEmpty(product.getDescription()) ? "No description available." : product.getDescription());
 
             loadSizesFromApi();

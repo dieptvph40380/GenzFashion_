@@ -64,7 +64,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.ViewHolder> {
         double priceValue = Double.parseDouble(product.getProductId().getPrice());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
         String formattedAmount = numberFormat.format(priceValue);
-        holder.cart_price.setText("$ "+formattedAmount);
+        holder.cart_price.setText(formattedAmount+"VND ");
 
         // Cập nhật số lượng
         int quantity = product.getQuantity();
