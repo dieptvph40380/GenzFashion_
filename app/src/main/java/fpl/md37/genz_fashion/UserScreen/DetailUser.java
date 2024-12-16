@@ -31,6 +31,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -239,28 +242,49 @@ public class DetailUser extends AppCompatActivity {
 
             tvProductPrice.setText(TextUtils.isEmpty(product.getPrice()) ? "Price Not Available" : product.getPrice());
 
+            // Danh sách size theo thứ tự mong muốn
+            List<String> preferredOrder = Arrays.asList("S", "M", "L", "XL");
+
+// Lấy danh sách size từ map và sắp xếp
+            List<String> sortedSizes = new ArrayList<>(sizeIdMap.keySet());
+            Collections.sort(sortedSizes, (size1, size2) -> {
+                int index1 = preferredOrder.indexOf(size1);
+                int index2 = preferredOrder.indexOf(size2);
+                // Nếu không tìm thấy trong preferredOrder, đặt cuối danh sách
+                index1 = index1 == -1 ? Integer.MAX_VALUE : index1;
+                index2 = index2 == -1 ? Integer.MAX_VALUE : index2;
+                return Integer.compare(index1, index2);
+            });
             // Cập nhật các size vào ChipGroup
             sizeOptions.removeAllViews();
-            for (String sizeName : sizeIdMap.keySet()) {
+            for (String sizeName : sortedSizes) {
                 Chip chip = new Chip(this);
                 chip.setText(sizeName);
                 chip.setCheckable(true); // Cho phép chọn size
-                chip.setOnClickListener(v -> {
-                    // Bỏ chọn tất cả các chip khác
-                    for (int i = 0; i < sizeOptions.getChildCount(); i++) {
-                        Chip otherChip = (Chip) sizeOptions.getChildAt(i);
-                        if (otherChip != chip) {
-                            otherChip.setChecked(false);
+                int availableQuantity = getAvailableQuantity(sizeName, product.getSizeQuantities());
+                if (availableQuantity == 0) {
+                    chip.setEnabled(false);
+                    chip.setAlpha(0.5f); // Làm nhạt chip để người dùng nhận biết
+                }else{
+                    chip.setOnClickListener(v -> {
+                        // Bỏ chọn tất cả các chip khác
+                        for (int i = 0; i < sizeOptions.getChildCount(); i++) {
+                            Chip otherChip = (Chip) sizeOptions.getChildAt(i);
+                            if (otherChip != chip) {
+                                otherChip.setChecked(false);
+                            }
                         }
-                    }
 
-                    // Cập nhật số lượng tối đa và hiện tại
-                    String selectedSize = chip.getText().toString();
-                    maxQuantity[0] = getAvailableQuantity(selectedSize, product.getSizeQuantities());
-                    tvProductStock.setText("Still: " + maxQuantity[0]);
-                    currentQuantity[0] = 1; // Reset số lượng về 1 khi chọn size mới
-                    tvQuantity.setText(String.valueOf(currentQuantity[0]));
-                });
+                        // Cập nhật số lượng tối đa và hiện tại
+                        String selectedSize = chip.getText().toString();
+                        maxQuantity[0] = getAvailableQuantity(selectedSize, product.getSizeQuantities());
+                        tvProductStock.setText("Still: " + maxQuantity[0]);
+                        currentQuantity[0] = 1; // Reset số lượng về 1 khi chọn size mới
+                        tvQuantity.setText(String.valueOf(currentQuantity[0]));
+                    });
+                }
+
+
 
                 sizeOptions.addView(chip);
             }
