@@ -8,6 +8,15 @@ public class OrderRequest {
     @SerializedName("id_client")
     private String idClient;
 
+    @SerializedName("name_user")
+    private String nameUser;
+
+    @SerializedName("phone_user")
+    private String phoneUser;
+
+    @SerializedName("address_user")
+    private String addressUser;
+
     @SerializedName("payment_method")
     private String paymentMethod;
 
@@ -17,11 +26,38 @@ public class OrderRequest {
     @SerializedName("total_amount")
     private double totalAmount;
 
-    public OrderRequest(String idClient, String paymentMethod, List<ProducItem> products, double totalAmount) {
+    public OrderRequest(String idClient, String nameUser, String phoneUser, String addressUser, String paymentMethod, List<ProducItem> products, double totalAmount) {
         this.idClient = idClient;
+        this.nameUser = nameUser;
+        this.phoneUser = phoneUser;
+        this.addressUser = addressUser;
         this.paymentMethod = paymentMethod;
         this.products = products;
         this.totalAmount = totalAmount;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public String getPhoneUser() {
+        return phoneUser;
+    }
+
+    public void setPhoneUser(String phoneUser) {
+        this.phoneUser = phoneUser;
+    }
+
+    public String getAddressUser() {
+        return addressUser;
+    }
+
+    public void setAddressUser(String addressUser) {
+        this.addressUser = addressUser;
     }
 
     public String getIdClient() {
