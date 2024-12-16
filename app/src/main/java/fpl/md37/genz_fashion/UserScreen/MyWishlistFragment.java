@@ -118,7 +118,8 @@ public class MyWishlistFragment extends Fragment implements Item_Handel_delete {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    httpRequest.callApi().getFavourite(userId).enqueue(getFavourite);
+//                    httpRequest.callApi().getFavourite(userId).enqueue(getFavourite);
+                    loadWishlist(userId);
                     Toast.makeText(getContext(), "Removed from favourites", Toast.LENGTH_SHORT).show();
                     Log.d("MyWishlistFragment", "Product removed successfully from wishlist");
                 } else {
@@ -136,5 +137,35 @@ public class MyWishlistFragment extends Fragment implements Item_Handel_delete {
             }
         });
     }
+    private void loadWishlist(String userId) {
+        httpRequest.callApi().getFavourite(userId).enqueue(new Callback<ResponseFavourite>() {
+            @Override
+            public void onResponse(Call<ResponseFavourite> call, Response<ResponseFavourite> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                    List<FavouriteItem> favouriteItems = response.body().getData().getProducts();
+                    if (favouriteItems != null && !favouriteItems.isEmpty()) {
+                        products = favouriteItems;
+                        adapter.setProducts(products); // Cập nhật dữ liệu adapter
+                        recyclerView.setVisibility(View.VISIBLE);
+
+                    } else {
+                        // Hiển thị layout khi danh sách trống
+                        recyclerView.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "No items in your wishlist", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("MyWishlistFragment", "Failed response: " + response.code());
+                    Toast.makeText(getContext(), "Failed to fetch favourites", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseFavourite> call, Throwable t) {
+                Log.e("MyWishlistFragment", "Network error: " + t.getMessage());
+                Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 }
