@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:layout_marginLeft="15dp"
     android:background="#FFFFFF"
     android:fitsSystemWindows="true"
     >
@@ -24,8 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="26dp"
-        android:text="Hướng dẫn cách hủy đơn hàng:"
+        android:layout_marginLeft="65dp"
+        android:text="Cancel an order:"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/backArrow"
@@ -37,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="1. Kiểm tra trạng thái đơn hàng"
+        android:text="1. Check order status"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,20 +49,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text=" Bạn chỉ có thể hủy đơn hàng nếu đơn hàng chưa được xử lý (chưa chuyển sang trạng thái ĐANG GIAO hoặc ĐÃ GIAO )."
+        android:text="You can only cancel an order if the order has not been processed (has not moved to the status OF DELIVERY or DELIVERED)."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step1Title" />
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="#BDBDBD"
-        android:alpha="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/step1Description" />
+
 
     <!-- Step 2 -->
     <TextView
@@ -69,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="2. Truy cập vào lịch sử đơn hàng"
+        android:text="2. Access your order history"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,20 +74,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Mở ứng dụng và vào phần Lịch sử đơn hàng của bạn."
+        android:text="Open the app and go to your Order History."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step2Title" />
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="#BDBDBD"
-        android:alpha="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/step2Description" />
+
 
     <!-- Step 3 -->
     <TextView
@@ -101,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="3. Chọn đơn hàng cần hủy"
+        android:text="3. Select the order to cancel"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +99,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Chọn đơn hàng mà bạn muốn hủy."
+        android:text="Select the order you want to cancel."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="4. Nhấn vào tùy chọn hủy "
+        android:text="4. Tap on the cancel option"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +123,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Nếu đơn hàng có thể hủy, sẽ có nút Hủy đơn hàng. Nhấn vào đó và xác nhận."
+        android:text="If the order can be canceled, there will be a Cancel order button. Click on it and confirm."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="5. Xác nhận hủy đơn hàng "
+        android:text="5. Confirm order cancellation"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +145,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Sau khi hủy thành công, bạn sẽ nhận được thông báo xác nhận hủy đơn hàng."
+        android:text="After successful cancellation, you will receive a confirmation of order cancellation."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -169,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="6. Nếu đơn hàng đã được xử lý, bạn có thể liên hệ bộ phận chăm sóc khách hàng để được hỗ trợ thêm."
+        android:text="6. If your order has been processed, you can contact customer service for further assistance."
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

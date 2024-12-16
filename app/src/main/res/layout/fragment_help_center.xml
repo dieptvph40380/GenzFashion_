@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Câu hỏi thường gặp"
+        android:text="Frequently asked questions"
         android:textStyle="bold"
         android:textSize="20sp"
         android:layout_marginStart="16dp"/>
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Làm cách nào để đặt hàng ?"
+            android:text="How to order ?"
             android:textSize="16sp" />
         <View
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Tôi có thể hủy đơn hàng không ? "
+            android:text="Can I cancel my order? "
             android:textSize="16sp" />
         <View
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Chính sách đổi trả của shop như thế nào  ?"
+            android:text="What is the shop's return policy like?"
             android:textSize="16sp" />
         <View
             android:layout_width="match_parent"
@@ -136,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Phương thức thanh toán nào được chấp nhận ?"
+            android:text="What payment methods are accepted?"
             android:textSize="16sp" />
         <View
             android:layout_width="match_parent"
@@ -156,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Các kênh liên hệ khác"
+        android:text="Other contact channels"
         android:textSize="20sp"
 
         android:layout_marginStart="16dp"/>

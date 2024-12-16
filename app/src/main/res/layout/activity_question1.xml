@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_marginLeft="15dp"
     android:background="#FFFFFF"
     android:fitsSystemWindows="true"
     >
@@ -28,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:text="Hướng Dẫn Đặt Hàng"
+        android:text="Ordering instructions"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/backArrow"
@@ -39,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="1. Chọn sản phẩm"
+        android:text="1. Select product"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,20 +49,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Duyệt qua danh mục sản phẩm và chọn sản phẩm bạn muốn mua."
+        android:text="Browse the product catalog and select the product you want to buy."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step1Title" />
 
     <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="#BDBDBD"
-        android:alpha="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/step1Description" />
+
 
     <!-- Step 2 -->
     <TextView
@@ -71,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="2. Thêm vào giỏ hàng"
+        android:text="2. Add to cart"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,20 +75,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Nhấn vào nút 'Thêm vào giỏ hàng' để thêm sản phẩm vào giỏ của bạn."
+        android:text="Click the 'Add to Cart' button to add the product to your cart."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step2Title" />
 
     <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="#BDBDBD"
-        android:alpha="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/step2Description" />
+
 
     <!-- Step 3 -->
     <TextView
@@ -103,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="3. Xem giỏ hàng"
+        android:text="3. View shopping cart"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +101,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Vào mục Giỏ hàng để kiểm tra lại các sản phẩm bạn đã chọn."
+        android:text="Go to the Shopping Cart section to check the products you have selected."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="4. Chọn phương thức thanh toán "
+        android:text="4. Choose payment method "
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +125,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Nhấn nút Thanh toán, sau đó chọn phương thức thanh toán phù hợp."
+        android:text="Click the Pay button, then select the appropriate payment method."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="5. Điền thông tin giao hàng "
+        android:text="5. Fill in delivery information"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -160,7 +147,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Cung cấp địa chỉ giao hàng và các thông tin cần thiết."
+        android:text="Provide delivery address and necessary information."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="6. Xác nhận và hoàn tất đơn hàng"
+        android:text="6. Confirm and complete the order"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +169,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Kiểm tra lại thông tin, sau đó nhấn Xác nhận để hoàn tất quá trình đặt hàng."
+        android:text="Check the information again, then click Confirm to complete the ordering process."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
