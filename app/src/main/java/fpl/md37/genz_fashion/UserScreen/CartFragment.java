@@ -163,7 +163,7 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                 String formattedAmount = numberFormat.format(cartData.getTotalPrice());
                 List<ProducItem> products = cartData.getProducts();
 
-                txtotal.setText("Total Price: $ " + formattedAmount);
+                txtotal.setText("Total Price: " + formattedAmount + " VND");
                 Log.d("CartFragment", "Total Price: " + formattedAmount);
                 if (products != null && !products.isEmpty()) {
                     for (ProducItem product : products) {
