@@ -121,7 +121,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
             image=itemView.findViewById(R.id.img_product);
             name=itemView.findViewById(R.id.tvProduct_name);
             price=itemView.findViewById(R.id.tvProduct_price);
-//            status=itemView.findViewById(R.id.tvProduct_status);
+//            status=itemView.findViewById(R.id.tvProduct_s tatus);
             heartIcon = itemView.findViewById(R.id.wishlist_icon); // Khởi tạo trái tim
 
         }
