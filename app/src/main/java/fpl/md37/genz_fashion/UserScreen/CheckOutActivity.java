@@ -76,7 +76,7 @@ public class CheckOutActivity extends AppCompatActivity {
     String selectedPaymentMethod;
     private String userId;
     CartData cartData;
-    String totalString;
+    String totalString,name,phone,address;
     List<ProducItem> products;
     private ActivityResultLauncher<Intent> selectPaymentMethodLauncher;
     private static final String CHANNEL_ID = "payment_success_channel";
@@ -177,7 +177,7 @@ public class CheckOutActivity extends AppCompatActivity {
                         return;
                     }
                     // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
-                    OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products,PricePayment);
+                    OrderRequest orderRequest = new OrderRequest(userId,name,phone,address, selectedPaymentMethod, products,PricePayment);
                     Gson gson = new Gson();
                     String orderRequestJson = gson.toJson(orderRequest);
                     Log.d("OrderRequest", "Data sent to API: " + orderRequestJson);
@@ -268,6 +268,10 @@ public class CheckOutActivity extends AppCompatActivity {
                         tvName.setText(currentUserModel.getName());
                         tvPhone.setText(currentUserModel.getPhone());
                         tvAddress.setText(currentUserModel.getAddress());
+                        name = currentUserModel.getName().toString();
+                        phone = currentUserModel.getPhone().toString();
+                        address = currentUserModel.getAddress().toString();
+                        Log.d("data", "getUserData: "+ name +"," +phone+","+address);
                     } else {
                         AndroidUtil.showToast(getApplicationContext(), "User data not found."); // Dùng this thay cho safeContext
                     }
@@ -423,7 +427,7 @@ public class CheckOutActivity extends AppCompatActivity {
             return;
         }
         // Tạo đối tượng OrderRequest với id_client, payment_method và danh sách sản phẩm đã chọn
-        OrderRequest orderRequest = new OrderRequest(userId, selectedPaymentMethod, products,PricePayment);
+        OrderRequest orderRequest = new OrderRequest(userId,name,phone,address, selectedPaymentMethod, products,PricePayment);
         Gson gson = new Gson();
         String orderRequestJson = gson.toJson(orderRequest);
         Log.d("OrderRequest", "Data sent to API: " + orderRequestJson);
