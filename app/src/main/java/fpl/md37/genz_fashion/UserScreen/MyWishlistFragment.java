@@ -154,7 +154,7 @@ public class MyWishlistFragment extends Fragment implements Item_Handel_delete {
                         Toast.makeText(getContext(), "No items in your wishlist", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Log.e("MyWishlistFragment", "Failed response: " + response.code());
+                    Log.e("MyWishlistFragment", "Failed response " + response.code());
                     Toast.makeText(getContext(), "Failed to fetch favourites", Toast.LENGTH_SHORT).show();
                 }
             }
