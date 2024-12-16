@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -88,24 +89,33 @@ public class AdapterSelectedVoucher extends RecyclerView.Adapter<AdapterSelected
         }
 
         holder.minimumOrderValue.setText("Applies to orders " + voucher.getMinimumOrderValue());
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    if (currentUser != null) {
-                        String userId = currentUser.getUid();
-                        String idvoucher = voucher.getId();
-                        if (idvoucher != null) {
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+                    String userId = currentUser.getUid();
+                    String idvoucher = voucher.getId();
+
+                    if (idvoucher != null) {
+                        long daysDifference = calculateDaysDifference(voucher.getValidFrom(), voucher.getValidUntil());
+
+                        if (daysDifference > 0) {
                             items.selected_voucher(userId, idvoucher);
                             if (items != null) {
                                 items.onVoucherSelected(voucher);
                             }
+                        } else {
+                            // Thông báo voucher đã hết hạn
+                            Toast.makeText(context, "Voucher has expired", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
-            });
-            holder.apply.setOnClickListener(new View.OnClickListener() {
+            }
+        });
+
+        holder.apply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
