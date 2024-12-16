@@ -106,36 +106,6 @@
                 android:layout_marginRight="20dp"
                  />
 
-            <!-- Payment Method -->
-            <LinearLayout
-                android:id="@+id/profile_payment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                >
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/payment" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="16dp"
-                    android:text="Payment Method"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
-            </LinearLayout>
-
             <!-- Divider -->
             <View
                 android:layout_width="match_parent"
