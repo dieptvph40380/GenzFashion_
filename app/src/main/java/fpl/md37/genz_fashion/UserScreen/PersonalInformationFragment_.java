@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,18 +20,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.genz_fashion.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
@@ -50,7 +45,7 @@ public class PersonalInformationFragment_ extends Fragment {
     Client currentUserModel;
     ActivityResultLauncher<Intent> imagePickLauncher;
     Uri selectedImageUri;
-    Context safeContext; // Lưu trữ context an toàn
+    Context safeContext;
 
     public PersonalInformationFragment_() {
         // Required empty public constructor
@@ -59,7 +54,7 @@ public class PersonalInformationFragment_ extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        safeContext = context; // Gắn kết context an toàn
+        safeContext = context;
     }
 
     @Override
@@ -80,6 +75,7 @@ public class PersonalInformationFragment_ extends Fragment {
                     }
                 });
     }
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,18 +88,6 @@ public class PersonalInformationFragment_ extends Fragment {
         edtAddress = view.findViewById(R.id.edt_ProfileAddress);
 
         updateProfileBtn = view.findViewById(R.id.btn_update_profile);
-
-
-//        Button animatedGradientButton = view.findViewById(R.id.shadow_button);
-//        AnimationDrawable animationDrawable = (AnimationDrawable) animatedGradientButton.getBackground();
-//        animationDrawable.start(); // Khởi động hiệu ứng gradient động
-//
-//        animatedGradientButton.setOnClickListener(v -> {
-//            // Thực hiện hành động khi bấm vào nút
-//            Toast.makeText(this, "Animated Gradient Button Clicked!", Toast.LENGTH_SHORT).show();
-//        });
-
-
 
         getUserData();
 
@@ -190,16 +174,46 @@ public class PersonalInformationFragment_ extends Fragment {
             return;
         }
 
-        String newUsername = edtName.getText().toString();
+        // Lấy dữ liệu từ các trường
+        String newUsername = edtName.getText().toString().trim();
+        String newUserEmail = edtEmail.getText().toString().trim();
+        String newUserPhone = edtPhone.getText().toString().trim();
+        String newUserAddress = edtAddress.getText().toString().trim();
+
+        boolean hasError = false;
+
+        if (newUsername.isEmpty()) {
+            edtName.setError("Name is required");
+            hasError = true;
+        }
+
+        if (newUserEmail.isEmpty()) {
+            edtEmail.setError("Email is required");
+            hasError = true;
+        } else if (!isValidEmail(newUserEmail)) {
+            edtEmail.setError("Invalid email format");
+            hasError = true;
+        }
+
+        if (newUserPhone.isEmpty()) {
+            edtPhone.setError("Phone is required");
+            hasError = true;
+        } else if (!isValidPhone(newUserPhone)) {
+            edtPhone.setError("Invalid phone number ");
+            hasError = true;
+        }
+
+        if (newUserAddress.isEmpty()) {
+            edtAddress.setError("Address is required");
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        // Cập nhật model
         currentUserModel.setName(newUsername);
-
-        String newUserEmail = edtEmail.getText().toString();
         currentUserModel.setEmail(newUserEmail);
-
-        String newUserPhone = edtPhone.getText().toString();
         currentUserModel.setPhone(newUserPhone);
-
-        String newUserAddress = edtAddress.getText().toString();
         currentUserModel.setAddress(newUserAddress);
 
         SharedPreferences preferences = requireActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -214,6 +228,20 @@ public class PersonalInformationFragment_ extends Fragment {
 
         editor.apply();
         updateToFirestore();
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailPattern = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+$";
+        Pattern pattern = Pattern.compile(emailPattern);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private boolean isValidPhone(String phone) {
+        String phonePattern = "^[0-9]{10}$";
+        Pattern pattern = Pattern.compile(phonePattern);
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches();
     }
 
     private boolean isValidBase64(String base64String) {
