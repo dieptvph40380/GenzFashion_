@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:layout_marginLeft="15dp"
     android:background="#FFFFFF"
     android:fitsSystemWindows="true"
     >
@@ -25,7 +26,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="56dp"
-        android:text="Phương thức thanh toán"
+        android:text="Payment method"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/backArrow"
@@ -37,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="1. Chuyển khoản ngân hàng ngân hàng :"
+        android:text="1. Bank bank transfer :"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,21 +49,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Nếu bạn muốn thanh toán qua chuyển khoản, hãy chọn phương thức này và làm theo hướng dẫn để chuyển khoản trực tiếp vào tài khoản ngân hàng của cửa hàng."
+        android:text="If you'd like to pay via bank transfer, select this method and follow the instructions to transfer funds directly to your store's bank account."
 
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step1Title" />
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="#BDBDBD"
-        android:alpha="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/step1Description" />
+
 
     <!-- Step 2 -->
     <TextView
@@ -70,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="2. Ví điện tử:"
+        android:text="2. Electronic wallet:"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +75,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Bạn có thể thanh toán qua các ví điện tử phổ biến như MoMo, ZaloPay để thuận tiện và nhanh chóng."
+        android:text="You can pay via popular e-wallets such as MoMo, ZaloPay for convenience and speed."
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
