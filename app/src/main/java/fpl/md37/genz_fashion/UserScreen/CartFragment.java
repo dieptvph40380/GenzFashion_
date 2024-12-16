@@ -159,12 +159,11 @@ public class CartFragment extends Fragment implements Item_Handel_check {
         public void onResponse(Call<ResponseCart> call, Response<ResponseCart> response) {
             if (response.isSuccessful()) {
                 CartData cartData = response.body().getData();
+                List<ProducItem> products = cartData.getProducts();
                 NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
                 String formattedAmount = numberFormat.format(cartData.getTotalPrice());
-                List<ProducItem> products = cartData.getProducts();
-
                 txtotal.setText("Total Price: " + formattedAmount + " VND");
-                Log.d("CartFragment", "Total Price: " + formattedAmount);
+                Log.d("CartFragment", "Total Price: " + cartData.getTotalPrice());
                 if (products != null && !products.isEmpty()) {
                     for (ProducItem product : products) {
                         Log.d("CartFragment", "Product ID: " + product.getId());
@@ -265,7 +264,9 @@ public class CartFragment extends Fragment implements Item_Handel_check {
                                 List<ProducItem> updatedProducts = cartData.getProducts();
 
                                 // Cập nhật giá trị total và danh sách sản phẩm mới
-                                txtotal.setText("Total Price: $" + totalPrice);
+                                NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+                                String formattedAmount = numberFormat.format(totalPrice);
+                                txtotal.setText("Total Price: " + formattedAmount +" VND");
                                 adapter.setProducts(updatedProducts);  // Cập nhật danh sách sản phẩm trong adapter
                             } else {
                                 Toast.makeText(getContext(), "Failed to fetch updated cart: " + response.message(), Toast.LENGTH_SHORT).show();

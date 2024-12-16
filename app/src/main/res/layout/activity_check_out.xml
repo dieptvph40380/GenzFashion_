@@ -274,16 +274,27 @@
                         android:text="Shipping cost"
                         android:textSize="14sp"
                         />
-
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/tv_DiscountShipping"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="30000.0"
+                        android:text="30.000"
                         android:textSize="14sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="VND"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout

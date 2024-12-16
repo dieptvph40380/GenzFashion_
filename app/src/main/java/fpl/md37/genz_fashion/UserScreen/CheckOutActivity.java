@@ -42,8 +42,10 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fpl.md37.genz_fashion.adapter.CheckOutAdapter;
 import fpl.md37.genz_fashion.api.CreateOrder;
@@ -150,7 +152,11 @@ public class CheckOutActivity extends AppCompatActivity {
         });
 
         String voucherPrice = getIntent().getStringExtra("voucher_price");
-        tvPC_Voucher.setText(voucherPrice);
+        PriceVoucher = Double.parseDouble(voucherPrice);
+
+        NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String formattedVoucherPrice = numberFormat.format(PriceVoucher);
+        tvPC_Voucher.setText(formattedVoucherPrice+ " VND");
 
         cbChekOut.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -296,19 +302,36 @@ public class CheckOutActivity extends AppCompatActivity {
                 Log.d("CheckOutFragment", "Cart ID: " + idCart);
                 products = cartData.getProducts();
 
-                String voucher =tvPC_Voucher.getText().toString();
-                PriceVoucher=Double.parseDouble(voucher);
+                try {
+                    String ship = tvPC_Shipping.getText().toString();
+                    String shipFormatted = ship.replace(".", "");
+                    PriceShip = Double.parseDouble(shipFormatted);
 
-                String ship = tvPC_Shipping.getText().toString();
-                PriceShip = Double.parseDouble(ship);
-                PriceTotal = totalPrice + PriceVoucher;
-                tvPC_ToTal.setText("" + PriceTotal);
-                PricePayment = totalPrice + PriceShip;
-                tvPC_Payment.setText("" + PricePayment);
-                totalcheckout.setText("" + PricePayment);
-                totalString = String.format("%.0f", PricePayment);
+                    // Tính tổng giá trị
+                    PriceTotal = totalPrice + PriceVoucher;
+                    PricePayment = totalPrice + PriceShip;
 
-//                String voucher =Voucher.getText().toString();
+                    // Định dạng số theo chuẩn Việt Nam
+                    NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+                    String formattedPriceTotal = numberFormat.format(PriceTotal);
+                    String formattedPricePayment = numberFormat.format(PricePayment);
+                    String formattedTotalCheckout = numberFormat.format(PricePayment);
+
+                    // Hiển thị lên giao diện
+                    tvPC_ToTal.setText(formattedPriceTotal+" VND");
+                    tvPC_Payment.setText(formattedPricePayment+" VND");
+                    totalcheckout.setText(formattedTotalCheckout+" VND");
+
+                    // Chuyển thành chuỗi không có phần thập phân (nếu cần)
+                    totalString = String.format("%.0f", PricePayment);
+                } catch (NumberFormatException e) {
+                    // Xử lý lỗi khi dữ liệu không hợp lệ
+                    e.printStackTrace();
+                    tvPC_ToTal.setText("N/A");
+                    tvPC_Payment.setText("N/A");
+                    totalcheckout.setText("N/A");
+                }
+
 
                 // Hiển thị danh sách sản phẩm trong giỏ hàng
                 adapter.setProducts(products);
