@@ -69,7 +69,7 @@ public class CompletedFragment extends Fragment{
         }
 
         userId = currentUser.getUid();
-        int state = 1;
+        int state = 2;
 
         // Gọi API sử dụng Retrofit
         httpRequest.callApi().getOrders(userId, state).enqueue(new Callback<OrderResponse>() {

@@ -65,7 +65,7 @@ public class CancelledFragment extends Fragment {
         }
 
         userId = currentUser.getUid();
-        int state = 2; // Hoặc bạn có thể thay đổi `state` tùy vào trạng thái bạn muốn
+        int state = 3; // Hoặc bạn có thể thay đổi `state` tùy vào trạng thái bạn muốn
 
         // Gọi API sử dụng Retrofit
         httpRequest.callApi().getOrders(userId, state).enqueue(new Callback<OrderResponse>() {

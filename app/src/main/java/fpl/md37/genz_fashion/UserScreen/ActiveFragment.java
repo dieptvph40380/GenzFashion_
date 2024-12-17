@@ -189,7 +189,7 @@ public class ActiveFragment extends Fragment implements Item_Handel_checkOrder {
         String cancelOrderTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).format(new Date());
 
         // Tạo đối tượng yêu cầu cập nhật
-        OrderUpdateRequest updateRequest = new OrderUpdateRequest(2, cancelOrderTime);
+        OrderUpdateRequest updateRequest = new OrderUpdateRequest(3, cancelOrderTime);
         Log.d("CancelOrder", "Order ID to cancel: " + order.getId());
         Log.d("CancelOrder", "Update Request: State=" + updateRequest.getState() + ", CancelTime=" + cancelOrderTime);
         AlertDialog progressDialog = new AlertDialog.Builder(requireContext())

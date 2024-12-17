@@ -70,7 +70,7 @@ public class PendingPaymentFragment extends Fragment {
         }
 
         userId = currentUser.getUid();
-        int state = 3;
+        int state = 1;
 
         // Gọi API sử dụng Retrofit
         httpRequest.callApi().getOrders(userId, state).enqueue(new Callback<OrderResponse>() {
