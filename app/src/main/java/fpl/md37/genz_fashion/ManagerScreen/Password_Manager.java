@@ -97,8 +97,7 @@ public class Password_Manager extends Fragment {
 
                 updatePassword(currentPassword, newPassword);
 
-                Intent intent = new Intent(getContext(), SignInActivity.class);
-                startActivity(intent);
+                logout();
 
             }
         });
@@ -133,6 +132,13 @@ public class Password_Manager extends Fragment {
         if (bottomNavigationView != null) {
             bottomNavigationView.setVisibility(View.VISIBLE);
         }
+    }
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getActivity(), SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.rotate_in, R.anim.zoom_out);
     }
 
 }
